@@ -27,12 +27,21 @@ namespace calificaciones.Controllers
             return View(ListaPreguntas);
         }
 
+        [HttpGet]
         public ActionResult CrearPregunta()
         {
-            /*Tema_ClaseViewModel Tyc = new Tema_ClaseViewModel();
-            Tyc.TemaListado = temaClaseService.ObtenerTodosLosTemas();
-            Tyc.ClaseListado = Service.ObtenerClase();
-            return View(Tyc);*/
+            //Tema_ClaseViewModel Tyc = new Tema_ClaseViewModel();
+            ViewData["Nro"] = preguntasService.ObtenerNroUltimaPregunta() + 1;
+            ViewData["Tema"] = preguntasService.ObtenerTemaTodos();
+            ViewData["Clase"] = preguntasService.ObtenerClasesTodas();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CrearPregunta(Pregunta pregunta)
+        {
+            pregunta.IdProfesorCreacion = Convert.ToInt32(Session["Id"]);
+            preguntasService.PreguntaAlta(pregunta);
             return View();
         }
 
