@@ -1,33 +1,28 @@
 ﻿@{
     ViewBag.Title = "Ingresar";
 }
-
-@{ 
+@{
     Layout = "~/Views/Shared/AnonimoLayout.cshtml";
 }
-
 @model calificaciones.Models.Usuario
-
 <div class="text-center align-middle">
     <div class="container col-sm-5">
         <h1 class="text-center">Ingresar</h1>
-
         <div class="jumbotron align-self-center">
-            <form action="@Url.Action("Login", "Home")" method="post">
+            <form action="@Url.Action("LoginSession", "Home")" method="post">
                 <fieldset>
                     <div class="form-group row">
                         <label for="staticEmail" class="col-sm-2 col-form-label text-right">Email</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Escriba su email">
+                            @Html.TextBoxFor(u => u.Email, new { placeholder = "Enter email", @class = "form-control" })
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="staticEmail" class="col-sm-2 col-form-label text-right">Password</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                            @Html.TextBoxFor(u => u.Password, new { type = "password", placeholder = "Password", @class = "form-control" })
                         </div>
                     </div>
-
                     <div class="form-group">
                         <div class="form-check text-center">
                             <label class="form-check-label">
@@ -39,13 +34,12 @@
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary align-items-center" id="btnIngresar" name="btnIngresar">Ingresar</button>
+                        @ViewBag.MessageFailed
+                        <p class="text-danger align-bottom">@TempData["MensajeError"]</p>
                     </div>
                 </fieldset>
             </form>
         </div>
     </div>
-
 </div>
-
-
 

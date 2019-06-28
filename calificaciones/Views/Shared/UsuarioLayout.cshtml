@@ -2,33 +2,19 @@
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/BaseLayout.cshtml";
 }
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">CALIFICApp</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item nav-link active">
-                @Html.ActionLink("Inicio", "Inicio", "Home")
-            </li>
-            <li class="nav-item nav-link active">
-                @Html.ActionLink("Preguntas", "Contact", "Home")
-            </li>
-            <li class="nav-item nav-link active">
-                @Html.ActionLink("Acerca de", "About", "Home")
-            </li>
+@if (Session["Rol"].ToString() == "Profesor")
+{
+    @Html.Partial("pv_ProfesorNav");
+}
+@if (Session["Rol"].ToString() == "Alumno")
+{
+    @Html.Partial("pv_AlumnoNav");
+}
 
-        </ul>
-        @Html.ActionLink("Iniciar sesión", "Ingresar", "Home")
-
-    </div>
-</nav>
 <div class="">
     @RenderBody()
 </div>
-
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 @RenderSection("scripts", required: false)

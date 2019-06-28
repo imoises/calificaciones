@@ -1,4 +1,5 @@
 ﻿using calificaciones.Services;
+using calificaciones.Entidades;
 using calificaciones.Models;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,9 @@ namespace calificaciones.Controllers
     {
         PreguntaService preguntasService = new PreguntaService();
         TemaClaseService temaClaseService = new TemaClaseService();
-
+        RespuestaService respuestaService = new RespuestaService();
         // GET: Profesor 
+
         public ActionResult Index()
         {
             return View();
@@ -39,12 +41,11 @@ namespace calificaciones.Controllers
             return View();
         }
 
-        public ActionResult EvaluarRespuestas(int Id)
+        public ActionResult EvaluarRespuestas(int id)
         {
-            /*var RespuestaService = new RespuestaService();
-            var ListaRespuestas = RespuestaService.ObtenerRespuestas(Id);
-            return View(ListaRespuestas);*/
-            return View();
+            var preguntaRespuesta = preguntasService.ObtenerPreguntasConRespuestas(id);
+            return View(preguntaRespuesta);
+            //return View();
         }
     }
 }

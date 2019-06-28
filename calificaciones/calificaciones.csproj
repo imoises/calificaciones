@@ -54,6 +54,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -127,6 +130,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Entidades\Alumno.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -176,6 +180,7 @@
     <Compile Include="Services\PreguntaService.cs" />
     <Compile Include="Services\ProfesorService.cs" />
     <Compile Include="Services\RespuestaService.cs" />
+    <Compile Include="Services\SessionService.cs" />
     <Compile Include="Services\TemaClaseService.cs" />
     <Compile Include="Entidades\Tema.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -1870,9 +1875,12 @@
     <Content Include="Views\Shared\AlumnosLayout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Shared\pv_ProfesorNav.cshtml" />
+    <Content Include="Views\Shared\pv_AlumnoNav.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Account\" />
     <Folder Include="Views\Respuestas\" />
   </ItemGroup>
   <ItemGroup>

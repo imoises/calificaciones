@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using calificaciones.Entidades;
+using System.Web.Security;
 
 namespace calificaciones.Controllers
 {
@@ -13,13 +14,13 @@ namespace calificaciones.Controllers
     {
         AlumnoService alumnoService = new AlumnoService();
         ProfesorService profesorService = new ProfesorService();
-
+        [AllowAnonymous]
         public ActionResult Ingresar()
         {
             return View();
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Login(Usuario usuario)
         {
             Boolean esAlumno;
@@ -52,26 +53,37 @@ namespace calificaciones.Controllers
                     return RedirectToAction("ProfesorIndex", esProfesor);
                 }
             }
-        }
+        }*/
 
         public ActionResult Error()
         {
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Sesion(bool soyProfesor)
+        public ActionResult LoginSession(Usuario usuario)
         {
-
-            if(soyProfesor)
+            var sessionService = new SessionService();
+            if (usuario.SoyProfesor)
             {
-                return RedirectToAction("AdminPreguntas", "Profesor");
+                var profesor = sessionService.IniciarProfesor(usuario);
+                if (profesor != null) { 
+                    Session["Nombre"] = profesor.Apellido+", "+profesor.Nombre;
+                    Session["Rol"] = "Profesor";
+                    return RedirectToAction("AdminPreguntas", "Profesor");
+                }
             }
             else
             {
-                return RedirectToAction("Inicio", "Alumno");
+                var alumno = sessionService.IniciarAlumno(usuario);
+                if (alumno != null)
+                {
+                    Session["Nombre"] = alumno.Apellido+", "+ alumno.Nombre;
+                    Session["Rol"] = "Alumno";
+                    return RedirectToAction("Inicio", "Alumno");
+                }
             }
-            
+            TempData["MensajeError"] = "Email y/o Contraseña inválidos";
+            return RedirectToAction("Ingresar", "Home");
         }
 
         public ActionResult About()
