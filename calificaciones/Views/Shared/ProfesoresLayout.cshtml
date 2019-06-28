@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "~/Views/Shared/BaseLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <!-- ACA VA EL MENU DE PROFESORES -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">CALIFICApp</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item nav-link active">
+                    @Html.ActionLink("Inicio", "Inicio", "Home")
+                </li>
+                <li class="nav-item nav-link active">
+                    @Html.ActionLink("Preguntas", "Contact", "Home")
+                </li>
+                <li class="nav-item nav-link active">
+                    @Html.ActionLink("Acerca de", "About", "Home")
+                </li>
+
+            </ul>
+            @Html.ActionLink("Iniciar sesión", "Ingresar", "Home")
+
+        </div>
+    </nav>
+    <div>
+        @Html.Partial("pv_Footer")
+    </div>
+</body>
+</html>

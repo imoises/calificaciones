@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "CrearPregunta";
+    Layout = "~/Views/Shared/UsuarioLayout.cshtml";
+}
+
+@model  calificaciones.Pregunta
+<div class="container">
+    <h1 class="m-4">Modificar Pregunta</h1>
+</div>
+<div class="container">
+    <div class="">
+        <form action="@Url.Action("Sesion", "Home")" method="post">
+            <fieldset>
+                <div class="form-group row">
+                    <label for="Nro" class="col-sm-2 col-form-label text-right">Nro(*)</label>
+                    @Html.TextBoxFor(p => p.Nro, new { @type = "number", @min = "0", @step = "0.01", @class = "form-control col-sm-4" })
+                </div>
+                <div class="form-group row">
+                    <label for="Clase" class="col-sm-2 col-form-label text-right">Clase</label>
+                    @Html.DropDownListFor(p => p.Clase, new List<SelectListItem>
+                        {
+                            new SelectListItem{Text="Clase 1", Value="1"},
+                            new SelectListItem{Text="Clase 2", Value="1"}
+                        }, "Seleccionar", new { @class = "form-control col-sm-4" })
+
+                    <label for="Tema" class="col-sm-2 col-form-label text-right">Tema(*)</label>
+
+                    @Html.DropDownListFor(p => p.Tema, new List<SelectListItem>
+                        {
+                            new SelectListItem{Text="Clase 1", Value="1"},
+                            new SelectListItem{Text="Clase 2", Value="1"}
+                        }, "Seleccionar", new { @class = "form-control col-sm-4" })
+
+                </div>
+                <div class="form-group row">
+                    <div clase="col-sm-6">
+                    </div>
+                    <label for="FechaDisponibleDesde" class="col-sm-2 col-form-label text-right">Disponible Desde</label>
+                    @Html.TextBoxFor(p => p.FechaDisponibleDesde, new { @type = "datetime-local", @min = "0", @step = "0.01", @class = "form-control col-sm-4" })
+
+                    <label for="FechaDisponibleHasta" class="col-sm-2 col-form-label text-right">Hasta</label>
+                    @Html.TextBoxFor(p => p.FechaDisponibleHasta, new { @type = "datetime-local", @min = "0", @step = "0.01", @class = "form-control col-sm-4" })
+                </div>
+
+                <div class="form-group row">
+                    <div clase="col-sm-6">
+                    </div>
+                    <label for="Pregunta1" class="col-sm-2 col-form-label text-right">Disponible Desde</label>
+                    @Html.TextAreaFor(p => p.Pregunta1, new { @class = "form-control col-sm-10" })
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary align-items-center col-sm-2" id="btnIngresar" name="btnIngresar">Crear</button>
+                    <button type="submit" class="btn btn-primary align-items-center  col-sm-2" id="btnIngresar" name="btnIngresar">Cancelar</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="51b470b548524df086e8ad737bd7fe6b" Name="Diagram1">
+        <EntityTypeShape EntityType="TP_20191CModel.Alumno" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_20191CModel.Clase" Width="1.5" PointX="0.5" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_20191CModel.Pregunta" Width="1.5" PointX="2.5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_20191CModel.Profesor" Width="1.5" PointX="10.625" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_20191CModel.RespuestaAlumno" Width="1.5" PointX="5.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_20191CModel.ResultadoEvaluacion" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_20191CModel.Tema" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
+        <AssociationConnector Association="TP_20191CModel.FK_RespuestaAlumno_Alumno" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_20191CModel.FK_Pregunta_Clase" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_20191CModel.FK_Pregunta_Profesor" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_20191CModel.FK_Pregunta_Profesor1" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_20191CModel.FK_Pregunta_Tema" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_20191CModel.FK_RespuestaAlumno_Pregunta" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_20191CModel.FK_RespuestaAlumno_Profesor" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_20191CModel.FK_RespuestaAlumno_ResultadoEvaluacion" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
