@@ -10,6 +10,14 @@ namespace calificaciones.Services
     {
         Contexto bdContexto = new Contexto();
 
+        //Alta
+        public void PreguntaAlta(Pregunta pregunta)
+        {
+            pregunta.FechaDisponibleDesde = Convert.ToDateTime(pregunta.FechaDisponibleDesde);
+            bdContexto.Preguntas.Add(pregunta);
+            bdContexto.SaveChanges();
+        }
+
         public List<Pregunta> ObtenerTodasLasPreguntas()
         {
             return bdContexto.Preguntas.Include("Clase").Include("Tema").ToList();
@@ -21,5 +29,24 @@ namespace calificaciones.Services
             var preguntaRespuesta = query.FirstOrDefault();
             return preguntaRespuesta;
         }
+
+        public int ObtenerNroUltimaPregunta()
+        {
+            var query = from p in bdContexto.Preguntas orderby p.Nro descending select p;
+            var nroPregunta = query.First().Nro;
+            return nroPregunta;
+        }
+
+        public List<Tema> ObtenerTemaTodos()
+        {
+            var temaLista = bdContexto.Temas.ToList();
+            return temaLista;
+        }
+        public List<Clase> ObtenerClasesTodas()
+        {
+            var claseLista = bdContexto.Clases.ToList();
+            return claseLista;
+        }
+
     }
 }
