@@ -13,7 +13,9 @@ namespace calificaciones.Services
         //Alta
         public void PreguntaAlta(Pregunta pregunta)
         {
-            pregunta.FechaDisponibleDesde = Convert.ToDateTime(pregunta.FechaDisponibleDesde);
+            var profesorService = new ProfesorService();
+            var profesor = profesorService.ObtenerUnProfesor(1);
+            pregunta.FechaHoraCreacion = DateTime.Today;
             bdContexto.Preguntas.Add(pregunta);
             bdContexto.SaveChanges();
         }
