@@ -14,12 +14,6 @@ namespace calificaciones.Services
         {
             var query = from p in bdContexto.Profesors where p.Email == usuario.Email && p.Password == usuario.Password select p;
             var profesor = query.FirstOrDefault();
-            if (profesor != null)
-            {
-                HttpContext.Current.Session["Nombre"] = profesor.Nombre;
-                HttpContext.Current.Session["Rol"] = "Profesor";
-            }
-            
             return profesor;
         }
 
