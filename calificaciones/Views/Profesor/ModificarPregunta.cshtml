@@ -1,56 +1,54 @@
 ﻿@{
-    ViewBag.Title = "CrearPregunta";
+    ViewBag.Title = "ModificarPregunta";
     Layout = "~/Views/Shared/UsuarioLayout.cshtml";
 }
-
-@model  calificaciones.Pregunta
+@model  calificaciones.Entidades.Pregunta
 <div class="container">
     <h1 class="m-4">Modificar Pregunta</h1>
 </div>
 <div class="container">
     <div class="">
-        <form action="@Url.Action("Sesion", "Home")" method="post">
+        <form action="@Url.Action("ModificarPregunta", "Profesor")" method="post">
             <fieldset>
+                @{
+                    if (Model.RespuestaAlumnoes.Any())
+                    {
+
+                        <div class="alert alert-dismissible alert-warning  form-control right">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <p class="mb-0">Ya se recibieron respuestas a esta pregunta, evite hacer modificaciones que puedan repercutir en las respuestas recibidas.</p>
+                        </div>
+                    }
+
+                    }
+                
                 <div class="form-group row">
-                    <label for="Nro" class="col-sm-2 col-form-label text-right">Nro(*)</label>
-                    @Html.TextBoxFor(p => p.Nro, new { @type = "number", @min = "0", @step = "0.01", @class = "form-control col-sm-4" })
+                    <label for="Nro" class="col-sm-2 col-form-label text-right blockquote">Nro(*)</label>
+                    @Html.TextBoxFor(p => p.Nro, new { @type = "number", @min = "1", @step = "1", @class = "form-control col-sm-4", @Value = Model.Nro })
                 </div>
                 <div class="form-group row">
-                    <label for="Clase" class="col-sm-2 col-form-label text-right">Clase</label>
-                    @Html.DropDownListFor(p => p.Clase, new List<SelectListItem>
-                        {
-                            new SelectListItem{Text="Clase 1", Value="1"},
-                            new SelectListItem{Text="Clase 2", Value="1"}
-                        }, "Seleccionar", new { @class = "form-control col-sm-4" })
+                    <label for="Clase" class="col-sm-2 col-form-label text-right">Clase(*)</label>
+                    @Html.DropDownListFor(p => p.IdClase, new SelectList(ViewData["Clase"] as List<calificaciones.Entidades.Clase>, "IdClase", "Nombre", Model.Clase), new { @class = "form-control col-sm-4" })
 
                     <label for="Tema" class="col-sm-2 col-form-label text-right">Tema(*)</label>
-
-                    @Html.DropDownListFor(p => p.Tema, new List<SelectListItem>
-                        {
-                            new SelectListItem{Text="Clase 1", Value="1"},
-                            new SelectListItem{Text="Clase 2", Value="1"}
-                        }, "Seleccionar", new { @class = "form-control col-sm-4" })
-
+                    @Html.DropDownListFor(p => p.IdTema, new SelectList(ViewData["Tema"] as List<calificaciones.Entidades.Tema>, "IdTema", "Nombre", Model.Tema), new { @class = "form-control col-sm-4" })
                 </div>
                 <div class="form-group row">
                     <div clase="col-sm-6">
                     </div>
                     <label for="FechaDisponibleDesde" class="col-sm-2 col-form-label text-right">Disponible Desde</label>
-                    @Html.TextBoxFor(p => p.FechaDisponibleDesde, new { @type = "datetime-local", @min = "0", @step = "0.01", @class = "form-control col-sm-4" })
-
+                    @Html.TextBoxFor(p => p.FechaDisponibleDesde, "{0:s}", new { @class = "form-control  col-sm-4", @type = "datetime-local" })
                     <label for="FechaDisponibleHasta" class="col-sm-2 col-form-label text-right">Hasta</label>
-                    @Html.TextBoxFor(p => p.FechaDisponibleHasta, new { @type = "datetime-local", @min = "0", @step = "0.01", @class = "form-control col-sm-4" })
+                    @Html.TextBoxFor(p => p.FechaDisponibleHasta, "{0:s}", new { @class = "form-control  col-sm-4", @type = "datetime-local" })
                 </div>
-
                 <div class="form-group row">
                     <div clase="col-sm-6">
                     </div>
-                    <label for="Pregunta1" class="col-sm-2 col-form-label text-right">Disponible Desde</label>
+                    <label for="Pregunta1" class="col-sm-2 col-form-label text-right">Pregunta(*)</label>
                     @Html.TextAreaFor(p => p.Pregunta1, new { @class = "form-control col-sm-10" })
                 </div>
-
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary align-items-center col-sm-2" id="btnIngresar" name="btnIngresar">Crear</button>
+                    <button type="submit" class="btn btn-primary align-items-center col-sm-2" id="btnIngresar" name="btnIngresar">Guardar</button>
                     <button type="submit" class="btn btn-primary align-items-center  col-sm-2" id="btnIngresar" name="btnIngresar">Cancelar</button>
                 </div>
             </fieldset>
