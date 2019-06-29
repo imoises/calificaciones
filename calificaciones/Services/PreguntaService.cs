@@ -28,7 +28,7 @@ namespace calificaciones.Services
 
         public Pregunta ObtenerUnaPreguntaNroClase(int Nro, int Clase)
         {
-            var query = from p in bdContexto.Preguntas.Include("RespuestaAlumnoes") where p.Nro == Nro && p.IdClase == Clase select p;
+            var query = from p in bdContexto.Preguntas.Include("RespuestaAlumnoes").Include("Profesor") where p.Nro == Nro && p.IdClase == Clase select p;
             var preguntaBuscada = query.FirstOrDefault();
             return preguntaBuscada;
         }
@@ -52,14 +52,27 @@ namespace calificaciones.Services
 
         public void ModificarPregunta(Pregunta pregunta)
         {
-            var query = from p in bdContexto.Preguntas where p.Nro == pregunta.Nro && p.IdClase == pregunta.IdClase select p;
-            var preguntaModif = query.FirstOrDefault();
+            var preguntaModif = this.ObtenerUnaPreguntaNroClase(pregunta.Nro, pregunta.IdClase);
             preguntaModif.Nro = pregunta.Nro;
             preguntaModif.IdTema = pregunta.IdTema;
             preguntaModif.FechaDisponibleDesde = pregunta.FechaDisponibleDesde;
             preguntaModif.FechaDisponibleHasta = pregunta.FechaDisponibleHasta;
             preguntaModif.Pregunta1 = pregunta.Pregunta1;
             bdContexto.SaveChanges();
+        }
+
+        //Eliminar
+        public bool EliminarPregunta(int Nro, int Clase)
+        {
+            var preguntaEliminar = this.ObtenerUnaPreguntaNroClase(Nro, Clase);
+            var contieneRespuestas = preguntaEliminar.RespuestaAlumnoes.Any();
+            if (!contieneRespuestas)
+            {
+                bdContexto.Preguntas.Remove(preguntaEliminar);
+                bdContexto.SaveChanges();
+            }
+            
+            return contieneRespuestas;
         }
 
         //Otras
@@ -76,3 +89,4 @@ namespace calificaciones.Services
 
     }
 }
+
