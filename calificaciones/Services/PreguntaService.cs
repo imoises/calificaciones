@@ -20,9 +20,17 @@ namespace calificaciones.Services
             bdContexto.SaveChanges();
         }
 
+        //Obtener
         public List<Pregunta> ObtenerTodasLasPreguntas()
         {
             return bdContexto.Preguntas.Include("Clase").Include("Tema").ToList();
+        }
+
+        public Pregunta ObtenerUnaPreguntaNroClase(int Nro, int Clase)
+        {
+            var query = from p in bdContexto.Preguntas.Include("RespuestaAlumnoes") where p.Nro == Nro && p.IdClase == Clase select p;
+            var preguntaBuscada = query.FirstOrDefault();
+            return preguntaBuscada;
         }
 
         public Pregunta ObtenerPreguntasConRespuestas(int id)
@@ -39,6 +47,22 @@ namespace calificaciones.Services
             return nroPregunta;
         }
 
+
+        //Modificar
+
+        public void ModificarPregunta(Pregunta pregunta)
+        {
+            var query = from p in bdContexto.Preguntas where p.Nro == pregunta.Nro && p.IdClase == pregunta.IdClase select p;
+            var preguntaModif = query.FirstOrDefault();
+            preguntaModif.Nro = pregunta.Nro;
+            preguntaModif.IdTema = pregunta.IdTema;
+            preguntaModif.FechaDisponibleDesde = pregunta.FechaDisponibleDesde;
+            preguntaModif.FechaDisponibleHasta = pregunta.FechaDisponibleHasta;
+            preguntaModif.Pregunta1 = pregunta.Pregunta1;
+            bdContexto.SaveChanges();
+        }
+
+        //Otras
         public List<Tema> ObtenerTemaTodos()
         {
             var temaLista = bdContexto.Temas.ToList();
