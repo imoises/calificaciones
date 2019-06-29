@@ -42,7 +42,7 @@ namespace calificaciones.Controllers
         {
             pregunta.IdProfesorCreacion = Convert.ToInt32(Session["Id"]);
             preguntasService.PreguntaAlta(pregunta);
-            return View();
+            return RedirectToAction("CrearPregunta");
         }
 
         public ActionResult ModificarPregunta()
