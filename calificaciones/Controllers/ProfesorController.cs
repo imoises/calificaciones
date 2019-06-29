@@ -45,9 +45,23 @@ namespace calificaciones.Controllers
             return RedirectToAction("CrearPregunta");
         }
 
-        public ActionResult ModificarPregunta()
+        [HttpGet]
+        public ActionResult ModificarPregunta(int Nro, int Clase)
         {
-            return View();
+            var pregunta = preguntasService.ObtenerUnaPreguntaNroClase(Nro, Clase);
+            if (pregunta.RespuestaAlumnoes.Any())
+                ViewData["AvisoModificacion"] = "Ya se recibieron respuestas a esta pregunta, evite hacer modificaciones que puedan repercutir en las respuestas recibidas.";
+            ViewData["Tema"] = preguntasService.ObtenerTemaTodos();
+            ViewData["Clase"] = preguntasService.ObtenerClasesTodas();
+            return View(pregunta);
+        }
+
+        [HttpPost]
+        public ActionResult ModificarPregunta(Pregunta pregunta)
+        {
+            //var pregunta = preguntasService.ObtenerUnaPorID(id);
+            preguntasService.ModificarPregunta(pregunta);
+            return RedirectToAction("ModificarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.IdClase });
         }
 
         public ActionResult EvaluarRespuestas(int id)
