@@ -13,8 +13,25 @@
     <div class="d-flex">
         <h3>@Model.Pregunta1</h3>
         <div class="p-1 ml-3">
-            (@Model.FechaDisponibleDesde.Value.ToString("dd/MM/yyyy") -
-            @Model.FechaDisponibleHasta.Value.ToString("dd/MM/yyyy"))
+            (
+            @if (@Model.FechaDisponibleDesde.Value.ToString("dd/MM/yyyy").ToString() != null)
+            {
+                @Model.FechaDisponibleDesde.Value.ToString("dd/MM/yyyy")
+            }
+            else
+            {
+                <p>Sin fecha</p>
+            }
+            -
+            @if (@Model.FechaDisponibleHasta.Value.ToString("dd/MM/yyyy").ToString() != null)
+            {
+                @Model.FechaDisponibleHasta.Value.ToString("dd/MM/yyyy")
+            }
+            else
+            {
+                <p>Sin fecha</p>
+            }
+            )
         </div>
     </div>
     

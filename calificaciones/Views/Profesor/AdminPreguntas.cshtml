@@ -47,7 +47,7 @@
                         <td>@Html.ActionLink(@pregunta.Pregunta1, "ModificarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase =  pregunta.IdClase}, new { @class="text-info" })</td>
                         <td>@pregunta.FechaDisponibleDesde</td>
                         <td>@pregunta.FechaDisponibleHasta</td>                         
-                        <td>@Html.ActionLink("Evaluar ", "EvaluarRespuesta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.IdClase }, new { @class = "btn btn-sm btn-outline-info mb-0" })
+                        <td>@Html.ActionLink("Evaluar ", "EvaluarRespuestas", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.IdClase }, new { @class = "btn btn-sm btn-outline-info mb-0" })
                             @Html.ActionLink("Eliminar", "EliminarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.IdClase }, new { @class = "btn btn-sm btn-outline-danger" })</td>
 
                     </tr>

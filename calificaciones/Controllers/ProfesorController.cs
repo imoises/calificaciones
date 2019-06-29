@@ -49,8 +49,8 @@ namespace calificaciones.Controllers
         public ActionResult ModificarPregunta(int Nro, int Clase)
         {
             var pregunta = preguntasService.ObtenerUnaPreguntaNroClase(Nro, Clase);
-            if (pregunta.RespuestaAlumnoes.Any())
-                ViewData["AvisoModificacion"] = "Ya se recibieron respuestas a esta pregunta, evite hacer modificaciones que puedan repercutir en las respuestas recibidas.";
+            //if (pregunta.RespuestaAlumnoes.Any())
+            //ViewData["AvisoModificacion"] = "Ya se recibieron respuestas a esta pregunta, evite hacer modificaciones que puedan repercutir en las respuestas recibidas.";
             ViewData["Tema"] = preguntasService.ObtenerTemaTodos();
             ViewData["Clase"] = preguntasService.ObtenerClasesTodas();
             return View(pregunta);
@@ -64,11 +64,34 @@ namespace calificaciones.Controllers
             return RedirectToAction("ModificarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.IdClase });
         }
 
-        public ActionResult EvaluarRespuestas(int id)
+        [HttpGet]
+        public ActionResult EvaluarRespuestas(int nro, int clase)
         {
-            var preguntaRespuesta = preguntasService.ObtenerPreguntasConRespuestas(id);
+            var preguntaRespuesta = preguntasService.ObtenerPreguntasConRespuestas(nro, clase);
             return View(preguntaRespuesta);
             //return View();
+        }
+
+        [HttpGet]
+        public ActionResult EliminarPregunta(int Nro, int Clase)
+        {
+            /*var pregunta = preguntasService.ObtenerUnaPreguntaNroClase(Nro, Clase);
+            if (!pregunta.RespuestaAlumnoes.Any())
+            {
+                preguntasService.EliminarPregunta(pregunta);
+            }
+            else
+            {
+                TempData["MensajeError"] = "No se puedo eliminar la pregunta Nro: "+Nro+" de  La Clase: "+ Clase;
+            }
+            return RedirectToAction("AdminPreguntas");*/
+
+            var contieneRespuestas = preguntasService.EliminarPregunta(Nro, Clase);
+            if (contieneRespuestas)
+            {
+                TempData["MensajeError"] = "No se pudo eliminar la pregunta Nro: " + Nro + " de  La Clase: " + Clase + ", porque ya contiene respuestas";
+            }
+            return RedirectToAction("AdminPreguntas");
         }
     }
 }

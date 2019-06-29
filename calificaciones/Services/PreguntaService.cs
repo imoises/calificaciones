@@ -33,9 +33,9 @@ namespace calificaciones.Services
             return preguntaBuscada;
         }
 
-        public Pregunta ObtenerPreguntasConRespuestas(int id)
+        public Pregunta ObtenerPreguntasConRespuestas(int nro, int clase)
         {
-            var query = from p in bdContexto.Preguntas.Include("Tema").Include("Clase") where p.IdPregunta == id select p;
+            var query = from p in bdContexto.Preguntas.Include("RespuestaAlumnoes") where p.Nro == nro && p.IdClase == clase select p;
             var preguntaRespuesta = query.FirstOrDefault();
             return preguntaRespuesta;
         }
