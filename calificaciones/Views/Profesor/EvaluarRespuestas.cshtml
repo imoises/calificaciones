@@ -14,22 +14,23 @@
         <h3>@Model.Pregunta1</h3>
         <div class="p-1 ml-3">
             (
-            @if (@Model.FechaDisponibleDesde.Value.ToString("dd/MM/yyyy").ToString() != null)
+            @if (@Model.FechaDisponibleDesde == null)
             {
-                @Model.FechaDisponibleDesde.Value.ToString("dd/MM/yyyy")
+            <span>Sin fecha</span>
             }
             else
             {
-                <p>Sin fecha</p>
+                @Model.FechaDisponibleDesde.Value.ToString("dd/MM/yyyy");
             }
             -
-            @if (@Model.FechaDisponibleHasta.Value.ToString("dd/MM/yyyy").ToString() != null)
+            @if (@Model.FechaDisponibleHasta == null)
             {
-                @Model.FechaDisponibleHasta.Value.ToString("dd/MM/yyyy")
+                <span>Sin fecha</span>
             }
             else
             {
-                <p>Sin fecha</p>
+                @Model.FechaDisponibleHasta.Value.ToString("dd/MM/yyyy")
+
             }
             )
         </div>
@@ -43,30 +44,53 @@
         <li class="breadcrumb-item"><a href="#">Mal</a></li>
     </ol>
 </div>
-
+<br />
 <div class="container">
-    <table class="table table-hover table-dark">
-        <tbody>
-            @{
-                foreach (var respuesta in Model.RespuestaAlumnoes)
-                {
-                    <tr class="table-primary">
-                        <td class="text-right">
+    <ul class="list-group">
+        @{
+            foreach (var respuesta in Model.RespuestaAlumnoes)
+            {
+                <li class="list-group-item justify-content-between align-items-center">
+                    <div class="row align-items-center">
+                        <div class="col-3">
                             <b>
                                 @respuesta.FechaHoraRespuesta
                                 <br />
                                 @respuesta.Alumno.Nombre @respuesta.Alumno.Apellido
                             </b>
-                        </td>
-                        <td>@respuesta.Respuesta</td>
-                        <td>@respuesta.ResultadoEvaluacion.Resultado</td>
+                        </div>
+                        <div class="col-6">
+                            @respuesta.Respuesta
+                        </div>
+                        <div class="col-3">
 
-                        <td>@respuesta.MejorRespuesta</td>
-                    </tr>
-                }}
-        </tbody>
-    </table>
 
+
+                            @if (@respuesta.ResultadoEvaluacion == null)
+                            {
+                                <div class="float-right">
+                                    @Html.ActionLink("Correcta ", "EvaluarRespuestas", "Profesor", new { @class = "btn btn-sm btn-outline-success mb-0" })
+                                    @Html.ActionLink("Regular", "EliminarPregunta", "Profesor", new { @class = "btn btn-sm btn-outline-warning" })
+                                    @Html.ActionLink("Mal", "EliminarPregunta", "Profesor", new { @class = "btn btn-sm btn-outline-danger" })
+                                </div>
+                            }
+                            else
+                            {
+                                @respuesta.ResultadoEvaluacion.Resultado
+                                @respuesta.MejorRespuesta
+                            }
+
+
+                        </div>
+                    </div>
+                </li>
+            }
+
+
+        }
+    </ul>
+</div>
+<div class="container">
     <div class="float-right">
         <ul class="pagination">
             <li class="page-item disabled">
@@ -92,8 +116,9 @@
             </li>
         </ul>
     </div>
-
+    <br />
 
 </div>
+
 
 
