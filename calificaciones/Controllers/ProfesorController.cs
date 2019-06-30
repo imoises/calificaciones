@@ -62,8 +62,8 @@ namespace calificaciones.Controllers
         {
             //var idPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
             //var pregunta = preguntasService.ObtenerUnaPorID(idPregunta);
-            pregunta.IdPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
-            preguntasService.ObtenerUnaPreguntaPorId(pregunta);
+            var IdPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
+            preguntasService.ModificarPreguntaId(pregunta, IdPregunta);
             return RedirectToAction("ModificarPregunta", "Profesor", new { nro = pregunta.Nro, clase = pregunta.IdClase });
         }
 
@@ -71,7 +71,27 @@ namespace calificaciones.Controllers
         public ActionResult EvaluarRespuestas(int nro, int clase)
         {
             var respuestaAlumnos = preguntasService.ObtenerPreguntasConRespuestas(nro, clase);
+            TempData["IdPregunta"] = respuestaAlumnos.IdPregunta;
             return View(respuestaAlumnos);
+            //return ViewrespuestaAlumnos
+        }
+
+        [HttpGet]
+        public ActionResult EvaluarRespuestasGo(int respuesta, int valor)//int respuesta es el id de la respuesta... :( | int valor es la valoración de la respuesta: Correcta/Regular/Mal
+        {
+            var profesor = Convert.ToInt32(Session["Id"]);
+            var resultado = preguntasService.RespuestaValorar(respuesta, valor, profesor);
+            if (resultado)
+            {
+                TempData["Mensaje"] = "Se calificó la respuesta";
+            }
+            else
+            {
+                TempData["Mensaje"] = "Hubo un error";
+            }
+            var IdPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
+            var preguntaBuscada = preguntasService.ObtenerUnaPreguntaId(IdPregunta);
+            return RedirectToAction("EvaluarRespuestas", "Profesor", new { nro = preguntaBuscada.Nro, clase = preguntaBuscada.IdClase });
             //return ViewrespuestaAlumnos
         }
 

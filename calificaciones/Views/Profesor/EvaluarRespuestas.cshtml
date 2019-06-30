@@ -44,48 +44,86 @@
         <li class="breadcrumb-item"><a href="#">Mal</a></li>
     </ol>
 </div>
-<br />
+
 <div class="container">
     <ul class="list-group">
         @{
-            foreach (var respuesta in Model.RespuestaAlumnoes)
+            var flag = true;
+            if (Model.RespuestaAlumnoes.Count > 0)
             {
-                <li class="list-group-item justify-content-between align-items-center">
-                    <div class="row align-items-center">
-                        <div class="col-3">
-                            <b>
-                                @respuesta.FechaHoraRespuesta
-                                <br />
-                                @respuesta.Alumno.Nombre @respuesta.Alumno.Apellido
-                            </b>
+                foreach (var respuesta in Model.RespuestaAlumnoes)
+                {
+                    <li class="list-group-item justify-content-between align-items-center">
+                        <div class="row align-items-center">
+                            <div class="col-3">
+                                <b>
+                                    @respuesta.FechaHoraRespuesta
+                                    <br />
+                                    @respuesta.Alumno.Nombre @respuesta.Alumno.Apellido
+                                </b>
+                            </div>
+                            <div class="col-6">
+                                @respuesta.Respuesta
+                            </div>
+                            <div class="col-3">
+
+                                @if (@respuesta.ResultadoEvaluacion == null)
+                                {
+                                    if (flag)
+                                    {
+                                        <div class="carousel-item-right">
+                                            @Html.ActionLink("Correcta ", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 1}, new { @class = "btn btn-sm btn-outline-success col-lg-4" })
+                                            @Html.ActionLink("Regular", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 2 }, new { @class = "btn btn-sm btn-outline-warning col-lg-3" })
+                                            @Html.ActionLink("Mal", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 3 }, new { @class = "btn btn-sm btn-outline-danger col-lg-3" })
+                                        </div>
+                                        flag = false;
+                                    }
+                                    else
+                                    {
+                                        <div class="text-center">
+                                            <cite title="Source Title">Pendiente</cite>
+                                        </div>
+                                    }
+
+                                }
+                                else
+                                {
+                                    switch (respuesta.ResultadoEvaluacion.IdResultadoEvaluacion)
+                                    {
+                                        //@Html.Raw renderiza html
+                                        case 1:
+                                            @Html.Raw("<b class = 'text-success'>");
+                                            break;
+                                        case 2:
+                                            @Html.Raw("<b class = 'text-warning'>");
+                                            break;
+                                        default:
+                                            @Html.Raw("<b class = 'text-danger'>");
+                                            break;
+                                    }
+                                    @respuesta.ResultadoEvaluacion.Resultado
+                                    @Html.Raw("</b>");
+                                    if (@respuesta.MejorRespuesta)
+                                    {
+                                        <span class="badge badge-info">Mejor respuesta</span>
+                                    }
+
+                                }
+
+
+                            </div>
                         </div>
-                        <div class="col-6">
-                            @respuesta.Respuesta
-                        </div>
-                        <div class="col-3">
+                    </li>
+                }
 
-
-
-                            @if (@respuesta.ResultadoEvaluacion == null)
-                            {
-                                <div class="float-right">
-                                    @Html.ActionLink("Correcta ", "EvaluarRespuestas", "Profesor", new { @class = "btn btn-sm btn-outline-success mb-0" })
-                                    @Html.ActionLink("Regular", "EliminarPregunta", "Profesor", new { @class = "btn btn-sm btn-outline-warning" })
-                                    @Html.ActionLink("Mal", "EliminarPregunta", "Profesor", new { @class = "btn btn-sm btn-outline-danger" })
-                                </div>
-                            }
-                            else
-                            {
-                                @respuesta.ResultadoEvaluacion.Resultado
-                                @respuesta.MejorRespuesta
-                            }
-
-
-                        </div>
-                    </div>
-                </li>
             }
-
+            else
+            {
+                <div class="text-center">
+                    <h4> <cite title="Source Title">No se encontraron respuestas.</cite></h4>
+                   
+                </div>
+            }
 
         }
     </ul>
