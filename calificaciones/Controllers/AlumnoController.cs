@@ -15,13 +15,29 @@ namespace calificaciones.Controllers
         // GET: Alumno
         public ActionResult Inicio()
         {
-            InicioAlumnoViewModel modelo = new InicioAlumnoViewModel();
+            if (Session["Id"]!=null && Session["Nombre"]!=null && Session["Rol"] != null)
+            {
+                InicioAlumnoViewModel modelo = new InicioAlumnoViewModel();
+
+                modelo.UltimasPreguntasCorregidas = alumnoService.ObtenerPreguntasUltimaClase();
+
+                modelo.TablaDePosiciones = alumnoService.ObtenerLosDoceAlumnosConMejorPuntajeTotal();
+
+                return View(modelo);
+            }
+
+            return Redirect("~/");
             
-            modelo.UltimasPreguntasCorregidas = alumnoService.ObtenerPreguntasUltimaClase();
+        }
 
-            modelo.TablaDePosiciones = alumnoService.ObtenerLosDoceAlumnosConMejorPuntajeTotal();
+        public ActionResult Preguntas()
+        {
+            return View();
+        }
 
-            return View(modelo);
+        public ActionResult AcercaDe()
+        {
+            return View();
         }
     }
 }

@@ -1880,6 +1880,8 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Shared\pv_ProfesorNav.cshtml" />
     <Content Include="Views\Shared\pv_AlumnoNav.cshtml" />
+    <Content Include="Views\Alumno\Preguntas.cshtml" />
+    <Content Include="Views\Alumno\AcercaDe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
