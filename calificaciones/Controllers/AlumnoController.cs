@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using calificaciones.Models;
 
 namespace calificaciones.Controllers
 {
@@ -14,8 +15,13 @@ namespace calificaciones.Controllers
         // GET: Alumno
         public ActionResult Inicio()
         {
-            var alumno = alumnoService.ObtenerTodosLosAlumnos();
-            return View(alumno);
+            InicioAlumnoViewModel modelo = new InicioAlumnoViewModel();
+            
+            modelo.UltimasPreguntasCorregidas = alumnoService.ObtenerPreguntasUltimaClase();
+
+            modelo.TablaDePosiciones = alumnoService.ObtenerLosDoceAlumnosConMejorPuntajeTotal();
+
+            return View(modelo);
         }
     }
 }
