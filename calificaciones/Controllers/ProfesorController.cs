@@ -51,6 +51,7 @@ namespace calificaciones.Controllers
             var pregunta = preguntasService.ObtenerUnaPreguntaNroClase(Nro, Clase);
             //if (pregunta.RespuestaAlumnoes.Any())
             //ViewData["AvisoModificacion"] = "Ya se recibieron respuestas a esta pregunta, evite hacer modificaciones que puedan repercutir en las respuestas recibidas.";
+            TempData["IdPregunta"] = pregunta.IdPregunta;
             ViewData["Tema"] = preguntasService.ObtenerTemaTodos();
             ViewData["Clase"] = preguntasService.ObtenerClasesTodas();
             return View(pregunta);
@@ -59,17 +60,19 @@ namespace calificaciones.Controllers
         [HttpPost]
         public ActionResult ModificarPregunta(Pregunta pregunta)
         {
-            //var pregunta = preguntasService.ObtenerUnaPorID(id);
-            preguntasService.ModificarPregunta(pregunta);
-            return RedirectToAction("ModificarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.IdClase });
+            //var idPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
+            //var pregunta = preguntasService.ObtenerUnaPorID(idPregunta);
+            pregunta.IdPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
+            preguntasService.ObtenerUnaPreguntaPorId(pregunta);
+            return RedirectToAction("ModificarPregunta", "Profesor", new { nro = pregunta.Nro, clase = pregunta.IdClase });
         }
 
         [HttpGet]
         public ActionResult EvaluarRespuestas(int nro, int clase)
         {
-            var preguntaRespuesta = preguntasService.ObtenerPreguntasConRespuestas(nro, clase);
-            return View(preguntaRespuesta);
-            //return View();
+            var respuestaAlumnos = preguntasService.ObtenerPreguntasConRespuestas(nro, clase);
+            return View(respuestaAlumnos);
+            //return ViewrespuestaAlumnos
         }
 
         [HttpGet]

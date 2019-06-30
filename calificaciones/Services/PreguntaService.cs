@@ -33,11 +33,25 @@ namespace calificaciones.Services
             return preguntaBuscada;
         }
 
+        public Pregunta ObtenerUnaPreguntaPorId(Pregunta pregunta)
+        {
+            var query = from p in bdContexto.Preguntas.Include("RespuestaAlumnoes") where p.IdPregunta == pregunta.IdPregunta select p;
+            var preguntaBuscada = query.FirstOrDefault();
+            return preguntaBuscada;
+        }
+        //no lo uso
         public Pregunta ObtenerPreguntasConRespuestas(int nro, int clase)
         {
-            var query = from p in bdContexto.Preguntas.Include("RespuestaAlumnoes") where p.Nro == nro && p.IdClase == clase select p;
+            var query = from p in bdContexto.Preguntas where p.Nro == nro && p.IdClase == clase select p;
             var preguntaRespuesta = query.FirstOrDefault();
             return preguntaRespuesta;
+        }
+
+        public List<RespuestaAlumno> ObtenerRespuestas(int nro, int clase)
+        {
+            var query = from r in bdContexto.RespuestaAlumnoes where r.Pregunta.Nro == nro && r.Pregunta.IdClase == clase select r;
+            var respuestas = query.ToList();
+            return respuestas;
         }
 
         public int ObtenerNroUltimaPregunta()
