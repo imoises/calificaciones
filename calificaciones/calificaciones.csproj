@@ -1874,8 +1874,6 @@
     <Content Include="Views\Profesor\ModificarPregunta.cshtml" />
     <Content Include="Views\Profesor\Inicio.cshtml" />
     <Content Include="Views\Profesor\EvaluarRespuestas.cshtml" />
-    <Content Include="Views\Shared\ProfesoresLayout.cshtml" />
-    <Content Include="Views\Shared\AlumnosLayout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Shared\pv_ProfesorNav.cshtml" />

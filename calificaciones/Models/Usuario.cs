@@ -8,12 +8,12 @@ namespace calificaciones.Models
 {
     public class Usuario
     {
-        [Required(ErrorMessage = "Debe ingresar un email")]
+        [Required(ErrorMessage = "*Debe ingresar un email")]
         [EmailAddress(ErrorMessage = "El email que esta ingresando no es válido")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Debe ingresar un password")]
+        [Required(ErrorMessage = "*Debe ingresar un password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

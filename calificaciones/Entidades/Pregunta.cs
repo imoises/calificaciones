@@ -14,8 +14,9 @@ namespace calificaciones.Entidades
 
 using System;
     using System.Collections.Generic;
-    
-public partial class Pregunta
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class Pregunta
 {
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,17 +29,20 @@ public partial class Pregunta
 
 
     public int IdPregunta { get; set; }
-
+     [Required(ErrorMessage = "*El Número de pregunta es obligatorio")]
+     [Range(1   , int.MaxValue, ErrorMessage = "Ingrese un Número de pregunta válido")]
     public int Nro { get; set; }
 
     public int IdClase { get; set; }
 
     public int IdTema { get; set; }
-
+       
+    [DataType(DataType.Date)]
     public Nullable<System.DateTime> FechaDisponibleDesde { get; set; }
-
+    [DataType(DataType.Date)]
     public Nullable<System.DateTime> FechaDisponibleHasta { get; set; }
-
+    
+    [Required(ErrorMessage = "Debe formular una pregunta")]
     public string Pregunta1 { get; set; }
 
     public int IdProfesorCreacion { get; set; }

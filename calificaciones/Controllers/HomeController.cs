@@ -63,28 +63,32 @@ namespace calificaciones.Controllers
        public ActionResult LoginSession(Usuario usuario)
         {
             var sessionService = new SessionService();
-            if (usuario.SoyProfesor)
+            if (ModelState.IsValid)
             {
-                var profesor = sessionService.IniciarProfesor(usuario);
-                if (profesor != null) { 
-                    Session["Id"] = profesor.IdProfesor;
-                    Session["Nombre"] = profesor.Apellido+", "+profesor.Nombre;
-                    Session["Rol"] = "Profesor";
-                    return RedirectToAction("AdminPreguntas", "Profesor");
-                }
-            }
-            else
-            {
-                var alumno = sessionService.IniciarAlumno(usuario);
-                if (alumno != null)
+                if (usuario.SoyProfesor)
                 {
-                    Session["Id"] = alumno.IdAlumno;
-                    Session["Nombre"] = alumno.Apellido+", "+ alumno.Nombre;
-                    Session["Rol"] = "Alumno";
-                    return RedirectToAction("Inicio", "Alumno");
+                    var profesor = sessionService.IniciarProfesor(usuario);
+                    if (profesor != null)
+                    {
+                        Session["Id"] = profesor.IdProfesor;
+                        Session["Nombre"] = profesor.Apellido + ", " + profesor.Nombre;
+                        Session["Rol"] = "Profesor";
+                        return RedirectToAction("AdminPreguntas", "Profesor");
+                    }
                 }
+                else
+                {
+                    var alumno = sessionService.IniciarAlumno(usuario);
+                    if (alumno != null)
+                    {
+                        Session["Id"] = alumno.IdAlumno;
+                        Session["Nombre"] = alumno.Apellido + ", " + alumno.Nombre;
+                        Session["Rol"] = "Alumno";
+                        return RedirectToAction("Inicio", "Alumno");
+                    }
+                }
+                TempData["MensajeError"] = "Email y/o Contraseña inválidos";
             }
-            TempData["MensajeError"] = "Email y/o Contraseña inválidos";
             return RedirectToAction("Ingresar", "Home");
         }
 
