@@ -162,6 +162,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\InicioAlumnoViewModel.cs" />
+    <Compile Include="Models\Paginador.cs" />
     <Compile Include="Models\PosAlumnoPuntos.cs" />
     <Compile Include="Models\PreguntasUltimaClase.cs" />
     <Compile Include="Models\Usuario.cs" />
