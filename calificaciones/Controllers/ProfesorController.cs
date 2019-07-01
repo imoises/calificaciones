@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace calificaciones.Controllers
 {
+    [Authorize]
     public class ProfesorController : Controller
     {
         PreguntaService preguntasService = new PreguntaService();

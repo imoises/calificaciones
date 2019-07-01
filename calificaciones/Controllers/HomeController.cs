@@ -14,6 +14,8 @@ namespace calificaciones.Controllers
     {
         AlumnoService alumnoService = new AlumnoService();
         ProfesorService profesorService = new ProfesorService();
+
+        [Authorize]
         [AllowAnonymous]
         public ActionResult Ingresar()
         {
@@ -60,9 +62,13 @@ namespace calificaciones.Controllers
             return View();
         }
 
-       public ActionResult LoginSession(Usuario usuario)
+       [HttpPost]
+       public ActionResult LoginSession(Usuario usuario,string returnUrl)
         {
             var sessionService = new SessionService();
+            FormsAuthentication.SetAuthCookie(usuario.Email, true);
+            if (Url.IsLocalUrl(returnUrl))
+                return Redirect(returnUrl);
             if (ModelState.IsValid)
             {
                 if (usuario.SoyProfesor)

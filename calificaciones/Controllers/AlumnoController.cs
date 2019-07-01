@@ -9,6 +9,7 @@ using calificaciones.Entidades;
 
 namespace calificaciones.Controllers
 {
+    [Authorize]
     public class AlumnoController : Controller
     {
         AlumnoService alumnoService = new AlumnoService();
