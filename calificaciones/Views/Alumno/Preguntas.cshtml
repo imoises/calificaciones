@@ -1,0 +1,75 @@
+﻿
+@{
+    Layout = "~/Views/Shared/AlumnosLayout.cshtml";
+}
+
+@using calificaciones.Entidades;
+@model List<calificaciones.Entidades.Pregunta>
+
+
+<div class="container body-content">
+    <h1>Preguntas</h1>
+    <div class="col-lg-5">
+        <p class="text-secondary">
+            Recuerda que cuando antes respontas correctamente, mas chances tienes de sumar un mejor puntaje,
+            y si tu respuesta es la mas completa, recibirás un puntaje bonus!!!!!!!!!!!!!
+        </p>
+    </div>
+</div>
+
+<div class="container">
+    <nav>
+        <a href="/alumno/preguntas/Todas">Todas</a> |
+        <a href="/alumno/preguntas/SinCorregir">Sin Corregir</a> |
+        <a href="/alumno/preguntas/Correcta">Correctas</a> |
+        <a href="/alumno/preguntas/Regular">Regular</a> |
+        <a href="/alumno/preguntas/Mal">Mal</a>
+    </nav>
+</div>
+
+<br />
+
+<div class="container">
+    @foreach (var pregunta in Model)
+     {
+        <div class="container custom-control-inline">
+            @pregunta.Clase.Nombre - @pregunta.Tema.Nombre
+            @if (@pregunta.FechaDisponibleHasta.Value > DateTime.Now)
+            {
+            <p>&nbsp;-&nbsp; Hasta @pregunta.FechaDisponibleHasta</p>
+            }
+            else
+            {
+            <p>&nbsp;-&nbsp;Plazo vencido</p>
+            }
+        </div>
+
+        <div class="custom-control-inline">
+            <h3>
+                @pregunta.Nro. @pregunta.Pregunta1
+            </h3>
+
+            &nbsp; &nbsp;
+
+            <p data-toggle="collapse">
+                @{
+                    int idAlumno = Convert.ToInt32(Session["Id"]);
+                    var respuestaAlumno = pregunta.RespuestaAlumnoes.Where(r => r.IdAlumno == idAlumno).ToList();
+
+                    if (respuestaAlumno.Count > 0)
+                    {
+                        <form>
+                            <button type="submit" class="btn text-success" formaction="VerRespuesta" value="@respuestaAlumno.First().IdRespuestaAlumno" name="IdRespuesta" formmethod="post">Ver</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form>
+                            <button type="submit" class="btn text-info" formaction="Responder" value="@pregunta.IdPregunta" name="IdPregunta" formmethod="post">Responder</button>
+                        </form>
+                    }
+                }
+            </p>
+        </div>
+     }
+</div>

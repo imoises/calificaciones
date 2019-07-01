@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/BaseLayout.cshtml";
+}
+
+@{ if (Session["Rol"] == null)
+    {
+        Response.Redirect("~/HOME/Ingresar");
+    }
+    else if (Session["Rol"].ToString() == "Profesor")
+    {
+        @Html.Partial("pv_ProfesorNav");
+    }
+    else if (Session["Rol"].ToString() == "Alumno")
+    {
+        @Html.Partial("pv_AlumnoNav");
+    }
+}
+
+<div class="">
+    @RenderBody()
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
