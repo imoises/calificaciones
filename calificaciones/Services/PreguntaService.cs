@@ -101,6 +101,22 @@ namespace calificaciones.Services
             return claseLista;
         }
 
+        public List<Pregunta> ObtenerPreguntasTipo(String tipo)
+        {
+            
+
+            return ObtenerTodasLasPreguntasPublicadas();
+        }
+
+        public List<Pregunta> ObtenerTodasLasPreguntasPublicadas()
+        {
+            List<Pregunta> listPreguntasPublicadas = new List<Pregunta>();
+
+            listPreguntasPublicadas = bdContexto.Preguntas.Include("Clase").Include("Tema").Where(p => p.FechaDisponibleDesde != null).OrderByDescending(p=>p.Nro).ToList();
+
+            return listPreguntasPublicadas;
+        }
+
     }
 }
 
