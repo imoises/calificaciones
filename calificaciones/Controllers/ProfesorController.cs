@@ -41,7 +41,14 @@ namespace calificaciones.Controllers
         public ActionResult CrearPregunta(Pregunta pregunta)
         {
             pregunta.IdProfesorCreacion = Convert.ToInt32(Session["Id"]);
-            preguntasService.PreguntaAlta(pregunta);
+            if (preguntasService.PreguntaAlta(pregunta))
+            {
+                TempData["Mensaje"] = "<p class='mb-0 text-success'> La pregunta se creó correctamente </p>";
+            }
+            else
+            {
+                TempData["Mensaje"] = "<p class='mb-0 text-danger'> Ya existe una pregunta con el Nro: "+pregunta.Nro+" y Clase: "+pregunta.IdClase+" </p>";
+            }
             return RedirectToAction("CrearPregunta");
         }
 
@@ -60,12 +67,27 @@ namespace calificaciones.Controllers
         [HttpPost]
         public ActionResult ModificarPregunta(Pregunta pregunta)
         {
+            var IdPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
+            if (preguntasService.ModificarPreguntaId(pregunta, IdPregunta))
+            {
+                TempData["Mensaje"] = "<p class='mb-0 text-info'> La pregunta se modificó correctamente </p>";
+            }
+            else
+            {
+                TempData["Mensaje"] = "<p class='mb-0 text-danger'> Ya existe una pregunta con el Nro: " + pregunta.Nro + " y Clase: " + pregunta.IdClase + " </p>";
+            }
+            return RedirectToAction("ModificarPregunta", "Profesor", new { nro = pregunta.Nro, clase = pregunta.IdClase });
+        }
+
+        /*[HttpPost]
+        public ActionResult ModificarPregunta(Pregunta pregunta)
+        {
             //var idPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
             //var pregunta = preguntasService.ObtenerUnaPorID(idPregunta);
             var IdPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
             preguntasService.ModificarPreguntaId(pregunta, IdPregunta);
             return RedirectToAction("ModificarPregunta", "Profesor", new { nro = pregunta.Nro, clase = pregunta.IdClase });
-        }
+        }*/
 
         [HttpGet]
         public ActionResult EvaluarRespuestas(int nro, int clase)

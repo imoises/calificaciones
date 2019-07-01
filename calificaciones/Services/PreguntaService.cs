@@ -11,14 +11,25 @@ namespace calificaciones.Services
     {
         Contexto bdContexto = new Contexto();
         AlumnoService alumnoService = new AlumnoService();
+
         //Alta
-        public void PreguntaAlta(Pregunta pregunta)
+        public bool PreguntaAlta(Pregunta pregunta)
         {
-            var profesorService = new ProfesorService();
-            var profesor = profesorService.ObtenerUnProfesor(pregunta.IdProfesorCreacion);
-            pregunta.FechaHoraCreacion = DateTime.Today;
-            bdContexto.Preguntas.Add(pregunta);
-            bdContexto.SaveChanges();
+            var preguntaExistente = this.ObtenerUnaPreguntaNroClase(pregunta.Nro, pregunta.IdClase);
+            if(preguntaExistente == null)
+            {
+                var profesorService = new ProfesorService();
+                var profesor = profesorService.ObtenerUnProfesor(pregunta.IdProfesorCreacion);
+                pregunta.FechaHoraCreacion = DateTime.Today;
+                bdContexto.Preguntas.Add(pregunta);
+                bdContexto.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         //Obtener
@@ -83,7 +94,28 @@ namespace calificaciones.Services
             bdContexto.SaveChanges();
         }
 
-        public void ModificarPreguntaId(Pregunta pregunta, int idPregunta)
+        public bool ModificarPreguntaId(Pregunta pregunta, int idPregunta)
+        {
+            var preguntaExistente = this.ObtenerUnaPreguntaNroClase(pregunta.Nro, pregunta.IdClase);
+            if (preguntaExistente == null)
+            {
+                var preguntaModif = this.ObtenerUnaPreguntaId(idPregunta);
+                preguntaModif.Nro = pregunta.Nro;
+                preguntaModif.IdTema = pregunta.IdTema;
+                preguntaModif.FechaDisponibleDesde = pregunta.FechaDisponibleDesde;
+                preguntaModif.FechaDisponibleHasta = pregunta.FechaDisponibleHasta;
+                preguntaModif.Pregunta1 = pregunta.Pregunta1;
+                bdContexto.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+
+        /*        public void ModificarPreguntaId(Pregunta pregunta, int idPregunta)
         {
             var preguntaModif = this.ObtenerUnaPreguntaId(idPregunta);
             preguntaModif.Nro = pregunta.Nro;
@@ -92,7 +124,7 @@ namespace calificaciones.Services
             preguntaModif.FechaDisponibleHasta = pregunta.FechaDisponibleHasta;
             preguntaModif.Pregunta1 = pregunta.Pregunta1;
             bdContexto.SaveChanges();
-        }
+        }*/
 
         //Eliminar
         public bool EliminarPregunta(int Nro, int Clase)
