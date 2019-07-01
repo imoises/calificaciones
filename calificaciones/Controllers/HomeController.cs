@@ -62,8 +62,8 @@ namespace calificaciones.Controllers
             return View();
         }
 
-       [HttpPost]
-       public ActionResult LoginSession(Usuario usuario,string returnUrl)
+        [HttpPost]
+        public ActionResult LoginSession(Usuario usuario,string returnUrl)
         {
             var sessionService = new SessionService();
             FormsAuthentication.SetAuthCookie(usuario.Email, true);
