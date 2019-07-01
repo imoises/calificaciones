@@ -79,7 +79,7 @@ namespace calificaciones.Controllers
                         Session["Id"] = profesor.IdProfesor;
                         Session["Nombre"] = profesor.Apellido + ", " + profesor.Nombre;
                         Session["Rol"] = "Profesor";
-                        return RedirectToAction("AdminPreguntas", "Profesor");
+                        return RedirectToAction("Preguntas", "Profesor");
                     }
                 }
                 else

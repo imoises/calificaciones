@@ -22,7 +22,7 @@ namespace calificaciones.Controllers
             return View();
         }
 
-        public ActionResult AdminPreguntas()
+        public ActionResult Preguntas()
         {
             var ListaPreguntas = preguntasService.ObtenerTodasLasPreguntas();
             return View(ListaPreguntas);
@@ -151,7 +151,7 @@ namespace calificaciones.Controllers
             {
                 TempData["MensajeError"] = "No se pudo eliminar la pregunta Nro: " + Nro + " de  La Clase: " + Clase + ", porque ya contiene respuestas";
             }
-            return RedirectToAction("AdminPreguntas");
+            return RedirectToAction("Preguntas");
         }
     }
 }
