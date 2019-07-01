@@ -34,8 +34,7 @@ namespace calificaciones.Controllers
             return Redirect("~/");
             
         }
-
-        [HttpGet]
+        
         public ActionResult Preguntas(String Id)
         {
             // ObtenerPreguntasTipo (Todas, Sin Corregir, Correctas,Regular ó Mal)
@@ -52,7 +51,18 @@ namespace calificaciones.Controllers
         [HttpPost]
         public ActionResult VerRespuesta(int IdRespuesta)
         {
-            return View();
+            RespuestaAlumno respuesta = respuestaServide.ObtenerRespuestaPorIdRespuesta(IdRespuesta);
+
+            Pregunta pregunta = preguntaService.ObtenerUnaPreguntaId(respuesta.IdPregunta);
+
+            TempData["Respuesta"] = respuesta.Respuesta;
+
+            return View(pregunta);
+        }
+
+        public ActionResult VerRespuesta()
+        {
+            return RedirectToAction("Preguntas");
         }
 
 
@@ -62,6 +72,11 @@ namespace calificaciones.Controllers
             Pregunta pregunta = preguntaService.ObtenerUnaPreguntaId(IdPregunta);
 
             return View(pregunta);
+        }
+
+        public ActionResult Responder()
+        {
+            return RedirectToAction("Preguntas");
         }
 
         [HttpPost]

@@ -30,5 +30,10 @@ namespace calificaciones.Services
 
             bdContexto.SaveChanges();
         }
+
+        public RespuestaAlumno ObtenerRespuestaPorIdRespuesta(int idRespuestaAlumno)
+        {
+            return bdContexto.RespuestaAlumnoes.Where(r => r.IdRespuestaAlumno == idRespuestaAlumno).FirstOrDefault();
+        }
     }
 }
