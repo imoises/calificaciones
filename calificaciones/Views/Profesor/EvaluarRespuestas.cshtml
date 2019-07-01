@@ -7,16 +7,16 @@
 <div class="container">
     <div>
         <h1 class="m-4"><b>Respuestas</b></h1>
-        <b class="m-4">@Model.Tema.Nombre - @Model.Clase.Nombre</b>
+        <h5> <b class="m-4">@Model.Tema.Nombre - @Model.Clase.Nombre</b></h5>
     </div>
-    
+
     <div class="d-flex">
         <h3>@Model.Pregunta1</h3>
         <div class="p-1 ml-3">
             (
             @if (@Model.FechaDisponibleDesde == null)
             {
-            <span>Sin fecha</span>
+                <span>Sin fecha</span>
             }
             else
             {
@@ -35,7 +35,7 @@
             )
         </div>
     </div>
-    
+    @Html.Raw(TempData["Mensaje"])
     <br />
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Todas</a></li>
@@ -48,7 +48,7 @@
 <div class="container">
     <ul class="list-group">
         @{
-            var flag = true;
+            var flagPendiente = false;
             if (Model.RespuestaAlumnoes.Count > 0)
             {
                 foreach (var respuesta in Model.RespuestaAlumnoes)
@@ -69,14 +69,14 @@
 
                                 @if (@respuesta.ResultadoEvaluacion == null)
                                 {
-                                    if (flag)
+                                    if (!flagPendiente)
                                     {
-                                        <div class="carousel-item-right">
-                                            @Html.ActionLink("Correcta ", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 1}, new { @class = "btn btn-sm btn-outline-success col-lg-4" })
+                                        <div>
+                                            @Html.ActionLink("Correcta ", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 1 }, new { @class = "btn btn-sm btn-outline-success col-lg-4" })
                                             @Html.ActionLink("Regular", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 2 }, new { @class = "btn btn-sm btn-outline-warning col-lg-3" })
                                             @Html.ActionLink("Mal", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 3 }, new { @class = "btn btn-sm btn-outline-danger col-lg-3" })
                                         </div>
-                                        flag = false;
+                                        flagPendiente = true;
                                     }
                                     else
                                     {
@@ -103,6 +103,14 @@
                                     }
                                     @respuesta.ResultadoEvaluacion.Resultado
                                     @Html.Raw("</b>");
+                                    var sinEvaluar = Convert.ToInt32(ViewData["SinEvaluar"]);
+                                    var mejorRespuesta = ViewData["MejorPregunta"];
+                                    if (sinEvaluar == 0 && mejorRespuesta.Equals(false)) //me fijo si ya no hay respuestas sin evaluar (tienen que haber 0 respuestas sin evaluar)
+                                    {
+                                        //muestro el botón
+                                        @Html.ActionLink("Mejor Respuesta", "MejorRespuesta", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno}, new { @class = "btn btn-sm btn-info float-right" })
+                                    }
+
                                     if (@respuesta.MejorRespuesta)
                                     {
                                         <span class="badge badge-info">Mejor respuesta</span>

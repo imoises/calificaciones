@@ -71,7 +71,10 @@ namespace calificaciones.Controllers
         public ActionResult EvaluarRespuestas(int nro, int clase)
         {
             var respuestaAlumnos = preguntasService.ObtenerPreguntasConRespuestas(nro, clase);
-            TempData["IdPregunta"] = respuestaAlumnos.IdPregunta;
+            var idPregunta = respuestaAlumnos.IdPregunta;
+            TempData["IdPregunta"] = idPregunta;
+            ViewData["SinEvaluar"] = preguntasService.ObtenerSinEvaluar(idPregunta);
+            ViewData["MejorPregunta"] = preguntasService.ObtenerSiMejorRespuesta(idPregunta);
             return View(respuestaAlumnos);
             //return ViewrespuestaAlumnos
         }
@@ -88,6 +91,24 @@ namespace calificaciones.Controllers
             else
             {
                 TempData["Mensaje"] = "Hubo un error";
+            }
+            var IdPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
+            var preguntaBuscada = preguntasService.ObtenerUnaPreguntaId(IdPregunta);
+            return RedirectToAction("EvaluarRespuestas", "Profesor", new { nro = preguntaBuscada.Nro, clase = preguntaBuscada.IdClase });
+            //return ViewrespuestaAlumnos
+        }
+
+        [HttpGet]
+        public ActionResult MejorRespuesta(int respuesta)
+        {
+            var resultado = preguntasService.valorarMejorRespuesta(respuesta);
+            if (resultado)
+            {
+                TempData["Mensaje"] = "<p class='mb-0 text-info'> La mejor respuesta se asignó correctamente </p>";
+            }
+            else
+            {
+                TempData["Mensaje"] = "<p class='mb-0 text-danger'> No se pudo realizar la acción </p>";
             }
             var IdPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
             var preguntaBuscada = preguntasService.ObtenerUnaPreguntaId(IdPregunta);

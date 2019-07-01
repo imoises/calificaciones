@@ -10,7 +10,7 @@ namespace calificaciones.Services
     public class PreguntaService
     {
         Contexto bdContexto = new Contexto();
-
+        AlumnoService alumnoService = new AlumnoService();
         //Alta
         public void PreguntaAlta(Pregunta pregunta)
         {
@@ -132,11 +132,54 @@ namespace calificaciones.Services
             return respuestasCorrecta;
         }
 
+        public int ObtenerSinEvaluar(int idPregunta)
+        {
+            var query = from r in bdContexto.RespuestaAlumnoes where r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == null   select r;
+            var respuestasSinEvaluar = query.Count();
+            return respuestasSinEvaluar;
+        }
+
+        public bool ObtenerSiMejorRespuesta(int idPregunta)
+        {
+            var query = from r in bdContexto.RespuestaAlumnoes where r.IdPregunta == idPregunta && r.MejorRespuesta == true select r;
+            var mejorRespuesta = query.Any();
+            return mejorRespuesta;
+        }
+
+        public int cantidadRespuestaCorrectasAlumno(int idAlumno)
+        {
+            var query = from r in bdContexto.RespuestaAlumnoes where r.IdAlumno == idAlumno && r.IdResultadoEvaluacion == 1 select r;
+            var respuestasCorrectas = query.Count();
+            return respuestasCorrectas;
+        }
+
+        public bool valorarMejorRespuesta(int respuesta)
+        {
+            int puntajeMax = Convert.ToInt32(WebConfigurationManager.AppSettings["PuntajeMaximoPorRespuestaCorrecta"]);
+            var respuestaAlumno = this.ObtenerUnaRespuestaId(respuesta);
+            if(respuestaAlumno != null)
+            {
+                var alumno = respuestaAlumno.Alumno;
+                //var puntos = Convert.ToInt32(respuestaAlumno.Puntos);
+                respuestaAlumno.MejorRespuesta = true;
+                alumno.CantidadMejorRespuesta += 1;
+                alumno.PuntosTotales += puntajeMax / 2;
+                bdContexto.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        //QUIZÁ DEBERÍA IR EN OTRO SERVICE
         public bool RespuestaValorar(int respuesta, int valor, int profesor)
         {
             var respuestaAlumno = this.ObtenerUnaRespuestaId(respuesta);
             var resultadoEvaluacion = this.ObtenerResultadoEvaluacionId(valor);
-
+            var alumno = respuestaAlumno.Alumno;
             //si no devuelve respuesta ni evaluacion null, entonces se procede a actualizar la tabla RespuestaAlumno
             if(respuestaAlumno != null && resultadoEvaluacion != null)
             {   
@@ -153,6 +196,7 @@ namespace calificaciones.Services
                         if (cantidadRespuestasCorrecta <= 10)
                         {
                             puntajeObtenido = puntajeMax - (puntajeMax / cupo * cantidadRespuestasCorrecta);
+                            alumno.CantidadRespuestasCorrectas += 1;
                         }
                         else
                         {
@@ -163,11 +207,15 @@ namespace calificaciones.Services
                         if (cantidadRespuestasCorrecta <= 10)
                         {
                             puntajeObtenido = (puntajeMax - (puntajeMax / cupo * cantidadRespuestasCorrecta))/2;
+                            alumno.CantidadRespuestasRegular += 1;
                         }
                         else
                         {
                             puntajeObtenido = puntajeMax / cupo / 2;
                         }
+                    break;
+                    case 3:
+                            alumno.CantidadRespuestasMal += 1;
                     break;
                 }
                 //se procede a actualizar la tabla RespuestaAlumno
@@ -176,6 +224,9 @@ namespace calificaciones.Services
                 respuestaAlumno.IdResultadoEvaluacion = resultadoEvaluacion.IdResultadoEvaluacion;
                 respuestaAlumno.RespuestasCorrectasHastaElMomento = cantidadRespuestasCorrecta;
                 respuestaAlumno.Puntos = puntajeObtenido;
+
+
+                alumno.PuntosTotales += puntajeObtenido;
                 bdContexto.SaveChanges();
 
                 return true;
