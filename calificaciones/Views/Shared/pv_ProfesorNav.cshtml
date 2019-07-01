@@ -16,7 +16,7 @@
                 @Html.ActionLink("Preguntas", "AdminPreguntas", "Profesor")
             </li>
             <li class="nav-item nav-link active">
-                @Html.ActionLink("Crear Pregunta", "CrearPregunta", "Profesor")
+                @Html.ActionLink("Crear Pregunta", "Pregunta/Crear", "Profesor")
             </li>
             <li class="nav-item nav-link active">
                 @Html.ActionLink("Respuestas", "EvaluarRespuestas", "Profesor")
@@ -26,7 +26,7 @@
             </li>
         </ul>
         <b>
-            @Session["Nombre"].ToString() (Profesor)
+            @Session["Nombre"].ToString() (@Session["Rol"].ToString())
         </b>
         <form action="/Home/LoginSessionOut">
             <li class="nav-item nav-link active">
