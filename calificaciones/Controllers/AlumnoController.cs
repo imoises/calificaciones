@@ -15,6 +15,8 @@ namespace calificaciones.Controllers
 
         PreguntaService preguntaService = new PreguntaService();
 
+        RespuestaService respuestaServide = new RespuestaService();
+
         // GET: Alumno
         public ActionResult Inicio()
         {
@@ -32,8 +34,7 @@ namespace calificaciones.Controllers
             return Redirect("~/");
             
         }
-
-        [HttpGet]
+        
         public ActionResult Preguntas(String Id)
         {
             // ObtenerPreguntasTipo (Todas, Sin Corregir, Correctas,Regular ó Mal)
@@ -50,15 +51,53 @@ namespace calificaciones.Controllers
         [HttpPost]
         public ActionResult VerRespuesta(int IdRespuesta)
         {
-            return View();
+            RespuestaAlumno respuesta = respuestaServide.ObtenerRespuestaPorIdRespuesta(IdRespuesta);
+
+            Pregunta pregunta = preguntaService.ObtenerUnaPreguntaId(respuesta.IdPregunta);
+
+            TempData["Respuesta"] = respuesta.Respuesta;
+
+            return View(pregunta);
+        }
+
+        public ActionResult VerRespuesta()
+        {
+            return RedirectToAction("Preguntas");
         }
 
 
         [HttpPost]
         public ActionResult Responder(int IdPregunta)
         {
-            return View();
+            Pregunta pregunta = preguntaService.ObtenerUnaPreguntaId(IdPregunta);
+
+            return View(pregunta);
         }
+
+        public ActionResult Responder()
+        {
+            return RedirectToAction("Preguntas");
+        }
+
+        [HttpPost]
+        public ActionResult VerificarRespuesta(int IdPregunta, String respuesta)
+        {
+            Pregunta pregunta = preguntaService.ObtenerUnaPreguntaId(IdPregunta);
+
+            if (pregunta.FechaDisponibleHasta.Value >= DateTime.Now)
+            {
+                respuestaServide.AgregarRespuesta(IdPregunta, respuesta, Convert.ToInt32(Session["Id"]));
+                return Redirect("~/Alumno/Preguntas");
+            }
+            else
+            {
+                TempData["Respuesta"] = respuesta;
+                TempData["Mensaje"] = "Ya paso la fecha de entrega";
+
+                return View("Responder", pregunta);
+            }
+        }
+
     }
 }
         

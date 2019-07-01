@@ -4,5 +4,33 @@
     Layout = "~/Views/Shared/AlumnosLayout.cshtml";
 }
 
-<h2>VerRespuesta</h2>
 
+@model calificaciones.Entidades.Pregunta
+
+<br />
+
+<div class="container">
+    <div>
+        @Model.Clase.Nombre - @Model.Tema.Nombre
+    </div>
+
+    <h3>@Model.Nro. @Model.Pregunta1 </h3>
+
+
+    <div class="">
+        <form action="#">
+            <fieldset>
+                <input type="hidden" name="IdPregunta" value="@Model.IdPregunta" />
+
+                <div class="form-group">
+                    <textarea name="Respuesta" class="form-control" rows="7" disabled>@TempData["Respuesta"]</textarea>
+                </div>
+
+                <div class="text-center">
+                    <a href="~/Alumno/Preguntas" class="btn btn-primary align-items-center  col-sm-2">Volver</a>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+</div>

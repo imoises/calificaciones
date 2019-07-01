@@ -4,5 +4,35 @@
     Layout = "~/Views/Shared/AlumnosLayout.cshtml";
 }
 
-<h2>Responder</h2>
+@model calificaciones.Entidades.Pregunta
 
+<br />
+
+<div class="container">
+    <div>
+        @Model.Clase.Nombre - @Model.Tema.Nombre
+    </div>
+    
+    <h3>@Model.Nro. @Model.Pregunta1 </h3>
+
+
+    <div class="">
+        <form action="@Url.Action("VerificarRespuesta", "Alumno")" method="post">
+            <fieldset>
+                <input type="hidden" name="IdPregunta" value="@Model.IdPregunta" />
+
+                <div class="form-group">
+                    <label>Se puede responder hasta: @Model.FechaDisponibleHasta</label>
+                    <textarea name="Respuesta" class="form-control" rows="7">@TempData["Respuesta"]</textarea>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary align-items-center  col-sm-2" name="btnEnviarRespuesta">Enviar Respuesta</button>
+                    <a href="~/Alumno/Preguntas" class="btn btn-primary align-items-center  col-sm-2">Volver</a>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="text-danger"> @Html.Raw(TempData["Mensaje"])</div>
+
+</div>
