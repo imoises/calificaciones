@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/BaseLayout.cshtml";
+}
+
+@{ if (Session["Rol"] == null)
+    {
+        Response.Redirect("~/Home/Ingresar");
+    }
+    else if (Session["Rol"].ToString() == "Profesor")
+    {
+
+    }
+    else if (Session["Rol"].ToString() == "Alumno")
+    {
+        Response.Redirect("~/Alumno/Inicio");
+    }
+}
+
+
+@Html.Partial("pv_ProfesorNav");
+<div class="">
+    @RenderBody()
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
