@@ -25,9 +25,11 @@
         <b>
             @Session["Nombre"].ToString() (Alumno)
         </b>
-        <li class="nav-item nav-link active">
-            @Html.ActionLink("Salir", "Inicio", "Home")
-        </li>
+        <form action="/Home/LoginSessionOut">
+            <li class="nav-item nav-link active">
+                @Html.ActionLink("Salir", "Inicio", "Home")
+            </li>
+        </form>
     </div>
 </nav>
 

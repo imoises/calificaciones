@@ -98,6 +98,12 @@ namespace calificaciones.Controllers
             return RedirectToAction("Ingresar", "Home");
         }
 
+        public ActionResult LoginSessionOut()
+        {
+            Session.Clear();
+            return RedirectToAction("Ingresar", "Home");
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
