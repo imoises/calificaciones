@@ -29,7 +29,7 @@ namespace calificaciones.Controllers
         }
 
         [HttpGet]
-        public ActionResult CrearPregunta()
+        public ActionResult Crear()
         {
             //Tema_ClaseViewModel Tyc = new Tema_ClaseViewModel();
             ViewData["Nro"] = preguntasService.ObtenerNroUltimaPregunta() + 1;
@@ -39,7 +39,7 @@ namespace calificaciones.Controllers
         }
 
         [HttpPost]
-        public ActionResult CrearPregunta(Pregunta pregunta)
+        public ActionResult Crear(Pregunta pregunta)
         {
             pregunta.IdProfesorCreacion = Convert.ToInt32(Session["Id"]);
             if (preguntasService.PreguntaAlta(pregunta))

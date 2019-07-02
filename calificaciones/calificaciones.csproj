@@ -1871,7 +1871,7 @@
     <Content Include="Views\Alumno\Inicio.cshtml" />
     <Content Include="Views\Shared\pv_Footer.cshtml" />
     <Content Include="Views\Profesor\Preguntas.cshtml" />
-    <Content Include="Views\Profesor\CrearPregunta.cshtml" />
+    <Content Include="Views\Profesor\Crear.cshtml" />
     <Content Include="Views\Profesor\ModificarPregunta.cshtml" />
     <Content Include="Views\Profesor\Inicio.cshtml" />
     <Content Include="Views\Profesor\EvaluarRespuestas.cshtml" />
