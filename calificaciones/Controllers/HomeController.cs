@@ -22,41 +22,6 @@ namespace calificaciones.Controllers
             return View();
         }
 
-        /*[HttpPost]
-        public ActionResult Login(Usuario usuario)
-        {
-            Boolean esAlumno;
-            Boolean esProfesor;
-            Alumno alumno = null;
-            Profesor profesor = null;
-            if (!usuario.SoyProfesor)
-            {
-                if(!alumnoService.verificarAlumnoRegistrado(alumno))
-                {
-                    ViewBag.MessageFailed = "Email y/o Contraseña inválidos";
-                    return View();
-                }
-                else
-                {
-                    esAlumno = alumnoService.verificarAlumnoRegistrado(alumno);
-                    return RedirectToAction("AlumnoIndex", esAlumno);
-                }
-            }
-            else
-            {
-                if (profesorService.verificarProfesorRegistrado(profesor))
-                {
-                    ViewBag.MessageFailed = "Email y/o Contraseña inválidos";
-                    return View();
-                }
-                else
-                {
-                    esProfesor = profesorService.verificarProfesorRegistrado(profesor);
-                    return RedirectToAction("ProfesorIndex", esProfesor);
-                }
-            }
-        }*/
-
         public ActionResult Error()
         {
             return View();
