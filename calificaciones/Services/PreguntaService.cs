@@ -282,8 +282,6 @@ namespace calificaciones.Services
 
         public List<Pregunta> ObtenerPreguntasTipo(String tipo)
         {
-            
-
             return ObtenerTodasLasPreguntasPublicadas();
         }
 

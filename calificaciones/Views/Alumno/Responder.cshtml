@@ -4,26 +4,29 @@
     Layout = "~/Views/Shared/AlumnosLayout.cshtml";
 }
 
-@model calificaciones.Entidades.Pregunta
+@model calificaciones.Models.ResponderViewModel
+
 
 <br />
 
 <div class="container">
     <div>
-        @Model.Clase.Nombre - @Model.Tema.Nombre
+        @Model.Pregunta.Clase.Nombre - @Model.Pregunta.Tema.Nombre
     </div>
-    
-    <h3>@Model.Nro. @Model.Pregunta1 </h3>
+
+    <h3>@Model.Pregunta.Nro. @Model.Pregunta.Pregunta1 </h3>
 
 
     <div class="">
         <form action="@Url.Action("VerificarRespuesta", "Alumno")" method="post">
             <fieldset>
-                <input type="hidden" name="IdPregunta" value="@Model.IdPregunta" />
+                <input type="hidden" name="IdPregunta" value="@Model.Pregunta.IdPregunta" />
 
                 <div class="form-group">
-                    <label>Se puede responder hasta: @Model.FechaDisponibleHasta</label>
-                    <textarea name="Respuesta" class="form-control" rows="7">@TempData["Respuesta"]</textarea>
+                    <label>Se puede responder hasta: @Model.Pregunta.FechaDisponibleHasta</label>
+                    @Html.TextAreaFor(model => model.RespuestaTextModel.Respuesta)
+                    @Html.ValidationMessageFor(model => model.RespuestaTextModel.Respuesta, "", new { @class = "text-danger" })
+                    <div class="text-danger"> @Html.Raw(TempData["Mensaje"])</div>
                 </div>
 
                 <div class="text-center">
@@ -33,6 +36,5 @@
             </fieldset>
         </form>
     </div>
-    <div class="text-danger"> @Html.Raw(TempData["Mensaje"])</div>
 
 </div>
