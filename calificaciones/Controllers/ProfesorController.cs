@@ -57,8 +57,6 @@ namespace calificaciones.Controllers
         public ActionResult ModificarPregunta(int Nro, int Clase)
         {
             var pregunta = preguntasService.ObtenerUnaPreguntaNroClase(Nro, Clase);
-            //if (pregunta.RespuestaAlumnoes.Any())
-            //ViewData["AvisoModificacion"] = "Ya se recibieron respuestas a esta pregunta, evite hacer modificaciones que puedan repercutir en las respuestas recibidas.";
             TempData["IdPregunta"] = pregunta.IdPregunta;
             ViewData["Tema"] = temaClaseService.ObtenerTodosLosTemas();
             ViewData["Clase"] = temaClaseService.ObtenerTodasLasClase();
@@ -84,11 +82,10 @@ namespace calificaciones.Controllers
         }
 
         [HttpGet]
-        public ActionResult Respuestas()
+        public ActionResult Respuestas()//lo agregué de última
         {
             var respuestaAlumnos = respuestaService.ObtenerRespuestasTodas();
             return View(respuestaAlumnos);
-            //return ViewrespuestaAlumnos
         }
 
         [HttpGet]
@@ -97,8 +94,8 @@ namespace calificaciones.Controllers
             var respuestaAlumnos = preguntasService.ObtenerPreguntasConRespuestas(nro, clase);
             var idPregunta = respuestaAlumnos.IdPregunta;
             TempData["IdPregunta"] = idPregunta;
-            ViewData["SinEvaluar"] = preguntasService.ObtenerSinEvaluar(idPregunta);
-            ViewData["MejorPregunta"] = preguntasService.ObtenerSiMejorRespuesta(idPregunta);
+            ViewData["SinEvaluar"] = respuestaService.ObtenerRespuestasSinEvaluar(idPregunta);
+            ViewData["MejorPregunta"] = respuestaService.ObtenerSiMejorRespuesta(idPregunta);
             return View(respuestaAlumnos);
             //return ViewrespuestaAlumnos
         }

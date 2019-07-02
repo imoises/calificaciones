@@ -11,6 +11,7 @@ namespace calificaciones.Services
     {
         Contexto bdContexto = new Contexto();
         AlumnoService alumnoService = new AlumnoService();
+        RespuestaService respuestaService = new RespuestaService();
 
         //Alta
         public bool PreguntaAlta(Pregunta pregunta)
@@ -66,13 +67,6 @@ namespace calificaciones.Services
             return preguntaRespuesta;
         }
 
-        public List<RespuestaAlumno> ObtenerRespuestas(int nro, int clase)
-        {
-            var query = from r in bdContexto.RespuestaAlumnoes where r.Pregunta.Nro == nro && r.Pregunta.IdClase == clase select r;
-            var respuestas = query.ToList();
-            return respuestas;
-        }
-
         public int ObtenerNroUltimaPregunta()
         {
             var query = from p in bdContexto.Preguntas orderby p.Nro descending select p;
@@ -115,17 +109,6 @@ namespace calificaciones.Services
             
         }
 
-        /*        public void ModificarPreguntaId(Pregunta pregunta, int idPregunta)
-        {
-            var preguntaModif = this.ObtenerUnaPreguntaId(idPregunta);
-            preguntaModif.Nro = pregunta.Nro;
-            preguntaModif.IdTema = pregunta.IdTema;
-            preguntaModif.FechaDisponibleDesde = pregunta.FechaDisponibleDesde;
-            preguntaModif.FechaDisponibleHasta = pregunta.FechaDisponibleHasta;
-            preguntaModif.Pregunta1 = pregunta.Pregunta1;
-            bdContexto.SaveChanges();
-        }*/
-
         //Eliminar
         public bool EliminarPregunta(int Nro, int Clase)
         {
@@ -142,13 +125,7 @@ namespace calificaciones.Services
 
         //Otras
 
-        public RespuestaAlumno ObtenerUnaRespuestaId(int respuesta)
-        {
-            //var query = from p in bdContexto.Preguntas.Include("RespuestaAlumnoes").Include("Profesor") where p.Nro == Nro && p.IdClase == Clase select p;
-            var query = from r in bdContexto.RespuestaAlumnoes where r.IdRespuestaAlumno == respuesta select r;
-            var respuestaBuscada = query.FirstOrDefault();
-            return respuestaBuscada;
-        }
+        
 
         public ResultadoEvaluacion ObtenerResultadoEvaluacionId(int valor)
         {
@@ -156,39 +133,18 @@ namespace calificaciones.Services
             var resultadoEvaluacion = query.FirstOrDefault();
             return resultadoEvaluacion;
         }
-
-        public List<RespuestaAlumno> ObtenerRespuestasCorrectas(int idPregunta)
-        {
-            var query = from r in bdContexto.RespuestaAlumnoes where r.IdResultadoEvaluacion == 1 && r.IdPregunta == idPregunta select r;
-            var respuestasCorrecta = query.ToList();
-            return respuestasCorrecta;
-        }
-
-        public int ObtenerSinEvaluar(int idPregunta)
-        {
-            var query = from r in bdContexto.RespuestaAlumnoes where r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == null   select r;
-            var respuestasSinEvaluar = query.Count();
-            return respuestasSinEvaluar;
-        }
-
-        public bool ObtenerSiMejorRespuesta(int idPregunta)
-        {
-            var query = from r in bdContexto.RespuestaAlumnoes where r.IdPregunta == idPregunta && r.MejorRespuesta == true select r;
-            var mejorRespuesta = query.Any();
-            return mejorRespuesta;
-        }
-
+        /*
         public int cantidadRespuestaCorrectasAlumno(int idAlumno)
         {
             var query = from r in bdContexto.RespuestaAlumnoes where r.IdAlumno == idAlumno && r.IdResultadoEvaluacion == 1 select r;
             var respuestasCorrectas = query.Count();
             return respuestasCorrectas;
         }
-
+        */
         public bool valorarMejorRespuesta(int respuesta)
         {
             int puntajeMax = Convert.ToInt32(WebConfigurationManager.AppSettings["PuntajeMaximoPorRespuestaCorrecta"]);
-            var respuestaAlumno = this.ObtenerUnaRespuestaId(respuesta);
+            var respuestaAlumno = respuestaService.ObtenerUnaRespuestaId(respuesta);
             if(respuestaAlumno != null)
             {
                 var alumno = respuestaAlumno.Alumno;
@@ -209,7 +165,7 @@ namespace calificaciones.Services
         //QUIZÁ DEBERÍA IR EN OTRO SERVICE
         public bool RespuestaValorar(int respuesta, int valor, int profesor)
         {
-            var respuestaAlumno = this.ObtenerUnaRespuestaId(respuesta);
+            var respuestaAlumno = respuestaService.ObtenerUnaRespuestaId(respuesta);
             var resultadoEvaluacion = this.ObtenerResultadoEvaluacionId(valor);
             var alumno = respuestaAlumno.Alumno;
             //si no devuelve respuesta ni evaluacion null, entonces se procede a actualizar la tabla RespuestaAlumno
@@ -218,7 +174,7 @@ namespace calificaciones.Services
                 //se inicializan las variables a utilizar
                 int puntajeMax = Convert.ToInt32(WebConfigurationManager.AppSettings["PuntajeMaximoPorRespuestaCorrecta"]);
                 int cupo = Convert.ToInt32(WebConfigurationManager.AppSettings["CupoMaximoRespuestasCorrectas"]);
-                var cantidadRespuestasCorrecta = this.ObtenerRespuestasCorrectas(respuestaAlumno.IdPregunta).Count();
+                var cantidadRespuestasCorrecta = respuestaService.ObtenerRespuestasCorrectas(respuestaAlumno.IdPregunta).Count();
                 int puntajeObtenido = 0;
 
                 //cálculo de puntaje por respuesta
@@ -268,21 +224,6 @@ namespace calificaciones.Services
                 return false;
             }
         }
-
-        public List<Pregunta> ObtenerPreguntasTipo(String tipo)
-        {
-            return ObtenerTodasLasPreguntasPublicadas();
-        }
-
-        public List<Pregunta> ObtenerTodasLasPreguntasPublicadas()
-        {
-            List<Pregunta> listPreguntasPublicadas = new List<Pregunta>();
-
-            listPreguntasPublicadas = bdContexto.Preguntas.Include("Clase").Include("Tema").Where(p => p.FechaDisponibleDesde != null).OrderByDescending(p=>p.Nro).ToList();
-
-            return listPreguntasPublicadas;
-        }
-
     }
 }
 

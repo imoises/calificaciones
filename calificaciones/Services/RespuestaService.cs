@@ -69,5 +69,34 @@ namespace calificaciones.Services
             var respuestas = query.ToList();
             return respuestas;
         }
+
+        public RespuestaAlumno ObtenerUnaRespuestaId(int respuesta)
+        {
+            //var query = from p in bdContexto.Preguntas.Include("RespuestaAlumnoes").Include("Profesor") where p.Nro == Nro && p.IdClase == Clase select p;
+            var query = from r in bdContexto.RespuestaAlumnoes where r.IdRespuestaAlumno == respuesta select r;
+            var respuestaBuscada = query.FirstOrDefault();
+            return respuestaBuscada;
+        }
+
+        public List<RespuestaAlumno> ObtenerRespuestasCorrectas(int idPregunta)
+        {
+            var query = from r in bdContexto.RespuestaAlumnoes where r.IdResultadoEvaluacion == 1 && r.IdPregunta == idPregunta select r;
+            var respuestasCorrecta = query.ToList();
+            return respuestasCorrecta;
+        }
+
+        public int ObtenerRespuestasSinEvaluar(int idPregunta)
+        {
+            var query = from r in bdContexto.RespuestaAlumnoes where r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == null select r;
+            var respuestasSinEvaluar = query.Count();
+            return respuestasSinEvaluar;
+        }
+
+        public bool ObtenerSiMejorRespuesta(int idPregunta)
+        {
+            var query = from r in bdContexto.RespuestaAlumnoes where r.IdPregunta == idPregunta && r.MejorRespuesta == true select r;
+            var mejorRespuesta = query.Any();
+            return mejorRespuesta;
+        }
     }
 }
