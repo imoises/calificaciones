@@ -184,6 +184,7 @@
     </Compile>
     <Compile Include="Services\AlumnoService.cs" />
     <Compile Include="Services\PreguntaService.cs" />
+    <Compile Include="Services\PreguntasAlumnoService.cs" />
     <Compile Include="Services\ProfesorService.cs" />
     <Compile Include="Services\RespuestaService.cs" />
     <Compile Include="Services\SessionService.cs" />

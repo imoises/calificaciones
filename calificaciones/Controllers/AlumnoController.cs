@@ -18,6 +18,8 @@ namespace calificaciones.Controllers
 
         RespuestaService respuestaServide = new RespuestaService();
 
+        PreguntasAlumnoService preguntaAlumnoService = new PreguntasAlumnoService();
+
         // GET: Alumno
         public ActionResult Inicio()
         {
@@ -39,7 +41,7 @@ namespace calificaciones.Controllers
         public ActionResult Preguntas(String Id)
         {
             // ObtenerPreguntasTipo (Todas, Sin Corregir, Correctas,Regular ó Mal)
-            List<Pregunta> preguntas = preguntaService.ObtenerPreguntasTipo(Id);
+            List<Pregunta> preguntas = preguntaAlumnoService.ObtenerPreguntasTipo(Id, Convert.ToInt32(Session["Id"]));
 
             return View(preguntas);
         }
