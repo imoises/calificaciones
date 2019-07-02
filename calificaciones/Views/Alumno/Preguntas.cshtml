@@ -3,7 +3,6 @@
     Layout = "~/Views/Shared/AlumnosLayout.cshtml";
 }
 
-@using calificaciones.Entidades;
 @model List<calificaciones.Entidades.Pregunta>
 
 
@@ -12,19 +11,20 @@
     <div class="col-lg-5">
         <p class="text-secondary">
             Recuerda que cuando antes respontas correctamente, mas chances tienes de sumar un mejor puntaje,
-            y si tu respuesta es la mas completa, recibirás un puntaje bonus!!!!!!!!!!!!!
+            y si tu respuesta es la mas completa, recibirás un puntaje bonus!!!
         </p>
     </div>
 </div>
 
 <div class="container">
-    <nav>
-        <a href="/alumno/preguntas/Todas">Todas</a> |
-        <a href="/alumno/preguntas/SinCorregir">Sin Corregir</a> |
-        <a href="/alumno/preguntas/Correcta">Correctas</a> |
-        <a href="/alumno/preguntas/Regular">Regular</a> |
-        <a href="/alumno/preguntas/Mal">Mal</a>
-    </nav>
+    <br />
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Alumno/Preguntas/Todas">Todas</a></li>
+        <li class="breadcrumb-item"><a href="/Alumno/Preguntas/SinCorregir">Sin Corregir</a></li>
+        <li class="breadcrumb-item"><a href="/Alumno/Preguntas/Correctas">Correcta</a></li>
+        <li class="breadcrumb-item"><a href="/Alumno/Preguntas/Regular">Regular</a></li>
+        <li class="breadcrumb-item"><a href="/Alumno/Preguntas/Mal">Mal</a></li>
+    </ol>
 </div>
 
 <br />
@@ -45,31 +45,57 @@
         </div>
 
         <div class="custom-control-inline">
-            <h3>
+            <h4>
                 @pregunta.Nro. @pregunta.Pregunta1
-            </h3>
+            </h4>
 
             &nbsp; &nbsp;
 
             <p data-toggle="collapse">
                 @{
                     int idAlumno = Convert.ToInt32(Session["Id"]);
-                    var respuestaAlumno = pregunta.RespuestaAlumnoes.Where(r => r.IdAlumno == idAlumno).ToList();
+                    var respuestaAlumno = pregunta.RespuestaAlumnoes.Where(r => r.IdAlumno == idAlumno).FirstOrDefault();
 
-                    if (respuestaAlumno.Count > 0)
+                    if (respuestaAlumno != null)
                     {
                         <form>
-                            <button type="submit" class="btn text-success" formaction="VerRespuesta" value="@respuestaAlumno.First().IdRespuestaAlumno" name="IdRespuesta" formmethod="post">Ver</button>
+                            <button type="submit" class="btn text-success" formaction="~/Alumno/VerRespuesta" value="@respuestaAlumno.IdRespuestaAlumno" name="IdRespuesta" formmethod="post">Ver</button>
                         </form>
+                        
+                        if (respuestaAlumno.Puntos == null)
+                        {
+                            <b>Correccion Pendiente</b>
+                        }
+                        else
+                        {   
+                            switch (respuestaAlumno.ResultadoEvaluacion.IdResultadoEvaluacion)
+                            {
+                                //@Html.Raw renderiza html
+                                case 1:
+                                    @Html.Raw("<b class = 'text-success'>");
+                                    break;
+                                case 2:
+                                    @Html.Raw("<b class = 'text-warning'>");
+                                    break;
+                                default:
+                                    @Html.Raw("<b class = 'text-danger'>");
+                                    break;
+                            }
+                            @Html.Raw("&nbsp &nbsp")
+                            @respuestaAlumno.ResultadoEvaluacion.Resultado @Html.Raw(" | ")
+                            @respuestaAlumno.Orden @Html.Raw("° | ")
+                            @respuestaAlumno.Puntos 
+                            @Html.Raw("</b>");
+                        }
                     }
                     else
                     {
                         <form>
-                            <button type="submit" class="btn text-info" formaction="Responder" value="@pregunta.IdPregunta" name="IdPregunta" formmethod="post">Responder</button>
+                            <button type="submit" class="btn text-info" formaction="~/Alumno/Responder" value="@pregunta.IdPregunta" name="IdPregunta" formmethod="post">Responder</button>
                         </form>
                     }
                 }
-            </p>
-        </div>
+                </p>
+            </div>
      }
 </div>

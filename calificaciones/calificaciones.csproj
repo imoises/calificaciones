@@ -164,6 +164,8 @@
     <Compile Include="Models\InicioAlumnoViewModel.cs" />
     <Compile Include="Models\PosAlumnoPuntos.cs" />
     <Compile Include="Models\PreguntasUltimaClase.cs" />
+    <Compile Include="Models\ResponderViewModel.cs" />
+    <Compile Include="Models\RespuestaTextModel.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\Tema_ClaseViewModel.cs" />
     <Compile Include="Entidades\Pregunta.cs">
@@ -182,6 +184,7 @@
     </Compile>
     <Compile Include="Services\AlumnoService.cs" />
     <Compile Include="Services\PreguntaService.cs" />
+    <Compile Include="Services\PreguntasAlumnoService.cs" />
     <Compile Include="Services\ProfesorService.cs" />
     <Compile Include="Services\RespuestaService.cs" />
     <Compile Include="Services\SessionService.cs" />
@@ -1852,6 +1855,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Rich text wysiwyg\tiny.js" />
+    <Content Include="Scripts\Rich text wysiwyg\tinymce.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1883,9 +1888,9 @@
     <Content Include="Views\Alumno\AcercaDe.cshtml" />
     <Content Include="Views\Alumno\VerRespuesta.cshtml" />
     <Content Include="Views\Alumno\Responder.cshtml" />
-    <Content Include="Views\Shared\AlumnoLayout.cshtml" />
     <Content Include="Views\Shared\ProfesorLayout.cshtml" />
     <Content Include="Views\Profesor\Respuestas.cshtml" />
+    <Content Include="Views\Shared\AlumnosLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
