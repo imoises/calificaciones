@@ -46,13 +46,6 @@ namespace calificaciones.Services
             return preguntaBuscada;
         }
 
-        public Pregunta ObtenerUnaPreguntaClase(Pregunta pregunta)
-        {
-            var query = from p in bdContexto.Preguntas.Include("RespuestaAlumnoes") where p.IdPregunta == pregunta.IdPregunta select p;
-            var preguntaBuscada = query.FirstOrDefault();
-            return preguntaBuscada;
-        }
-
         public Pregunta ObtenerUnaPreguntaId(int idPregunta)
         {
             var query = from p in bdContexto.Preguntas.Include("RespuestaAlumnoes") where p.IdPregunta == idPregunta select p;
@@ -133,14 +126,7 @@ namespace calificaciones.Services
             var resultadoEvaluacion = query.FirstOrDefault();
             return resultadoEvaluacion;
         }
-        /*
-        public int cantidadRespuestaCorrectasAlumno(int idAlumno)
-        {
-            var query = from r in bdContexto.RespuestaAlumnoes where r.IdAlumno == idAlumno && r.IdResultadoEvaluacion == 1 select r;
-            var respuestasCorrectas = query.Count();
-            return respuestasCorrectas;
-        }
-        */
+
         public bool valorarMejorRespuesta(int respuesta)
         {
             int puntajeMax = Convert.ToInt32(WebConfigurationManager.AppSettings["PuntajeMaximoPorRespuestaCorrecta"]);
@@ -148,7 +134,6 @@ namespace calificaciones.Services
             if(respuestaAlumno != null)
             {
                 var alumno = respuestaAlumno.Alumno;
-                //var puntos = Convert.ToInt32(respuestaAlumno.Puntos);
                 respuestaAlumno.MejorRespuesta = true;
                 alumno.CantidadMejorRespuesta += 1;
                 alumno.PuntosTotales += puntajeMax / 2;
