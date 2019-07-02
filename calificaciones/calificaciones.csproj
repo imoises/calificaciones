@@ -1887,8 +1887,8 @@
     <Content Include="Views\Alumno\AcercaDe.cshtml" />
     <Content Include="Views\Alumno\VerRespuesta.cshtml" />
     <Content Include="Views\Alumno\Responder.cshtml" />
-    <Content Include="Views\Shared\AlumnoLayout.cshtml" />
     <Content Include="Views\Shared\ProfesorLayout.cshtml" />
+    <Content Include="Views\Shared\AlumnosLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
