@@ -33,8 +33,8 @@ namespace calificaciones.Controllers
         {
             //Tema_ClaseViewModel Tyc = new Tema_ClaseViewModel();
             ViewData["Nro"] = preguntasService.ObtenerNroUltimaPregunta() + 1;
-            ViewData["Tema"] = preguntasService.ObtenerTemaTodos();
-            ViewData["Clase"] = preguntasService.ObtenerClasesTodas();
+            ViewData["Tema"] = temaClaseService.ObtenerTodosLosTemas();
+            ViewData["Clase"] = temaClaseService.ObtenerTodasLasClase();
             return View();
         }
 
