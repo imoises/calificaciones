@@ -196,6 +196,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css404\style.css" />
+    <Content Include="Content\images404\bg.png" />
+    <Content Include="Content\images404\bg1.png" />
+    <Content Include="Content\images404\error-img.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome\css\all.css" />
     <Content Include="fonts\fontawesome\css\all.min.css" />
@@ -1844,6 +1848,7 @@
     <Content Include="fonts\fontawesome\webfonts\fa-solid-900.ttf" />
     <Content Include="fonts\fontawesome\webfonts\fa-solid-900.woff" />
     <Content Include="fonts\fontawesome\webfonts\fa-solid-900.woff2" />
+    <Content Include="Content\images404\Thumbs.db" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1891,6 +1896,7 @@
     <Content Include="Views\Shared\ProfesorLayout.cshtml" />
     <Content Include="Views\Profesor\Respuestas.cshtml" />
     <Content Include="Views\Shared\AlumnosLayout.cshtml" />
+    <Content Include="Views\Alumno\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
