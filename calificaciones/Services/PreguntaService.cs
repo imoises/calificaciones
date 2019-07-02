@@ -69,7 +69,6 @@ namespace calificaciones.Services
 
 
         //Modificar
-
         public void ModificarPregunta(Pregunta pregunta)
         {
             var preguntaModif = this.ObtenerUnaPreguntaNroClase(pregunta.Nro, pregunta.IdClase);
@@ -117,9 +116,6 @@ namespace calificaciones.Services
         }
 
         //Otras
-
-        
-
         public ResultadoEvaluacion ObtenerResultadoEvaluacionId(int valor)
         {
             var query = from e in bdContexto.ResultadoEvaluacions where e.IdResultadoEvaluacion == valor select e;
@@ -145,7 +141,6 @@ namespace calificaciones.Services
                 return false;
             }
         }
-
 
         //QUIZÁ DEBERÍA IR EN OTRO SERVICE
         public bool RespuestaValorar(int respuesta, int valor, int profesor)
