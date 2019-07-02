@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Respuestas";
+    Layout = "~/Views/Shared/ProfesorLayout.cshtml";
+}
+
+@model  List<calificaciones.Entidades.RespuestaAlumno>
+<div class="">
+    <div>
+        <h1 class="m-4"><b>Respuestas</b></h1>
+    </div>
+
+    @Html.Raw(TempData["Mensaje"])
+    <br />
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Todas</a></li>
+        <li class="breadcrumb-item"><a href="#">Sin Corregir</a></li>
+        <li class="breadcrumb-item"><a href="#">Regular</a></li>
+        <li class="breadcrumb-item"><a href="#">Mal</a></li>
+    </ol>
+</div>
+
+<div class="container-fluid">
+    <table class="table table-hover table-bordered table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Alumno</th>
+                <th scope="col">Fecha</th>
+                <th scope="col"  >Respuesta</th>
+                <th scope="col">Pregunta</th>
+                <th scope="col">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var respuesta in Model)
+                {
+            <tr class="table-primary">
+                <td>@respuesta.Alumno.Nombre @respuesta.Alumno.Apellido</td>
+                <td>@respuesta.FechaHoraRespuesta</td>
+                <td>@respuesta.Respuesta</td>
+                <td>@respuesta.Pregunta.Pregunta1</td>
+
+
+                <td>@Html.ActionLink("Evaluar respuestas de pregunta", "EvaluarRespuestas", "Profesor", new { Nro = respuesta.Pregunta.Nro, Clase = respuesta.Pregunta.IdClase }, new { @class = "btn btn-sm btn-outline-info" })</td>
+
+            </tr>
+            }}
+        </tbody>
+    </table>
+
+  
+</div>
+<div class="container">
+    <div class="float-right">
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <a class="page-link" href="#">&laquo;</a>
+            </li>
+            <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">4</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">5</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+    <br />
+
+</div>
+
+
+

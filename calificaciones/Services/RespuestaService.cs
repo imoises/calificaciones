@@ -62,5 +62,12 @@ namespace calificaciones.Services
             cli.Host = "smtp.gmail.com";
             cli.Send(msj);
         }
+
+        public List<RespuestaAlumno> ObtenerRespuestasTodas()
+        {
+            var query = from r in bdContexto.RespuestaAlumnoes  select r;
+            var respuestas = query.ToList();
+            return respuestas;
+        }
     }
 }

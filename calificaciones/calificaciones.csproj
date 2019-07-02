@@ -1885,6 +1885,7 @@
     <Content Include="Views\Alumno\Responder.cshtml" />
     <Content Include="Views\Shared\AlumnoLayout.cshtml" />
     <Content Include="Views\Shared\ProfesorLayout.cshtml" />
+    <Content Include="Views\Profesor\Respuestas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

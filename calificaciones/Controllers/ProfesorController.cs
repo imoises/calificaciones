@@ -84,6 +84,14 @@ namespace calificaciones.Controllers
         }
 
         [HttpGet]
+        public ActionResult Respuestas()
+        {
+            var respuestaAlumnos = respuestaService.ObtenerRespuestasTodas();
+            return View(respuestaAlumnos);
+            //return ViewrespuestaAlumnos
+        }
+
+        [HttpGet]
         public ActionResult EvaluarRespuestas(int nro, int clase)
         {
             var respuestaAlumnos = preguntasService.ObtenerPreguntasConRespuestas(nro, clase);

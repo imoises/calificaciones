@@ -58,7 +58,7 @@ namespace calificaciones.Services
             var preguntaBuscada = query.FirstOrDefault();
             return preguntaBuscada;
         }
-        //no lo uso
+
         public Pregunta ObtenerPreguntasConRespuestas(int nro, int clase)
         {
             var query = from p in bdContexto.Preguntas where p.Nro == nro && p.IdClase == clase select p;

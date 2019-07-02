@@ -43,7 +43,7 @@ namespace calificaciones.Controllers
 
             return View(preguntas);
         }
-
+        [ActionName("Acerca-de")]
         public ActionResult AcercaDe()
         {
             return View();
