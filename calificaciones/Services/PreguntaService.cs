@@ -269,17 +269,6 @@ namespace calificaciones.Services
             }
         }
 
-        public List<Tema> ObtenerTemaTodos()
-        {
-            var temaLista = bdContexto.Temas.ToList();
-            return temaLista;
-        }
-        public List<Clase> ObtenerClasesTodas()
-        {
-            var claseLista = bdContexto.Clases.ToList();
-            return claseLista;
-        }
-
         public List<Pregunta> ObtenerPreguntasTipo(String tipo)
         {
             return ObtenerTodasLasPreguntasPublicadas();

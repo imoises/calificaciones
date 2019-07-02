@@ -60,8 +60,8 @@ namespace calificaciones.Controllers
             //if (pregunta.RespuestaAlumnoes.Any())
             //ViewData["AvisoModificacion"] = "Ya se recibieron respuestas a esta pregunta, evite hacer modificaciones que puedan repercutir en las respuestas recibidas.";
             TempData["IdPregunta"] = pregunta.IdPregunta;
-            ViewData["Tema"] = preguntasService.ObtenerTemaTodos();
-            ViewData["Clase"] = preguntasService.ObtenerClasesTodas();
+            ViewData["Tema"] = temaClaseService.ObtenerTodosLosTemas();
+            ViewData["Clase"] = temaClaseService.ObtenerTodasLasClase();
             return View(pregunta);
         }
 
