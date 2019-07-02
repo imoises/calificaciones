@@ -92,6 +92,7 @@ namespace calificaciones.Controllers
             if (pregunta.FechaDisponibleHasta.Value >= DateTime.Now && respuesta.RespuestaTextModel.Respuesta != null)
             {
                 respuestaServide.AgregarRespuesta(IdPregunta, respuesta.RespuestaTextModel.Respuesta, Convert.ToInt32(Session["Id"]));
+                respuestaServide.EnviarEmailRespuestaDelAlumno(pregunta,respuesta.RespuestaTextModel.Respuesta, Convert.ToInt32(Session["Id"]));
                 return Redirect("~/Alumno/Preguntas");
             }
             else
