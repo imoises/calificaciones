@@ -164,6 +164,8 @@
     <Compile Include="Models\InicioAlumnoViewModel.cs" />
     <Compile Include="Models\PosAlumnoPuntos.cs" />
     <Compile Include="Models\PreguntasUltimaClase.cs" />
+    <Compile Include="Models\ResponderViewModel.cs" />
+    <Compile Include="Models\RespuestaTextModel.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\Tema_ClaseViewModel.cs" />
     <Compile Include="Entidades\Pregunta.cs">
@@ -1852,6 +1854,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Rich text wysiwyg\tiny.js" />
+    <Content Include="Scripts\Rich text wysiwyg\tinymce.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

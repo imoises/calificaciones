@@ -70,9 +70,11 @@ namespace calificaciones.Controllers
         [HttpPost]
         public ActionResult Responder(int IdPregunta)
         {
-            Pregunta pregunta = preguntaService.ObtenerUnaPreguntaId(IdPregunta);
+            ResponderViewModel responderViewModel = new ResponderViewModel();
 
-            return View(pregunta);
+            responderViewModel.Pregunta = preguntaService.ObtenerUnaPreguntaId(IdPregunta);
+
+            return View(responderViewModel);
         }
 
         public ActionResult Responder()
@@ -81,21 +83,23 @@ namespace calificaciones.Controllers
         }
 
         [HttpPost]
-        public ActionResult VerificarRespuesta(int IdPregunta, String respuesta)
+        public ActionResult VerificarRespuesta(int IdPregunta, ResponderViewModel respuesta)
         {
             Pregunta pregunta = preguntaService.ObtenerUnaPreguntaId(IdPregunta);
 
-            if (pregunta.FechaDisponibleHasta.Value >= DateTime.Now)
+            if (pregunta.FechaDisponibleHasta.Value >= DateTime.Now && respuesta.RespuestaTextModel.Respuesta != null)
             {
-                respuestaServide.AgregarRespuesta(IdPregunta, respuesta, Convert.ToInt32(Session["Id"]));
+                respuestaServide.AgregarRespuesta(IdPregunta, respuesta.RespuestaTextModel.Respuesta, Convert.ToInt32(Session["Id"]));
                 return Redirect("~/Alumno/Preguntas");
             }
             else
             {
+                ResponderViewModel responderViewModel = new ResponderViewModel();
+                responderViewModel.Pregunta = pregunta;
                 TempData["Respuesta"] = respuesta;
                 TempData["Mensaje"] = "Ya paso la fecha de entrega";
 
-                return View("Responder", pregunta);
+                return View("Responder", responderViewModel);
             }
         }
 
