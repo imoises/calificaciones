@@ -162,6 +162,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EvaluarRespuestasViewModel.cs" />
     <Compile Include="Models\InicioAlumnoViewModel.cs" />
     <Compile Include="Models\Paginador.cs" />
     <Compile Include="Models\PosAlumnoPuntos.cs" />
