@@ -39,7 +39,7 @@
                     <tr class="table-primary">
                         <td>@respuesta.Alumno.Nombre @respuesta.Alumno.Apellido</td>
                         <td>@respuesta.FechaHoraRespuesta</td>
-                        <td>@respuesta.Respuesta</td>
+                        <td>@Html.Raw(@respuesta.Respuesta.ToString())</td>
                         <td>@respuesta.Pregunta.Pregunta1</td>
 
 
