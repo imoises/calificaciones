@@ -98,5 +98,48 @@ namespace calificaciones.Services
             var mejorRespuesta = query.Any();
             return mejorRespuesta;
         }
+
+        //public List<RespuestaAlumno> ObtenerRespuestasAlumnoTipo(int idPregunta, String tipo) // tipo: Todas, SinCorregir, Correcta,Regular, Mal
+        //{
+        //    switch (tipo)
+        //    {
+        //        case "SinCorregir":
+        //            return ObtenerRespuestasAlumnoSinCorregir(idPregunta);
+        //        case "Correctas":
+        //            return ObtenerRespustasAlumnoCorrecta(idPregunta);
+        //        case "Regular":
+        //            return ObtenerRespustasAlumnoRegular(idPregunta);
+        //        case "Mal":
+        //            return ObtenerRespustasAlumnoMal(idPregunta);
+        //        default:
+        //            return ObtenerTodasLasRespuestaPublicadas();
+        //    }
+
+        //}
+
+        //public List<RespuestaAlumno> ObtenerRespustasAlumnoMal(int idPregunta)
+        //{
+        //    List<RespuestaAlumno> respuestasAlumno = bdContexto.RespuestaAlumnoes.Where(r => r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == 3).ToList();
+            
+        //    return respuestasAlumno;
+        //}
+
+        public List<RespuestaAlumno> ObtenerRespuestasAlumnoTipo(int idPregunta, String tipo) // tipo: Todas, SinCorregir, Correcta,Regular, Mal
+        {
+            switch (tipo)
+            {
+                case "SinCorregir":
+                    return bdContexto.RespuestaAlumnoes.Where(r => r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == null).ToList();
+                case "Correcta":
+                    return bdContexto.RespuestaAlumnoes.Where(r => r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == 1).ToList();
+                case "Regular":
+                    return bdContexto.RespuestaAlumnoes.Where(r => r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == 2).ToList();
+                case "Mal":
+                    return bdContexto.RespuestaAlumnoes.Where(r => r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == 3).ToList();
+                default:
+                    return bdContexto.RespuestaAlumnoes.Where(r => r.IdPregunta == idPregunta).ToList();
+            }
+
+        }
     }
 }

@@ -162,6 +162,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EvaluarRespuestasViewModel.cs" />
     <Compile Include="Models\InicioAlumnoViewModel.cs" />
     <Compile Include="Models\Paginador.cs" />
     <Compile Include="Models\PosAlumnoPuntos.cs" />
@@ -1892,7 +1893,7 @@
     <Content Include="Views\Shared\pv_ProfesorNav.cshtml" />
     <Content Include="Views\Shared\pv_AlumnoNav.cshtml" />
     <Content Include="Views\Alumno\Preguntas.cshtml" />
-    <Content Include="Views\Alumno\AcercaDe.cshtml" />
+    <Content Include="Views\Shared\AcercaDe.cshtml" />
     <Content Include="Views\Alumno\VerRespuesta.cshtml" />
     <Content Include="Views\Alumno\Responder.cshtml" />
     <Content Include="Views\Shared\ProfesorLayout.cshtml" />
