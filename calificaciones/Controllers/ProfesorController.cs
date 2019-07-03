@@ -32,7 +32,6 @@ namespace calificaciones.Controllers
         [HttpGet]
         public ActionResult Crear()
         {
-            //Tema_ClaseViewModel Tyc = new Tema_ClaseViewModel();
             ViewData["Nro"] = preguntasService.ObtenerNroUltimaPregunta() + 1;
             ViewData["Tema"] = temaClaseService.ObtenerTodosLosTemas();
             ViewData["Clase"] = temaClaseService.ObtenerTodasLasClase();
@@ -42,15 +41,19 @@ namespace calificaciones.Controllers
         [HttpPost]
         public ActionResult Crear(Pregunta pregunta)
         {
-            pregunta.IdProfesorCreacion = Convert.ToInt32(Session["Id"]);
-            if (preguntasService.PreguntaAlta(pregunta))
+            if (ModelState.IsValid)
             {
-                TempData["Mensaje"] = "<p class='mb-0 text-success'> La pregunta se creó correctamente </p>";
+                pregunta.IdProfesorCreacion = Convert.ToInt32(Session["Id"]);
+                if (preguntasService.PreguntaAlta(pregunta))
+                {
+                    TempData["Mensaje"] = "<p class='mb-0 text-success'> La pregunta se creó correctamente </p>";
+                }
+                else
+                {
+                    TempData["Mensaje"] = "<p class='mb-0 text-danger'> Ya existe una pregunta con el Nro: " + pregunta.Nro + " y Clase: " + pregunta.IdClase + " </p>";
+                }
             }
-            else
-            {
-                TempData["Mensaje"] = "<p class='mb-0 text-danger'> Ya existe una pregunta con el Nro: "+pregunta.Nro+" y Clase: "+pregunta.IdClase+" </p>";
-            }
+            
             return RedirectToAction("Crear");
         }
 
@@ -58,9 +61,12 @@ namespace calificaciones.Controllers
         public ActionResult ModificarPregunta(int Nro, int Clase)
         {
             var pregunta = preguntasService.ObtenerUnaPreguntaNroClase(Nro, Clase);
-            TempData["IdPregunta"] = pregunta.IdPregunta;
-            ViewData["Tema"] = temaClaseService.ObtenerTodosLosTemas();
-            ViewData["Clase"] = temaClaseService.ObtenerTodasLasClase();
+            if (ModelState.IsValid)
+            {
+                TempData["IdPregunta"] = pregunta.IdPregunta;
+                ViewData["Tema"] = temaClaseService.ObtenerTodosLosTemas();
+                ViewData["Clase"] = temaClaseService.ObtenerTodasLasClase();
+            }
             return View(pregunta);
         }
 
