@@ -171,5 +171,10 @@ namespace calificaciones.Controllers
             return RedirectToAction("Preguntas");
         }
 
+        public ActionResult AcercaDe()
+        {
+            return View();
+        }
+
     }
 }
