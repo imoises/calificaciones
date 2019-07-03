@@ -25,18 +25,16 @@ namespace calificaciones.Controllers
 
         public ActionResult Preguntas(int pagina = 1)
         {
-            
             Paginador<Pregunta> paginador = preguntasService.PaginadorPreguntas(pagina);
-            preguntasService.ObtenerTodasLasPreguntas();
             return View(paginador);
         }
 
-       /* [HttpPost]
+        [HttpPost]
         public ActionResult Preguntas()
         {
             var ListaPreguntas = preguntasService.ObtenerTodasLasPreguntas();
             return View(ListaPreguntas);
-        }*/
+        }
 
         [HttpGet]
         public ActionResult Crear()
@@ -60,7 +58,7 @@ namespace calificaciones.Controllers
             {
                 TempData["Mensaje"] = "<p class='mb-0 text-danger'> Ya existe una pregunta con el Nro: "+pregunta.Nro+" y Clase: "+pregunta.IdClase+" </p>";
             }
-            return RedirectToAction("CrearPregunta");
+            return RedirectToAction("Crear");
         }
 
         [HttpGet]
