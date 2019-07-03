@@ -23,13 +23,6 @@ namespace calificaciones.Controllers
             return View();
         }
 
-        public ActionResult Preguntas(int pagina = 1)
-        {
-            Paginador<Pregunta> paginador = preguntasService.PaginadorPreguntas(pagina);
-            return View(paginador);
-        }
-
-        [HttpPost]
         public ActionResult Preguntas()
         {
             var ListaPreguntas = preguntasService.ObtenerTodasLasPreguntas();
