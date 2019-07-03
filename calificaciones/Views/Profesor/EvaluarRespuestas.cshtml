@@ -75,11 +75,11 @@
                                 {
                                     if (!flagPendiente)
                                     {
-                                        <div>
-                                            @Html.ActionLink("Correcta ", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 1 }, new { @class = "btn btn-sm btn-outline-success col-lg-4" })
-                                            @Html.ActionLink("Regular", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 2 }, new { @class = "btn btn-sm btn-outline-warning col-lg-3" })
-                                            @Html.ActionLink("Mal", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 3 }, new { @class = "btn btn-sm btn-outline-danger col-lg-3" })
-                                        </div>
+                                <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+                                    @Html.ActionLink("Correcta ", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 1 }, new { @class = "btn btn-sm btn-outline-success" })
+                                    @Html.ActionLink("Regular", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 2 }, new { @class = "btn btn-sm btn-outline-warning" })
+                                    @Html.ActionLink(" Mal ", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 3 }, new { @class = "btn btn-sm btn-outline-danger" })
+                                </div>
                                         flagPendiente = true;
                                     }
                                     else

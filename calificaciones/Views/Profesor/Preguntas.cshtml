@@ -47,11 +47,13 @@
                         <td>@pregunta.FechaDisponibleDesde</td>
                         <td>@pregunta.FechaDisponibleHasta</td>                         
                         <td>
-                            <form>
-                                <button type="submit" class="btn btn-sm btn-outline-info mb-0" formaction="~/Profesor/EvaluarRespuestas" value="@pregunta.IdPregunta" name="idPregunta" formmethod="post">Evaluar</button>
-                            </form>
-
-                            @Html.ActionLink("Eliminar", "EliminarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.IdClase }, new { @class = "btn btn-sm btn-outline-danger" })</td>
+                            <div class="btn-group btn-group-toggle">
+                                <form>
+                                    <button type="submit" class="btn btn-sm btn-outline-info" formaction="~/Profesor/EvaluarRespuestas" value="@pregunta.IdPregunta" name="idPregunta" formmethod="post">Evaluar</button>
+                                </form>
+                                @Html.ActionLink("Eliminar", "EliminarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.IdClase }, new { @class = "btn btn-sm btn-outline-danger" })
+                            </div>
+                        </td>
 
                     </tr>
                         }}
