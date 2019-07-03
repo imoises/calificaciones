@@ -22,30 +22,30 @@
 </div>
 
 <div class="container-fluid">
-            <table class="table table-hover table-bordered table-dark">
-                <thead>
-                    <tr>
-                        <th scope="col">Nro</th>
-                        <th scope="col">Clase</th>
-                        <th scope="col">Tema</th>
-                        <th scope="col">Pregunta</th>
-                        <th scope="col">Fecha Desde</th>
-                        <th scope="col">Fecha Hasta</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (var pregunta in Model.Resultado)
-                        {
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">Nro</th>
+                <th scope="col">Clase</th>
+                <th scope="col">Tema</th>
+                <th scope="col">Pregunta</th>
+                <th scope="col">Fecha Desde</th>
+                <th scope="col">Fecha Hasta</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var pregunta in Model.Resultado)
+                {
                     <tr class="table-primary">
                         <td>@pregunta.Nro</td>
                         <td>@pregunta.Clase.Nombre</td>
                         <td>@pregunta.Tema.Nombre</td>
 
-                        <td>@Html.ActionLink(@pregunta.Pregunta1, "ModificarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase =  pregunta.IdClase}, new { @class="text-info" })</td>
+                        <td>@Html.ActionLink(@pregunta.Pregunta1, "ModificarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.IdClase }, new { @class = "text-info" })</td>
                         <td>@pregunta.FechaDisponibleDesde</td>
-                        <td>@pregunta.FechaDisponibleHasta</td>                         
+                        <td>@pregunta.FechaDisponibleHasta</td>
                         <td>
                             <div class="btn-group btn-group-toggle">
                                 <form>
@@ -56,11 +56,11 @@
                         </td>
 
                     </tr>
-                        }}
-                </tbody>
-            </table>
+                }}
+        </tbody>
+    </table>
 
-           
+@*           
             <blockquote class="blockquote text-center">
 
                 @if (Model.Resultado.Count() > 0)
@@ -120,3 +120,4 @@
 
 </div>
 
+*@
