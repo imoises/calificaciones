@@ -5,7 +5,7 @@ using System.Web;
 
 namespace calificaciones.Models
 {
-    public class Paginador
+    public class Paginador<T> where T:class
     {
         public int PaginaActual { get; set; }
         public int RegistrosPorPagina { get; set; }
