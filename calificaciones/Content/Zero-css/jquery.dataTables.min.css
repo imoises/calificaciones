@@ -157,7 +157,7 @@
     }
 
     table.dataTable.display tbody tr:hover > .sorting_1, table.dataTable.order-column.hover tbody tr:hover > .sorting_1 {
-        background-color: #aaa /*#eaeaea cambie de color cuado el cursor en una casilla de la tabla */
+        background-color: #878787 /*#eaeaea cambie de color cuado el cursor en una casilla de la tabla */
     }
 
     table.dataTable.display tbody tr:hover > .sorting_2, table.dataTable.order-column.hover tbody tr:hover > .sorting_2 {
