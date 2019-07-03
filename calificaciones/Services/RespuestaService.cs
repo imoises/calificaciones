@@ -130,7 +130,7 @@ namespace calificaciones.Services
             {
                 case "SinCorregir":
                     return bdContexto.RespuestaAlumnoes.Where(r => r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == null).ToList();
-                case "Correctas":
+                case "Correcta":
                     return bdContexto.RespuestaAlumnoes.Where(r => r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == 1).ToList();
                 case "Regular":
                     return bdContexto.RespuestaAlumnoes.Where(r => r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == 2).ToList();

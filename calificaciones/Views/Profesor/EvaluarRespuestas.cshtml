@@ -3,33 +3,33 @@
     Layout = "~/Views/Shared/ProfesorLayout.cshtml";
 }
 
-@model  calificaciones.Entidades.Pregunta
+@model calificaciones.Models.EvaluarRespuestasViewModel
 <div class="container">
     <div>
         <h1 class="m-4"><b>Respuestas</b></h1>
-        <h5> <b class="m-4">@Model.Tema.Nombre - @Model.Clase.Nombre</b></h5>
+        <h5> <b class="m-4">@Model.Pregunta.Tema.Nombre - @Model.Pregunta.Clase.Nombre</b></h5>
     </div>
 
     <div class="d-flex">
-        <h3>@Model.Pregunta1</h3>
+        <h3>@Model.Pregunta.Pregunta1</h3>
         <div class="p-1 ml-3">
             (
-            @if (@Model.FechaDisponibleDesde == null)
+            @if (@Model.Pregunta.FechaDisponibleDesde == null)
             {
                 <span>Sin fecha</span>
             }
             else
             {
-                @Model.FechaDisponibleDesde.Value.ToString("dd/MM/yyyy");
+                @Model.Pregunta.FechaDisponibleDesde.Value.ToString("dd/MM/yyyy");
             }
             -
-            @if (@Model.FechaDisponibleHasta == null)
+            @if (@Model.Pregunta.FechaDisponibleHasta == null)
             {
                 <span>Sin fecha</span>
             }
             else
             {
-                @Model.FechaDisponibleHasta.Value.ToString("dd/MM/yyyy")
+                @Model.Pregunta.FechaDisponibleHasta.Value.ToString("dd/MM/yyyy")
 
             }
             )
@@ -37,21 +37,25 @@
     </div>
     @Html.Raw(TempData["Mensaje"])
     <br />
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Todas</a></li>
-        <li class="breadcrumb-item"><a href="#">Sin Corregir</a></li>
-        <li class="breadcrumb-item"><a href="#">Regular</a></li>
-        <li class="breadcrumb-item"><a href="#">Mal</a></li>
-    </ol>
+    <div class="breadcrumb">
+        <form>
+            <input type="hidden" name="idPregunta" value="@Model.Pregunta.IdPregunta" />
+            <button type="submit" class="btn btn-outline-info" formaction="~/Profesor/EvaluarRespuestas" value="Todas" name="tipo" formmethod="post">Todas</button>
+            <button type="submit" class="btn btn-outline-info" formaction="~/Profesor/EvaluarRespuestas" value="SinCorregir" name="tipo" formmethod="post">Sin Corregir</button>
+            <button type="submit" class="btn btn-outline-info" formaction="~/Profesor/EvaluarRespuestas" value="Correcta" name="tipo" formmethod="post">Correcta</button>
+            <button type="submit" class="btn btn-outline-info" formaction="~/Profesor/EvaluarRespuestas" value="Regular" name="tipo" formmethod="post">Regular</button>
+            <button type="submit" class="btn btn-outline-info" formaction="~/Profesor/EvaluarRespuestas" value="Mal" name="tipo" formmethod="post">Mal</button>
+        </form>
+    </div>
 </div>
 
 <div class="container">
     <ul class="list-group">
         @{
             var flagPendiente = false;
-            if (Model.RespuestaAlumnoes.Count > 0)
+            if (Model.ListaRespuestaAlumno.Count > 0)
             {
-                foreach (var respuesta in Model.RespuestaAlumnoes)
+                foreach (var respuesta in Model.ListaRespuestaAlumno)
                 {
                     <li class="list-group-item justify-content-between align-items-center">
                         <div class="row align-items-center">
@@ -108,7 +112,7 @@
                                     if (sinEvaluar == 0 && mejorRespuesta.Equals(false)) //me fijo si ya no hay respuestas sin evaluar (tienen que haber 0 respuestas sin evaluar)
                                     {
                                         //muestro el botón
-                                        @Html.ActionLink("Mejor Respuesta", "MejorRespuesta", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno}, new { @class = "btn btn-sm btn-info float-right" })
+                                        @Html.ActionLink("Mejor Respuesta", "MejorRespuesta", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno }, new { @class = "btn btn-sm btn-info float-right" })
                                     }
 
                                     if (@respuesta.MejorRespuesta)
@@ -129,7 +133,7 @@
             {
                 <div class="text-center">
                     <h4> <cite title="Source Title">No se encontraron respuestas.</cite></h4>
-                   
+
                 </div>
             }
 

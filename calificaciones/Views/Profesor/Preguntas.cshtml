@@ -46,7 +46,11 @@
                         <td>@Html.ActionLink(@pregunta.Pregunta1, "ModificarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase =  pregunta.IdClase}, new { @class="text-info" })</td>
                         <td>@pregunta.FechaDisponibleDesde</td>
                         <td>@pregunta.FechaDisponibleHasta</td>                         
-                        <td>@Html.ActionLink("Evaluar ", "EvaluarRespuestas", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.IdClase }, new { @class = "btn btn-sm btn-outline-info mb-0" })
+                        <td>
+                            <form>
+                                <button type="submit" class="btn btn-sm btn-outline-info mb-0" formaction="~/Profesor/EvaluarRespuestas" value="@pregunta.IdPregunta" name="idPregunta" formmethod="post">Evaluar</button>
+                            </form>
+
                             @Html.ActionLink("Eliminar", "EliminarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.IdClase }, new { @class = "btn btn-sm btn-outline-danger" })</td>
 
                     </tr>
