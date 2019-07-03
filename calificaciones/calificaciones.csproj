@@ -203,6 +203,7 @@
     <Content Include="Content\images404\bg.png" />
     <Content Include="Content\images404\bg1.png" />
     <Content Include="Content\images404\error-img.png" />
+    <Content Include="Content\Zero-css\jquery.dataTables.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome\css\all.css" />
     <Content Include="fonts\fontawesome\css\all.min.css" />
@@ -1865,6 +1866,9 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Rich text wysiwyg\tiny.js" />
     <Content Include="Scripts\Rich text wysiwyg\tinymce.min.js" />
+    <Content Include="Scripts\Zero-js\Javascript.js" />
+    <Content Include="Scripts\Zero-js\jquery-3.3.1.js" />
+    <Content Include="Scripts\Zero-js\jquery.dataTables.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

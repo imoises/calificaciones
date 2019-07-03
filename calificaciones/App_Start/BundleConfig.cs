@@ -24,9 +24,14 @@ namespace calificaciones
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/Zero-css/jquery.dataTables.min.css",
                       "~/Content/site.css"));
             bundles.Add(new StyleBundle("~/fontawesome/css").Include(
                       "~/fontawesome/all.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/Zero/jquery").Include(
+                        "~/Scripts/Zero-js/jquery.dataTables.min.js",
+                        "~/Scripts/Zero-js/Javascript.js"));
         }
     }
 }
