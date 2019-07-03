@@ -34,14 +34,29 @@
                         foreach (var alumno in Model.TablaDePosiciones)
                         {
                             i = i + 1;
-                            <tr class="table-primary">
-                                <th scope="row">@i</th>
-                                <td>@alumno.Nombre @alumno.Apellido</td>
-                                <td>@alumno.PuntosTotales</td>
-                                <td>@alumno.CantidadRespuestasCorrectas</td>
-                                <td>@alumno.CantidadMejorRespuesta</td>
-                            </tr>
-                        }}
+                            if (alumno.IdAlumno == Convert.ToInt32(Session["Id"]))
+                            {
+                                <tr class="table-primary">
+                                    <th scope="row"><b>@i</b></th>
+                                    <td><b>@alumno.Nombre @alumno.Apellido</b></td>
+                                    <td><b>@alumno.PuntosTotales</b></td>
+                                    <td><b>@alumno.CantidadRespuestasCorrectas</b></td>
+                                    <td><b>@alumno.CantidadMejorRespuesta</b></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr class="table-primary">
+                                    <th scope="row">@i</th>
+                                    <td>@alumno.Nombre @alumno.Apellido</td>
+                                    <td>@alumno.PuntosTotales</td>
+                                    <td>@alumno.CantidadRespuestasCorrectas</td>
+                                    <td>@alumno.CantidadMejorRespuesta</td>
+                                </tr>
+                            }
+
+                        }
+                     }
 
                 </tbody>
             </table>
@@ -67,12 +82,22 @@
                         <tbody>
                             @foreach (var alumno in Model.UltimasPreguntasCorregidas[0].PosAlumnosPuntos)
                             {
-                                <tr class="">
-                                    <th scope="row">@alumno.Posicion</th>
-                                    <td>@alumno.Nombre @alumno.Apellido</td>
-                                    <td>@alumno.Puntos</td>
-
-                                </tr>
+                            <tr class="">
+                                @{ String nombreCompleto = alumno.Apellido + ", " + alumno.Nombre;
+                                    if (nombreCompleto == Session["Nombre"].ToString())
+                                    {
+                                        <th scope="row"><b>@alumno.Posicion</b></th>
+                                        <td><b>@alumno.Nombre @alumno.Apellido</b></td>
+                                        <td><b>@alumno.Puntos</b></td>
+                                    }
+                                    else
+                                    {
+                                        <th scope="row">@alumno.Posicion</th>
+                                        <td>@alumno.Nombre @alumno.Apellido</td>
+                                        <td>@alumno.Puntos</td>
+                                    }
+                                }
+                            </tr>
                             }
 
                         </tbody>
