@@ -15,6 +15,7 @@ namespace calificaciones.Controllers
         PreguntaService preguntasService = new PreguntaService();
         TemaClaseService temaClaseService = new TemaClaseService();
         RespuestaService respuestaService = new RespuestaService();
+        ProfesorService profesorService = new ProfesorService();
         // GET: Profesor 
 
         public ActionResult Index()
@@ -158,5 +159,6 @@ namespace calificaciones.Controllers
             }
             return RedirectToAction("Preguntas");
         }
+
     }
 }

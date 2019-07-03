@@ -31,7 +31,7 @@ namespace calificaciones.Controllers
         public ActionResult LoginSession(Usuario usuario,string returnUrl)
         {
             var sessionService = new SessionService();
-            FormsAuthentication.SetAuthCookie(usuario.Email, true);
+            FormsAuthentication.SetAuthCookie(usuario.Email, false);
             if (Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);
             if (ModelState.IsValid)

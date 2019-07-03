@@ -8,82 +8,51 @@ namespace calificaciones.Controllers
 {
     public class ErrorController : Controller
     {
-        // GET: Error
-        public ActionResult Index()
-        {
+       public ActionResult Error()
+       {
+            int err = 0;
+            switch (err)
+            {
+                case 400:
+                    ViewBag.ErrorMensaje = "La página tiene sintaxis incorrecta";
+                    ViewBag.Descripcion = "Por favor ingrese nuevamente";
+                    break;
+                case 401:
+                    ViewBag.ErrorMensaje = "La página que ingreso tiene acceso restringido";
+                    ViewBag.Descripcion = "Por favor ingrese nuevamente";
+                    break;
+                case 403:
+                    ViewBag.ErrorMensaje = "Se ha denegado el acceso";
+                    ViewBag.Descripcion = "Por favor ingrese nuevamente";
+                    break;
+                case 404:
+                    ViewBag.ErrorMensaje = "La página que ingreso tiene un formato no válido";
+                    ViewBag.Descripcion = "Por favor ingrese nuevamente";
+                    break;
+                case 406:
+                    ViewBag.ErrorMensaje = "Código no interpretado por el navegador";
+                    ViewBag.Descripcion = "Por favor ingrese nuevamente";
+                    break;
+                case 500:
+                    ViewBag.ErrorMensaje = "Error interno...ya lo estamos solucionando";
+                    ViewBag.Descripcion = "Por favor ingrese nuevamente";
+                    break;
+                case 504:
+                    ViewBag.ErrorMensaje = "El tiempo de espera se ha agotado";
+                    ViewBag.Descripcion = "Por favor ingrese nuevamente";
+                    break;
+                case 509:
+                    ViewBag.ErrorMensaje = "Ha superado el límite de banda ancha disponible";
+                    ViewBag.Descripcion = "Por favor ingrese nuevamente";
+                    break;
+                default:
+                    ViewBag.ErrorMensaje = "La página que ingreso es erronea";
+                    ViewBag.Descripcion = "Por favor ingrese nuevamente";
+                    break;
+
+            }
+            
             return View();
-        }
-
-        // GET: Error/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Error/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Error/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Error/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Error/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Error/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Error/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       }
     }
 }
