@@ -96,6 +96,12 @@ namespace calificaciones.Controllers
             return View(respuestaAlumnos);
         }
 
+        public ActionResult Respuestas(int pagina = 0)
+        {
+            Paginador<Pregunta> paginador = preguntasService.PaginadorPreguntas(pagina);
+            return View(paginador);
+        }
+
         [HttpGet]
         public ActionResult EvaluarRespuestas(int nro, int clase)
         {
