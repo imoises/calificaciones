@@ -18,5 +18,7 @@ namespace calificaciones.Models
         public string Password { get; set; }
 
         public bool SoyProfesor { get; set; }
+
+        public string Roles { get; set; }
     }
 }

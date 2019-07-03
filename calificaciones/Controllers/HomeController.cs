@@ -31,9 +31,13 @@ namespace calificaciones.Controllers
         public ActionResult LoginSession(Usuario usuario,string returnUrl)
         {
             var sessionService = new SessionService();
-            FormsAuthentication.SetAuthCookie(usuario.Email, false);
+            FormsAuthentication.SetAuthCookie(usuario.Email, true);
             if (Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);
+           /* var authTicket = new FormsAuthenticationTicket(1, usuario.Email, DateTime.Now, DateTime.Now.AddMinutes(20), false, usuario.Roles);
+            string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
+            var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+            HttpContext.Response.Cookies.Add(authCookie);*/
             if (ModelState.IsValid)
             {
                 if (usuario.SoyProfesor)
