@@ -34,14 +34,23 @@
      {
         <div class="container custom-control-inline">
             @pregunta.Clase.Nombre - @pregunta.Tema.Nombre
-            @if (@pregunta.FechaDisponibleHasta.Value > DateTime.Now)
+
+            @if (@pregunta.FechaDisponibleHasta != null)
             {
-            <p>&nbsp;-&nbsp; Hasta @pregunta.FechaDisponibleHasta</p>
+                if (@pregunta.FechaDisponibleHasta.Value > DateTime.Now)
+                {
+                <p>&nbsp;-&nbsp; Hasta @pregunta.FechaDisponibleHasta</p>
+                }
+                else
+                {
+                <p>&nbsp;-&nbsp;Plazo vencido</p>
+                }
             }
             else
             {
-            <p>&nbsp;-&nbsp;Plazo vencido</p>
+                <p> &nbsp; -&nbsp; No Tiene Fecha</p>
             }
+
         </div>
 
         <div class="custom-control-inline">
