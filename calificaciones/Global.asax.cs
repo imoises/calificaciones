@@ -23,5 +23,15 @@ namespace calificaciones
             Session["Email"] = String.Empty;
             Session["SoyProfesor"] = String.Empty;
         }
+
+        protected void Application_Error(Object sender, EventArgs e) 
+        {
+            Exception exc = Server.GetLastError();
+            Response.Clear();
+            HttpException httpException = exc as HttpException;
+            int error = httpException != null ? httpException.GetHttpCode() : 0;
+            Server.ClearError();
+            Response.Redirect(String.Format("~/Error/Error/?error={0}", error, exc.Message));
+        }
     }
 }
