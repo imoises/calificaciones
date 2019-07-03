@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using calificaciones.Entidades;
+using calificaciones.Models;
 
 namespace calificaciones.Services
 {
@@ -203,6 +204,30 @@ namespace calificaciones.Services
             {
                 return false;
             }
+        }
+
+        public Paginador<Pregunta> PaginadorPreguntas(int pagina)
+        {
+            pagina = 1;
+            int RegistrosPorPagina = 10;
+            int TotalRegistros = 0;
+            List<Pregunta> ListaPreguntas = null;
+            Paginador<Pregunta> pagPreg = null;
+            TotalRegistros = bdContexto.Preguntas.Count();
+            ListaPreguntas = bdContexto.Preguntas.OrderBy(p => p.Nro)
+                .Skip((pagina - 1) * RegistrosPorPagina)
+                .Take(RegistrosPorPagina)
+                .ToList();
+            var TotalPaginas = (int) Math.Ceiling((double)TotalRegistros / RegistrosPorPagina);
+            pagPreg = new Paginador<Pregunta>()
+            {
+                RegistrosPorPagina = RegistrosPorPagina,
+                TotalRegistros = TotalRegistros,
+                TotalPaginas = TotalPaginas,
+                PaginaActual = pagina,
+                Resultado = ListaPreguntas
+            };
+            return pagPreg;
         }
     }
 }

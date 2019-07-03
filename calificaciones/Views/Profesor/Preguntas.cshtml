@@ -2,7 +2,7 @@
     ViewBag.Title = "Preguntas";
     Layout = "~/Views/Shared/ProfesorLayout.cshtml";
 }
-@model  List<calificaciones.Entidades.Pregunta>
+@model calificaciones.Models.Paginador<calificaciones.Entidades.Pregunta>
 <div class="container">
     <h1 class="m-4">Admin Preguntas</h1>
     <div  class="">
@@ -36,7 +36,7 @@
                 </thead>
                 <tbody>
                     @{
-                        foreach (var pregunta in Model)
+                        foreach (var pregunta in Model.Resultado)
                         {
                     <tr class="table-primary">
                         <td>@pregunta.Nro</td>
@@ -55,31 +55,61 @@
             </table>
 
            
-            <div class="float-right">
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#">&laquo;</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">4</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">5</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">&raquo;</a>
-                    </li>
-                </ul>
-            </div>
+            <blockquote class="blockquote text-center">
+
+                @if (Model.Resultado.Count() > 0)
+                {
+                    <span>
+                        <strong>@Model.TotalRegistros</strong> registros encontrados
+                    </span>
+                    <span>&nbsp;|&nbsp;</span>
+                    <span>
+                        Página <strong>@(Model.PaginaActual)</strong> de
+                        <strong>@Model.TotalPaginas</strong>
+                    </span>
+                    <span>&nbsp;|&nbsp;</span>
+                }
+                else
+                {
+                    <span>No hay resultados para esta búsqueda</span>
+                    <span>&nbsp;|&nbsp;</span>
+                }
+
+                @if (Model.PaginaActual > 1)
+                {
+                    @Html.ActionLink("<<", "Preguntas", new { pagina = 1 },
+                                    new { @class = "btn btn-sm btn-default" })
+                    <span></span>
+                    @Html.ActionLink("Anterior", "Preguntas", new { pagina = Model.PaginaActual - 1 },
+                                    new { @class = "btn btn-sm btn-default" })
+                }
+                else
+                {
+                    @Html.ActionLink("<<", "Preguntas", new { pagina = 1 },
+                                    new { @class = "btn btn-sm btn-default disabled" })
+                    <span></span>
+                    @Html.ActionLink("Anterior", "Preguntas", new { pagina = 1 },
+                                    new { @class = "btn btn-sm btn-default disabled" })
+                }
+                <span></span>
+                @if (Model.PaginaActual < Model.TotalPaginas)
+                {
+                    @Html.ActionLink("Siguiente", "Preguntas", new { pagina = Model.PaginaActual + 1 },
+                                    new { @class = "btn btn-sm btn-default" })
+                    <span></span>
+                    @Html.ActionLink(">>", "Preguntas", new { pagina = Model.TotalPaginas },
+                                    new { @class = "btn btn-sm btn-default" })
+                }
+                else
+                {
+                    @Html.ActionLink("Siguiente", "Index", new { pagina = Model.TotalPaginas - 1 },
+                                    new { @class = "btn btn-sm btn-default disabled" })
+                    <span></span>
+                    @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPaginas },
+                                    new { @class = "btn btn-sm btn-default disabled" })
+                }
+
+            </blockquote>
 
 
 </div>
