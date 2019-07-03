@@ -139,6 +139,23 @@ namespace calificaciones.Services
                 default:
                     return bdContexto.RespuestaAlumnoes.Where(r => r.IdPregunta == idPregunta).ToList();
             }
+        }
+
+        public List<RespuestaAlumno> ObtenerRespuestasAlumnoTipo(String tipo) // tipo: Todas, SinCorregir, Correcta,Regular, Mal
+        {
+            switch (tipo)
+            {
+                case "SinCorregir":
+                    return bdContexto.RespuestaAlumnoes.Where(r => r.IdResultadoEvaluacion == null).ToList();
+                case "Correcta":
+                    return bdContexto.RespuestaAlumnoes.Where(r => r.IdResultadoEvaluacion == 1).ToList();
+                case "Regular":
+                    return bdContexto.RespuestaAlumnoes.Where(r => r.IdResultadoEvaluacion == 2).ToList();
+                case "Mal":
+                    return bdContexto.RespuestaAlumnoes.Where(r => r.IdResultadoEvaluacion == 3).ToList();
+                default:
+                    return bdContexto.RespuestaAlumnoes.ToList();
+            }
 
         }
     }

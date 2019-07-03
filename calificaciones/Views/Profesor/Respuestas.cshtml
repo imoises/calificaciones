@@ -12,15 +12,17 @@
     @Html.Raw(TempData["Mensaje"])
     <br />
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Todas</a></li>
-        <li class="breadcrumb-item"><a href="#">Sin Corregir</a></li>
-        <li class="breadcrumb-item"><a href="#">Regular</a></li>
-        <li class="breadcrumb-item"><a href="#">Mal</a></li>
+        <li><a class="btn btn-outline-info" href="/Profesor/Respuestas/Todas">Todas</a></li>
+        <li><a class="btn btn-outline-info" href="/Profesor/Respuestas/SinCorregir">Sin Corregir</a></li>
+        <li><a class="btn btn-outline-info" href="/Profesor/Respuestas/Correctas">Correcta</a></li>
+        <li><a class="btn btn-outline-info" href="/Profesor/Respuestas/Regular">Regular</a></li>
+        <li><a class="btn btn-outline-info" href="/Profesor/Respuestas/Mal">Mal</a></li>
     </ol>
 </div>
 
 <div class="container-fluid">
-    <table class="table table-hover table-bordered table-dark">
+
+    <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
                 <th scope="col">Alumno</th>
@@ -45,9 +47,18 @@
 
                     </tr>
                 }}
-        </tbody>
-    </table>
 
+        </tbody>
+        <tfoot>
+            <tr>
+                <th scope="col">Alumno</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Respuesta</th>
+                <th scope="col">Pregunta</th>
+                <th scope="col">Acción</th>
+            </tr>
+        </tfoot>
+    </table>
 
 </div>
 

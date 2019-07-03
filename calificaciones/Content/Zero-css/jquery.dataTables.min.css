@@ -102,14 +102,14 @@
 
     table.dataTable.order-column tbody tr > .sorting_1, table.dataTable.order-column tbody tr > .sorting_2, table.dataTable.order-column tbody tr > .sorting_3, table.dataTable.display tbody tr > .sorting_1, table.dataTable.display tbody tr > .sorting_2, table.dataTable.display tbody tr > .sorting_3 {
         background-color: #fafafa
-    }
+        }
 
     table.dataTable.order-column tbody tr.selected > .sorting_1, table.dataTable.order-column tbody tr.selected > .sorting_2, table.dataTable.order-column tbody tr.selected > .sorting_3, table.dataTable.display tbody tr.selected > .sorting_1, table.dataTable.display tbody tr.selected > .sorting_2, table.dataTable.display tbody tr.selected > .sorting_3 {
         background-color: #acbad5
     }
 
     table.dataTable.display tbody tr.odd > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd > .sorting_1 {
-        background-color: #f1f1f1
+        background-color: #545b63 /*#f1f1f1*/
     }
 
     table.dataTable.display tbody tr.odd > .sorting_2, table.dataTable.order-column.stripe tbody tr.odd > .sorting_2 {
@@ -117,7 +117,7 @@
     }
 
     table.dataTable.display tbody tr.odd > .sorting_3, table.dataTable.order-column.stripe tbody tr.odd > .sorting_3 {
-        background-color: whitesmoke
+        background-color: #909092 /*whitesmoke*/
     }
 
     table.dataTable.display tbody tr.odd.selected > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd.selected > .sorting_1 {
@@ -133,7 +133,7 @@
     }
 
     table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column.stripe tbody tr.even > .sorting_1 {
-        background-color: #fafafa
+        background-color: #65696e /*#fafafa*/
     }
 
     table.dataTable.display tbody tr.even > .sorting_2, table.dataTable.order-column.stripe tbody tr.even > .sorting_2 {
@@ -157,7 +157,7 @@
     }
 
     table.dataTable.display tbody tr:hover > .sorting_1, table.dataTable.order-column.hover tbody tr:hover > .sorting_1 {
-        background-color: #eaeaea
+        background-color: #aaa /*#eaeaea cambie de color cuado el cursor en una casilla de la tabla */
     }
 
     table.dataTable.display tbody tr:hover > .sorting_2, table.dataTable.order-column.hover tbody tr:hover > .sorting_2 {
@@ -306,10 +306,10 @@
             text-decoration: none !important;
             cursor: pointer;
             *cursor: hand;
-            color: #333 !important;
-            border: 1px solid transparent;
-            border-radius: 2px
-        }
+            color: #fff;/*#333 !important;*/
+        border: 1px solid transparent;
+        border-radius: 2px
+    }
 
             .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
                 color: #333 !important;
@@ -380,7 +380,7 @@
     }
 
     .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
-        color: #333
+        color: #7ebfd4 /*#333*/
     }
 
     .dataTables_wrapper .dataTables_scroll {

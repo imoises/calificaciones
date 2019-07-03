@@ -90,9 +90,9 @@ namespace calificaciones.Controllers
         }
 
         [HttpGet]
-        public ActionResult Respuestas()//lo agregué de última
+        public ActionResult Respuestas(String Id) // Id contiene el valor tipo: Todas, SinCorregir, Correctas, Regular o Mal
         {
-            var respuestaAlumnos = respuestaService.ObtenerRespuestasTodas();
+            var respuestaAlumnos = respuestaService.ObtenerRespuestasAlumnoTipo(Id);
             return View(respuestaAlumnos);
         }
 
