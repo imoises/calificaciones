@@ -42,10 +42,20 @@
                     @Html.TextBoxFor(p => p.FechaDisponibleHasta, "{0:s}", new { @class = "form-control  col-sm-4", @type = "datetime-local" })
                 </div>
                 <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    @Html.ValidationMessageFor(p => p.FechaDisponibleDesde, "", new { @class = "text-danger" })
+
+                    <div class="col-sm-2"></div>
+                    @Html.ValidationMessageFor(p => p.FechaDisponibleHasta, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group row">
                     <div clase="col-sm-6">
                     </div>
                     <label for="Pregunta1" class="col-sm-2 col-form-label text-right">Pregunta(*)</label>
                     @Html.TextAreaFor(p => p.Pregunta1, new { @class = "form-control col-sm-10" })
+                    <div class="col-sm-2"></div>
+                    @Html.ValidationMessageFor(p => p.Pregunta1, "", new { @class = "text-danger" })
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary align-items-center col-sm-2" id="btnIngresar" name="btnIngresar">Guardar</button>
