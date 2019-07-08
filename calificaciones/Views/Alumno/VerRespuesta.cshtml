@@ -14,23 +14,16 @@
         @Model.Clase.Nombre - @Model.Tema.Nombre
     </div>
 
-    <h3>@Model.Nro. @Model.Pregunta1 </h3>
+    <h4>@Model.Nro. @Model.Pregunta1 </h4>
 
+    <hr class="alert-light"/>
 
-    <div class="">
-        <form action="#">
-            <fieldset>
-                <input type="hidden" name="IdPregunta" value="@Model.IdPregunta" />
+    <div class="container">
+        <div>@Html.Raw(@TempData["Respuesta"].ToString())</div>
 
-                <div class="form-group">
-                    <textarea name="Respuesta" class="form-control" rows="7" disabled>@TempData["Respuesta"]</textarea>
-                </div>
-
-                <div class="text-center">
-                    <a href="~/Alumno/Preguntas" class="btn btn-primary align-items-center  col-sm-2">Volver</a>
-                </div>
-            </fieldset>
-        </form>
+        <div class="text-center">
+            <a href="~/Alumno/Preguntas" class="btn btn-primary align-items-center  col-sm-2">Volver</a>
+        </div>
     </div>
 
 </div>

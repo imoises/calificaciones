@@ -27,28 +27,23 @@
     </ol>
 </div>
 
-<br />
 
 <div class="container">
     @foreach (var pregunta in Model)
      {
-        <div class="container custom-control-inline">
-            @pregunta.Clase.Nombre - @pregunta.Tema.Nombre
+        <div data-toggle="collapse">
+            <span>&nbsp;&nbsp;@pregunta.Clase.Nombre - @pregunta.Tema.Nombre</span>
 
             @if (@pregunta.FechaDisponibleHasta != null)
             {
                 if (@pregunta.FechaDisponibleHasta.Value > DateTime.Now)
                 {
-                <p>&nbsp;-&nbsp; Hasta @pregunta.FechaDisponibleHasta</p>
+                <span>&nbsp;-&nbsp; Hasta @pregunta.FechaDisponibleHasta</span>
                 }
                 else
                 {
-                <p>&nbsp;-&nbsp;Plazo vencido</p>
+                <span>&nbsp;-&nbsp;Plazo vencido</span>
                 }
-            }
-            else
-            {
-                <p> &nbsp; -&nbsp; No Tiene Fecha</p>
             }
 
         </div>
@@ -68,43 +63,54 @@
                     if (respuestaAlumno != null)
                     {
                         <form>
-                            <button type="submit" class="btn text-success" formaction="~/Alumno/VerRespuesta" value="@respuestaAlumno.IdRespuestaAlumno" name="IdRespuesta" formmethod="post">Ver</button>
+                            <button type="submit" class="btn btn-sm text-success" formaction="~/Alumno/VerRespuesta" value="@respuestaAlumno.IdRespuestaAlumno" name="IdRespuesta" formmethod="post">Ver</button>
                         </form>
-                        
+
                         if (respuestaAlumno.Puntos == null)
                         {
-                            <b>Correccion Pendiente</b>
+                            <b class="text-light"> &nbsp; Correccion Pendiente</b>
                         }
                         else
-                        {   
+                        {
                             switch (respuestaAlumno.ResultadoEvaluacion.IdResultadoEvaluacion)
                             {
                                 //@Html.Raw renderiza html
                                 case 1:
-                                    @Html.Raw("<b class = 'text-success'>");
+                                    @Html.Raw("<p class = 'text-success'>");
                                     break;
                                 case 2:
-                                    @Html.Raw("<b class = 'text-warning'>");
+                                    @Html.Raw("<p class = 'text-warning'>");
                                     break;
                                 default:
-                                    @Html.Raw("<b class = 'text-danger'>");
+                                    @Html.Raw("<p class = 'text-danger'>");
                                     break;
                             }
                             @Html.Raw("&nbsp &nbsp")
                             @respuestaAlumno.ResultadoEvaluacion.Resultado @Html.Raw(" | ")
                             @respuestaAlumno.Orden @Html.Raw("° | ")
-                            @respuestaAlumno.Puntos 
-                            @Html.Raw("</b>");
+                            @respuestaAlumno.Puntos
+                            @Html.Raw("</p>");
                         }
                     }
                     else
                     {
-                        <form>
-                            <button type="submit" class="btn text-info" formaction="~/Alumno/Responder" value="@pregunta.IdPregunta" name="IdPregunta" formmethod="post">Responder</button>
-                        </form>
+                        if (@pregunta.FechaDisponibleHasta != null)
+                        {
+                            if (@pregunta.FechaDisponibleHasta.Value > DateTime.Now)
+                            {
+                                <form>
+                                    <button type="submit" class="btn btn-sm text-info" formaction="~/Alumno/Responder" value="@pregunta.IdPregunta" name="IdPregunta" formmethod="post">Responder</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <p class="bg-primary text-white" >&nbsp;No respondio &nbsp;</p>
+                            }
+                        }
                     }
                 }
-                </p>
-            </div>
+            </p>
+        </div>
+        <hr class="bg-light"/>
      }
 </div>
