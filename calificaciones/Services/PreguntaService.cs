@@ -195,7 +195,7 @@ namespace calificaciones.Services
 
 
                 alumno.PuntosTotales += puntajeObtenido;
-                bdContexto.SaveChanges();
+                bdContexto.SaveChanges();  
                 respuestaService.Guardar();
 
                 return true;
