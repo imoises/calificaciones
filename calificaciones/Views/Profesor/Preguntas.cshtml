@@ -1,4 +1,4 @@
-﻿@{
+﻿        @{
     ViewBag.Title = "Preguntas";
     Layout = "~/Views/Shared/ProfesorLayout.cshtml";
 }
@@ -48,10 +48,8 @@
                         <td>@pregunta.FechaDisponibleHasta</td>
                         <td>
                             <div class="btn-group btn-group-toggle">
-                                <form>
-                                    <button type="submit" class="btn btn-sm btn-outline-info" formaction="~/Profesor/EvaluarRespuestas" value="@pregunta.IdPregunta" name="idPregunta" formmethod="post">Evaluar</button>
-                                </form>
-                                @Html.ActionLink("Eliminar", "EliminarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.IdClase }, new { @class = "btn btn-sm btn-outline-danger" })
+                                @Html.ActionLink("Evaluar", "EvaluarRespuestas", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.Clase.Nombre, Tipo = "Todas" }, new { @class = "btn btn-outline-info text-info" })
+                                @Html.ActionLink("Eliminar", "EliminarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.Clase.Nombre }, new { @class = "btn btn-sm btn-outline-danger" })
                             </div>
                         </td>
 

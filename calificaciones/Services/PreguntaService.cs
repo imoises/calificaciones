@@ -54,9 +54,9 @@ namespace calificaciones.Services
             return preguntaBuscada;
         }
 
-        public Pregunta ObtenerPreguntasConRespuestas(int nro, int clase)
+        public Pregunta ObtenerPreguntasConRespuestas(int nro, string clase)
         {
-            var query = from p in bdContexto.Preguntas where p.Nro == nro && p.IdClase == clase select p;
+            var query = from p in bdContexto.Preguntas.Include("Clase") where p.Nro == nro && p.Clase.Nombre == clase select p;
             var preguntaRespuesta = query.FirstOrDefault();
             return preguntaRespuesta;
         }
@@ -84,9 +84,9 @@ namespace calificaciones.Services
         public bool ModificarPreguntaId(Pregunta pregunta, int idPregunta)
         {
             var preguntaExistente = this.ObtenerUnaPreguntaNroClase(pregunta.Nro, pregunta.IdClase);
-            if (preguntaExistente == null)
+            var preguntaModif = this.ObtenerUnaPreguntaId(idPregunta);
+            if (preguntaExistente == null || preguntaExistente.IdPregunta == preguntaModif.IdPregunta)
             {
-                var preguntaModif = this.ObtenerUnaPreguntaId(idPregunta);
                 preguntaModif.Nro = pregunta.Nro;
                 preguntaModif.IdTema = pregunta.IdTema;
                 preguntaModif.FechaDisponibleDesde = pregunta.FechaDisponibleDesde;
@@ -99,7 +99,6 @@ namespace calificaciones.Services
             {
                 return false;
             }
-            
         }
 
         //Eliminar
@@ -197,6 +196,7 @@ namespace calificaciones.Services
 
                 alumno.PuntosTotales += puntajeObtenido;
                 bdContexto.SaveChanges();
+                respuestaService.Guardar();
 
                 return true;
             }

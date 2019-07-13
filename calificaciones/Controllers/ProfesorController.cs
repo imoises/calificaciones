@@ -1,4 +1,4 @@
-﻿using calificaciones.Services;
+﻿    using calificaciones.Services;
 using calificaciones.Entidades;
 using calificaciones.Models;
 using System;
@@ -58,9 +58,9 @@ namespace calificaciones.Controllers
         }
 
         [HttpGet]
-        public ActionResult ModificarPregunta(int Nro, int Clase)
+        public ActionResult ModificarPregunta(int nro, int clase)
         {
-            var pregunta = preguntasService.ObtenerUnaPreguntaNroClase(Nro, Clase);
+            var pregunta = preguntasService.ObtenerUnaPreguntaNroClase(nro, clase);
             if (ModelState.IsValid)
             {
                 TempData["IdPregunta"] = pregunta.IdPregunta;
@@ -89,19 +89,45 @@ namespace calificaciones.Controllers
         }
 
         [HttpGet]
-        public ActionResult Respuestas(String Id) // Id contiene el valor tipo: Todas, SinCorregir, Correctas, Regular o Mal
+        public ActionResult Respuestas(String tipo) // Id contiene el valor tipo: Todas, SinCorregir, Correctas, Regular o Mal
         {
-            var respuestaAlumnos = respuestaService.ObtenerRespuestasAlumnoTipo(Id);
-            return View(respuestaAlumnos);
+            var respuestaAlumnos = respuestaService.ObtenerRespuestasTodas();
+            var listaRespuestaAlumno = respuestaService.FiltroRespuesta(respuestaAlumnos, tipo);
+            return View(listaRespuestaAlumno);
         }
 
-        public ActionResult Respuestas(int pagina = 0)
+        [HttpGet]
+        public ActionResult EvaluarRespuestas(int nro, string clase, String tipo)
         {
-            Paginador<Pregunta> paginador = preguntasService.PaginadorPreguntas(pagina);
-            return View(paginador);
+            var respuestaAlumnos = preguntasService.ObtenerPreguntasConRespuestas(nro, clase);
+            var idPregunta = respuestaAlumnos.IdPregunta;
+            var listaRespuestaAlumno = respuestaService.FiltroRespuesta(respuestaAlumnos, tipo);
+            TempData["IdPregunta"] = idPregunta;
+            ViewData["SinEvaluar"] = respuestaService.ObtenerSinEvaluar(idPregunta);
+            ViewData["MejorPregunta"] = respuestaService.ObtenerSiMejor(idPregunta);
+            return View(listaRespuestaAlumno);
         }
 
-        [HttpPost]
+        [HttpGet]
+        public ActionResult EvaluarRespuestasGo(int respuesta, int valor)//int respuesta es el id de la respuesta... :( | int valor es la valoración de la respuesta: Correcta/Regular/Mal
+        {
+            var profesor = Convert.ToInt32(Session["Id"]);
+            var resultado = preguntasService.RespuestaValorar(respuesta, valor, profesor);
+            if (resultado)
+            {
+                TempData["Mensaje"] = "Se calificó la respuesta";
+            }
+            else
+            {
+                TempData["Mensaje"] = "Hubo un error";
+            }
+            var IdPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
+            var preguntaBuscada = preguntasService.ObtenerUnaPreguntaId(IdPregunta);
+            return RedirectToAction("EvaluarRespuestas", "Profesor", new { nro = preguntaBuscada.Nro, clase = preguntaBuscada.Clase.Nombre });
+            //return ViewrespuestaAlumnos
+        }
+
+        /*[HttpPost]
         public ActionResult EvaluarRespuestas(int idPregunta, String tipo)
         {
             EvaluarRespuestasViewModel evaluarRespuestasViewModel = new EvaluarRespuestasViewModel();
@@ -132,7 +158,7 @@ namespace calificaciones.Controllers
             evaluarRespuestasViewModel.Pregunta = preguntasService.ObtenerUnaPreguntaId(idPregunta);
             evaluarRespuestasViewModel.ListaRespuestaAlumno = respuestaService.ObtenerRespuestasAlumnoTipo(idPregunta, "Todas");
             return View("EvaluarRespuestas", evaluarRespuestasViewModel);
-        }
+        }*/
 
         [HttpGet]
         public ActionResult MejorRespuesta(int respuesta)

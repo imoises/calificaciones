@@ -3,33 +3,33 @@
     Layout = "~/Views/Shared/ProfesorLayout.cshtml";
 }
 
-@model calificaciones.Models.EvaluarRespuestasViewModel
+@model calificaciones.Entidades.Pregunta
 <div class="container">
     <div>
         <h1 class="m-4"><b>Respuestas</b></h1>
-        <h5> <b class="m-4">@Model.Pregunta.Tema.Nombre - @Model.Pregunta.Clase.Nombre</b></h5>
+        <h5> <b class="m-4">@Model.Tema.Nombre - @Model.Clase.Nombre</b></h5>
     </div>
 
     <div class="d-flex">
-        <h3>@Model.Pregunta.Pregunta1</h3>
+        <h3>@Model.Pregunta1</h3>
         <div class="p-1 ml-3">
             (
-            @if (@Model.Pregunta.FechaDisponibleDesde == null)
+            @if (@Model.FechaDisponibleDesde == null)
             {
                 <span>Sin fecha</span>
             }
             else
             {
-                @Model.Pregunta.FechaDisponibleDesde.Value.ToString("dd/MM/yyyy");
+                @Model.FechaDisponibleDesde.Value.ToString("dd/MM/yyyy");
             }
             -
-            @if (@Model.Pregunta.FechaDisponibleHasta == null)
+            @if (@Model.FechaDisponibleHasta == null)
             {
                 <span>Sin fecha</span>
             }
             else
             {
-                @Model.Pregunta.FechaDisponibleHasta.Value.ToString("dd/MM/yyyy")
+                @Model.FechaDisponibleHasta.Value.ToString("dd/MM/yyyy")
 
             }
             )
@@ -37,15 +37,12 @@
     </div>
     @Html.Raw(TempData["Mensaje"])
     <br />
-    <div class="breadcrumb">
-        <form>
-            <input type="hidden" name="idPregunta" value="@Model.Pregunta.IdPregunta" />
-            <button type="submit" class="btn btn-outline-info" formaction="~/Profesor/EvaluarRespuestas" value="Todas" name="tipo" formmethod="post">Todas</button>
-            <button type="submit" class="btn btn-outline-info" formaction="~/Profesor/EvaluarRespuestas" value="SinCorregir" name="tipo" formmethod="post">Sin Corregir</button>
-            <button type="submit" class="btn btn-outline-info" formaction="~/Profesor/EvaluarRespuestas" value="Correcta" name="tipo" formmethod="post">Correcta</button>
-            <button type="submit" class="btn btn-outline-info" formaction="~/Profesor/EvaluarRespuestas" value="Regular" name="tipo" formmethod="post">Regular</button>
-            <button type="submit" class="btn btn-outline-info" formaction="~/Profesor/EvaluarRespuestas" value="Mal" name="tipo" formmethod="post">Mal</button>
-        </form>
+    <div class="breadcrumb btn-group btn-group-toggle" role="group">
+        @Html.ActionLink("Todas", "EvaluarRespuestas", "Profesor", new { Nro = Model.Nro, Clase = Model.Clase.Nombre, Tipo = "Todas" }, new { @class = "btn btn-outline-info text-info" })
+        @Html.ActionLink("Sin Corregir", "EvaluarRespuestas", "Profesor", new { Nro = Model.Nro, Clase = Model.Clase.Nombre, Tipo = "SinCorregir" }, new { @class = "btn btn-outline-info" })
+        @Html.ActionLink("Correcta", "EvaluarRespuestas", "Profesor", new { Nro = Model.Nro, Clase = Model.Clase.Nombre, Tipo = "Correcta" }, new { @class = "btn btn-outline-info text-success" })
+        @Html.ActionLink("Regular", "EvaluarRespuestas", "Profesor", new { Nro = Model.Nro, Clase = Model.Clase.Nombre, Tipo = "Regular" }, new { @class = "btn btn-outline-info text-warning" })
+        @Html.ActionLink("Mal", "EvaluarRespuestas", "Profesor", new { Nro = Model.Nro, Clase = Model.Clase.Nombre, Tipo = "Mal" }, new { @class = "btn btn-outline-info text-danger" })
     </div>
 </div>
 
@@ -53,9 +50,9 @@
     <ul class="list-group">
         @{
             var flagPendiente = false;
-            if (Model.ListaRespuestaAlumno.Count > 0)
-            {
-                foreach (var respuesta in Model.ListaRespuestaAlumno)
+            if (Model.RespuestaAlumnoes.Count > 0)
+            {   
+                foreach (var respuesta in Model.RespuestaAlumnoes)
                 {
                     <li class="list-group-item justify-content-between align-items-center">
                         <div class="row align-items-center">
@@ -75,7 +72,7 @@
                                 {
                                     if (!flagPendiente)
                                     {
-                                <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+                                <div class="btn-group btn-group-toggle d-flex">
                                     @Html.ActionLink("Correcta ", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 1 }, new { @class = "btn btn-sm btn-outline-success" })
                                     @Html.ActionLink("Regular", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 2 }, new { @class = "btn btn-sm btn-outline-warning" })
                                     @Html.ActionLink(" Mal ", "EvaluarRespuestasGo", "Profesor", new { respuesta = respuesta.IdRespuestaAlumno, valor = 3 }, new { @class = "btn btn-sm btn-outline-danger" })

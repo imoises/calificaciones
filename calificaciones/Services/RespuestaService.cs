@@ -63,11 +63,12 @@ namespace calificaciones.Services
             cli.Send(msj);
         }
 
-        public List<RespuestaAlumno> ObtenerRespuestasTodas()
+        public Pregunta ObtenerRespuestasTodas()
         {
+            var pregunta = new Pregunta();
             var query = from r in bdContexto.RespuestaAlumnoes  select r;
-            var respuestas = query.ToList();
-            return respuestas;
+            pregunta.RespuestaAlumnoes = query.ToList();
+            return pregunta;
         }
 
         public RespuestaAlumno ObtenerUnaRespuestaId(int respuesta)
@@ -85,14 +86,14 @@ namespace calificaciones.Services
             return respuestasCorrecta;
         }
 
-        public int ObtenerRespuestasSinEvaluar(int idPregunta)
+        public int ObtenerSinEvaluar(int idPregunta)
         {
             var query = from r in bdContexto.RespuestaAlumnoes where r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == null select r;
             var respuestasSinEvaluar = query.Count();
             return respuestasSinEvaluar;
         }
 
-        public bool ObtenerSiMejorRespuesta(int idPregunta)
+        public bool ObtenerSiMejor(int idPregunta)
         {
             var query = from r in bdContexto.RespuestaAlumnoes where r.IdPregunta == idPregunta && r.MejorRespuesta == true select r;
             var mejorRespuesta = query.Any();
@@ -120,9 +121,16 @@ namespace calificaciones.Services
         //public List<RespuestaAlumno> ObtenerRespustasAlumnoMal(int idPregunta)
         //{
         //    List<RespuestaAlumno> respuestasAlumno = bdContexto.RespuestaAlumnoes.Where(r => r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == 3).ToList();
-            
+
         //    return respuestasAlumno;
         //}
+
+        public Pregunta ObtenerPreguntasConRespuestas(int nro, string clase)
+        {
+            var query = from p in bdContexto.Preguntas where p.Nro == nro && p.Clase.Nombre == clase select p;
+            var preguntaRespuesta = query.FirstOrDefault();
+            return preguntaRespuesta;
+        }
 
         public List<RespuestaAlumno> ObtenerRespuestasAlumnoTipo(int idPregunta, String tipo) // tipo: Todas, SinCorregir, Correcta,Regular, Mal
         {
@@ -141,6 +149,41 @@ namespace calificaciones.Services
             }
         }
 
+        public Pregunta FiltroRespuesta(Pregunta respuestaAlumnos, string tipo)
+        {
+            var respuesta = new RespuestaAlumno();
+            if (tipo != null && tipo != "Todas")
+            {
+                var query = from r in respuestaAlumnos.RespuestaAlumnoes where r.ResultadoEvaluacion.Resultado == tipo select r;
+                //var query1 = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion.Resultado == tipo);
+                respuestaAlumnos.RespuestaAlumnoes = query.ToList();
+            }
+            return respuestaAlumnos;
+        }
+
+        //public Pregunta FiltroRespuesta(Pregunta respuestaAlumnos, string tipo)
+        //{
+        //    var respuesta = new RespuestaAlumno();
+
+        //    switch (tipo)
+        //    {
+        //        case "SinCorregir":
+        //            respuestaAlumnos.RespuestaAlumnoes = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion.Resultado == null).ToList();
+        //            break;
+        //        case "Correcta":
+        //            respuestaAlumnos.RespuestaAlumnoes = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion.IdResultadoEvaluacion == 1).ToList();
+        //            break;
+        //        case "Regular":
+        //            respuestaAlumnos.RespuestaAlumnoes = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion.IdResultadoEvaluacion == 2).ToList();
+        //            break;
+        //        case "Mal":
+        //            respuestaAlumnos.RespuestaAlumnoes = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion.IdResultadoEvaluacion == 3).ToList();
+        //            break;
+        //    }
+
+        //    return respuestaAlumnos;
+        //}
+
         public List<RespuestaAlumno> ObtenerRespuestasAlumnoTipo(String tipo) // tipo: Todas, SinCorregir, Correcta,Regular, Mal
         {
             switch (tipo)
@@ -157,6 +200,11 @@ namespace calificaciones.Services
                     return bdContexto.RespuestaAlumnoes.ToList();
             }
 
+        }
+
+        public void Guardar()
+        {
+            bdContexto.SaveChanges();
         }
     }
 }

@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/ProfesorLayout.cshtml";
 }
 
-@model  List<calificaciones.Entidades.RespuestaAlumno>
+@model  calificaciones.Entidades.Pregunta
 <div class="">
     <div>
         <h1 class="m-4"><b>Respuestas</b></h1>
@@ -18,6 +18,14 @@
         <li><a class="btn btn-outline-info" href="/Profesor/Respuestas/Regular">Regular</a></li>
         <li><a class="btn btn-outline-info" href="/Profesor/Respuestas/Mal">Mal</a></li>
     </ol>
+
+    <div class="breadcrumb btn-group btn-group-toggle" role="group">
+        @Html.ActionLink("Todas", "Respuestas", "Profesor", new { Tipo = "Todas" }, new { @class = "btn btn-outline-info text-info" })
+        @Html.ActionLink("Sin Corregir", "Respuestas", "Profesor", new {Tipo = "SinCorregir" }, new { @class = "btn btn-outline-info" })
+        @Html.ActionLink("Correcta", "Respuestas", "Profesor", new {Tipo = "Correcta" }, new { @class = "btn btn-outline-info text-success" })
+        @Html.ActionLink("Regular", "Respuestas", "Profesor", new { Tipo = "Regular" }, new { @class = "btn btn-outline-info text-warning" })
+        @Html.ActionLink("Mal", "Respuestas", "Profesor", new {Tipo = "Mal" }, new { @class = "btn btn-outline-info text-danger" })
+    </div>
 </div>
 
 <div class="container-fluid">
@@ -34,7 +42,7 @@
         </thead>
         <tbody>
             @{
-                foreach (var respuesta in Model)
+                foreach (var respuesta in Model.RespuestaAlumnoes)
                 {
                     <tr class="table-primary">
                         <td>@respuesta.Alumno.Nombre @respuesta.Alumno.Apellido</td>
@@ -43,7 +51,7 @@
                         <td>@respuesta.Pregunta.Pregunta1</td>
 
 
-                        <td>@Html.ActionLink("Evaluar respuestas de pregunta", "EvaluarRespuestas", "Profesor", new { Nro = respuesta.Pregunta.Nro, Clase = respuesta.Pregunta.IdClase }, new { @class = "btn btn-sm btn-outline-info" })</td>
+                        <td>@Html.ActionLink("Evaluar pregunta", "EvaluarRespuestas", "Profesor", new { Nro = respuesta.Pregunta.Nro, Clase = respuesta.Pregunta.Clase.Nombre, Tipo = "Todas" }, new { @class = "btn btn-outline-info text-info" })</td>
 
                     </tr>
                 }}
