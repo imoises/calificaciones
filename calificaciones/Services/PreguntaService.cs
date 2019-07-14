@@ -102,9 +102,9 @@ namespace calificaciones.Services
         }
 
         //Eliminar
-        public bool EliminarPregunta(int Nro, int Clase)
+        public bool EliminarPregunta(int nro, string clase)
         {
-            var preguntaEliminar = this.ObtenerUnaPreguntaNroClase(Nro, Clase);
+            var preguntaEliminar = this.ObtenerPreguntasConRespuestas(nro, clase);
             var contieneRespuestas = preguntaEliminar.RespuestaAlumnoes.Any();
             if (!contieneRespuestas)
             {
@@ -134,6 +134,7 @@ namespace calificaciones.Services
                 alumno.CantidadMejorRespuesta += 1;
                 alumno.PuntosTotales += puntajeMax / 2;
                 bdContexto.SaveChanges();
+                respuestaService.Guardar();
                 return true;
             }
             else

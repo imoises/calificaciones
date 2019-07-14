@@ -48,8 +48,8 @@
                         <td>@pregunta.FechaDisponibleHasta</td>
                         <td>
                             <div class="btn-group btn-group-toggle">
-                                @Html.ActionLink("Evaluar", "EvaluarRespuestas", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.Clase.Nombre, Tipo = "Todas" }, new { @class = "btn btn-outline-info text-info" })
-                                @Html.ActionLink("Eliminar", "EliminarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.Clase.Nombre }, new { @class = "btn btn-sm btn-outline-danger" })
+                                @Html.ActionLink("Evaluar", "EvaluarRespuestas", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.Clase.Nombre, Tipo = "Todas" }, new { @class = "btn btn-sm btn-outline-info text-info" })
+                                @Html.ActionLink("Eliminar", "EliminarPregunta", "Profesor", new { Nro = pregunta.Nro, Clase = pregunta.Clase.Nombre }, new { @class = "btn btn-sm btn-outline-danger text-danger" })
                             </div>
                         </td>
 

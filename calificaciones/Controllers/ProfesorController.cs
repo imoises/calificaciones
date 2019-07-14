@@ -127,39 +127,6 @@ namespace calificaciones.Controllers
             //return ViewrespuestaAlumnos
         }
 
-        /*[HttpPost]
-        public ActionResult EvaluarRespuestas(int idPregunta, String tipo)
-        {
-            EvaluarRespuestasViewModel evaluarRespuestasViewModel = new EvaluarRespuestasViewModel();
-            evaluarRespuestasViewModel.Pregunta = preguntasService.ObtenerUnaPreguntaId(idPregunta);
-            evaluarRespuestasViewModel.ListaRespuestaAlumno = respuestaService.ObtenerRespuestasAlumnoTipo(idPregunta, tipo);
-            
-            ViewData["SinEvaluar"] = respuestaService.ObtenerRespuestasSinEvaluar(idPregunta);
-            ViewData["MejorPregunta"] = respuestaService.ObtenerSiMejorRespuesta(idPregunta);
-
-            return View(evaluarRespuestasViewModel);
-        }
-
-        [HttpGet]
-        public ActionResult EvaluarRespuestasGo(int respuesta, int valor)//int respuesta es el id de la respuesta... :( | int valor es la valoración de la respuesta: Correcta/Regular/Mal
-        {
-            var profesor = Convert.ToInt32(Session["Id"]);
-            var resultado = preguntasService.RespuestaValorar(respuesta, valor, profesor);
-            if (resultado)
-            {
-                TempData["Mensaje"] = "Se calificó la respuesta";
-            }
-            else
-            {
-                TempData["Mensaje"] = "Hubo un error";
-            }
-            int idPregunta = respuestaService.ObtenerUnaRespuestaId(respuesta).IdPregunta;
-            EvaluarRespuestasViewModel evaluarRespuestasViewModel = new EvaluarRespuestasViewModel();
-            evaluarRespuestasViewModel.Pregunta = preguntasService.ObtenerUnaPreguntaId(idPregunta);
-            evaluarRespuestasViewModel.ListaRespuestaAlumno = respuestaService.ObtenerRespuestasAlumnoTipo(idPregunta, "Todas");
-            return View("EvaluarRespuestas", evaluarRespuestasViewModel);
-        }*/
-
         [HttpGet]
         public ActionResult MejorRespuesta(int respuesta)
         {
@@ -174,12 +141,12 @@ namespace calificaciones.Controllers
             }
             var IdPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
             var preguntaBuscada = preguntasService.ObtenerUnaPreguntaId(IdPregunta);
-            return RedirectToAction("EvaluarRespuestas", "Profesor", new { nro = preguntaBuscada.Nro, clase = preguntaBuscada.IdClase });
+            return RedirectToAction("EvaluarRespuestas", "Profesor", new { nro = preguntaBuscada.Nro, clase = preguntaBuscada.Clase.Nombre });
             //return ViewrespuestaAlumnos
         }
 
         [HttpGet]
-        public ActionResult EliminarPregunta(int Nro, int Clase)
+        public ActionResult EliminarPregunta(int nro, string clase)
         {
             /*var pregunta = preguntasService.ObtenerUnaPreguntaNroClase(Nro, Clase);
             if (!pregunta.RespuestaAlumnoes.Any())
@@ -191,11 +158,11 @@ namespace calificaciones.Controllers
                 TempData["MensajeError"] = "No se puedo eliminar la pregunta Nro: "+Nro+" de  La Clase: "+ Clase;
             }
             return RedirectToAction("AdminPreguntas");*/
-
-            var contieneRespuestas = preguntasService.EliminarPregunta(Nro, Clase);
+            var respuestaAlumnos = preguntasService.ObtenerPreguntasConRespuestas(nro, clase);
+            var contieneRespuestas = preguntasService.EliminarPregunta(nro, clase);
             if (contieneRespuestas)
             {
-                TempData["MensajeError"] = "No se pudo eliminar la pregunta Nro: " + Nro + " de  La Clase: " + Clase + ", porque ya contiene respuestas";
+                TempData["MensajeError"] = "No se pudo eliminar la pregunta Nro: " + nro + " de  La Clase: " + clase + ", porque ya contiene respuestas";
             }
             return RedirectToAction("Preguntas");
         }
