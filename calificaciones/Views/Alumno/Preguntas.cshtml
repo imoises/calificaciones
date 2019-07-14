@@ -1,4 +1,4 @@
-﻿
+﻿@using calificaciones.Session
 @{
     Layout = "~/Views/Shared/AlumnosLayout.cshtml";
 }
@@ -57,7 +57,7 @@
 
             <p data-toggle="collapse">
                 @{
-                    int idAlumno = Convert.ToInt32(Session["Id"]);
+                    int idAlumno = SessionManagement.IdUsuario;
                     var respuestaAlumno = pregunta.RespuestaAlumnoes.Where(r => r.IdAlumno == idAlumno).FirstOrDefault();
 
                     if (respuestaAlumno != null)

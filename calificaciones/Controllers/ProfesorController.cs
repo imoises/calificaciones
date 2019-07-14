@@ -1,4 +1,4 @@
-﻿    using calificaciones.Services;
+﻿using calificaciones.Services;
 using calificaciones.Entidades;
 using calificaciones.Models;
 using System;
@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using calificaciones.Session;
 
 namespace calificaciones.Controllers
 {
-    [Authorize]
+    [AuthorizeProfesor]
     public class ProfesorController : Controller
     {
         PreguntaService preguntasService = new PreguntaService();
@@ -43,7 +44,7 @@ namespace calificaciones.Controllers
         {
             if (ModelState.IsValid)
             {
-                pregunta.IdProfesorCreacion = Convert.ToInt32(Session["Id"]);
+                pregunta.IdProfesorCreacion = SessionManagement.IdUsuario;
                 if (preguntasService.PreguntaAlta(pregunta))
                 {
                     TempData["Mensaje"] = "<p class='mb-0 text-success'> La pregunta se creó correctamente </p>";
@@ -52,8 +53,7 @@ namespace calificaciones.Controllers
                 {
                     TempData["Mensaje"] = "<p class='mb-0 text-danger'> Ya existe una pregunta con el Nro: " + pregunta.Nro + " y Clase: " + pregunta.IdClase + " </p>";
                 }
-            }
-            
+            }           
             return RedirectToAction("Crear");
         }
 
@@ -111,7 +111,7 @@ namespace calificaciones.Controllers
         [HttpGet]
         public ActionResult EvaluarRespuestasGo(int respuesta, int valor)//int respuesta es el id de la respuesta... :( | int valor es la valoración de la respuesta: Correcta/Regular/Mal
         {
-            var profesor = Convert.ToInt32(Session["Id"]);
+            var profesor = SessionManagement.IdUsuario;
             var resultado = preguntasService.RespuestaValorar(respuesta, valor, profesor);
             if (resultado)
             {
@@ -124,7 +124,6 @@ namespace calificaciones.Controllers
             var IdPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
             var preguntaBuscada = preguntasService.ObtenerUnaPreguntaId(IdPregunta);
             return RedirectToAction("EvaluarRespuestas", "Profesor", new { nro = preguntaBuscada.Nro, clase = preguntaBuscada.Clase.Nombre });
-            //return ViewrespuestaAlumnos
         }
 
         [HttpGet]
@@ -142,22 +141,11 @@ namespace calificaciones.Controllers
             var IdPregunta = Convert.ToInt32(TempData["IdPregunta"].ToString());
             var preguntaBuscada = preguntasService.ObtenerUnaPreguntaId(IdPregunta);
             return RedirectToAction("EvaluarRespuestas", "Profesor", new { nro = preguntaBuscada.Nro, clase = preguntaBuscada.Clase.Nombre });
-            //return ViewrespuestaAlumnos
         }
 
         [HttpGet]
         public ActionResult EliminarPregunta(int nro, string clase)
         {
-            /*var pregunta = preguntasService.ObtenerUnaPreguntaNroClase(Nro, Clase);
-            if (!pregunta.RespuestaAlumnoes.Any())
-            {
-                preguntasService.EliminarPregunta(pregunta);
-            }
-            else
-            {
-                TempData["MensajeError"] = "No se puedo eliminar la pregunta Nro: "+Nro+" de  La Clase: "+ Clase;
-            }
-            return RedirectToAction("AdminPreguntas");*/
             var respuestaAlumnos = preguntasService.ObtenerPreguntasConRespuestas(nro, clase);
             var contieneRespuestas = preguntasService.EliminarPregunta(nro, clase);
             if (contieneRespuestas)

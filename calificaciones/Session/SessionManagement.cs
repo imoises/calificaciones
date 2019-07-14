@@ -22,7 +22,23 @@ namespace calificaciones.Session
                 HttpContext.Current.Session["Id"] = value;
             }
         }
+
+        public static string Nombre
+        {
+            get
+            {
+                if(HttpContext.Current.Session["Nombre"] == null)
+                {
+                    return "";
+                }
+                return (string)HttpContext.Current.Session["Nombre"];
+            }
+            set
+            {
+                HttpContext.Current.Session["Nombre"] = value;
+            }
+        }
         
-        public static string Roles { get; set; }
+        public static string Rol { get; set; }
     }
 }

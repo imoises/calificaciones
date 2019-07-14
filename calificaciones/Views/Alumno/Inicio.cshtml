@@ -1,4 +1,4 @@
-﻿
+﻿@using calificaciones.Session
 @{
     Layout = "~/Views/Shared/AlumnosLayout.cshtml";
 }
@@ -34,7 +34,7 @@
                         foreach (var alumno in Model.TablaDePosiciones)
                         {
                             i = i + 1;
-                            if (alumno.IdAlumno == Convert.ToInt32(Session["Id"]))
+                            if (alumno.IdAlumno == SessionManagement.IdUsuario)
                             {
                                 <tr class="table-primary">
                                     <th scope="row"><b>@i</b></th>
@@ -84,7 +84,7 @@
                             {
                             <tr class="">
                                 @{ String nombreCompleto = alumno.Apellido + ", " + alumno.Nombre;
-                                    if (nombreCompleto == Session["Nombre"].ToString())
+                                    if (nombreCompleto == SessionManagement.Nombre.ToString())
                                     {
                                         <th scope="row"><b>@alumno.Posicion</b></th>
                                         <td><b>@alumno.Nombre @alumno.Apellido</b></td>

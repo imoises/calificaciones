@@ -1,19 +1,22 @@
 ﻿<script src="~/Scripts/Rich text wysiwyg/tinymce.min.js"></script>
 <script src="~/Scripts/Rich text wysiwyg/tiny.js"></script>
 
+@using calificaciones.Session
 @{
     Layout = "~/Views/Shared/BaseLayout.cshtml";
 }
 
-@{ if (Session["Rol"] == null)
+
+
+@{ if (SessionManagement.Rol == null)
     {
         Response.Redirect("~/HOME/Ingresar");
     }
-    else if (Session["Rol"].ToString() == "Profesor")
+    else if (SessionManagement.Rol.ToString() == RolesPermisos.ROL_PROFESOR)
     {
         @Html.Partial("pv_ProfesorNav");
     }
-    else if (Session["Rol"].ToString() == "Alumno")
+    else if (SessionManagement.Rol.ToString() == RolesPermisos.ROL_ALUMNO)
     {
         @Html.Partial("pv_AlumnoNav");
     }

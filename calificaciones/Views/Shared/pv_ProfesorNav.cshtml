@@ -1,4 +1,4 @@
-﻿
+﻿@using calificaciones.Session
 @{
     ViewBag.Title = "null";
 }
@@ -26,7 +26,8 @@
             </li>
         </ul>
         <b>
-            @Session["Nombre"].ToString() (@Session["Rol"].ToString())
+            
+            @SessionManagement.Nombre.ToString() (@SessionManagement.Rol.ToString())
         </b>
         <form action="/Home/LoginSessionOut">
             <li class="nav-item nav-link active">

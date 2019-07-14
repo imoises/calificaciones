@@ -195,6 +195,9 @@
     <Compile Include="Entidades\Tema.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Session\AuthorizeAlumno.cs" />
+    <Compile Include="Session\AuthorizeProfesor.cs" />
+    <Compile Include="Session\RolesPermisos.cs" />
     <Compile Include="Session\SessionManagement.cs" />
   </ItemGroup>
   <ItemGroup>

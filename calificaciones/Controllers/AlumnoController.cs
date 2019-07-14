@@ -6,10 +6,11 @@ using System.Web;
 using System.Web.Mvc;
 using calificaciones.Models;
 using calificaciones.Entidades;
+using calificaciones.Session;
 
 namespace calificaciones.Controllers
 {
-    [Authorize]
+    [AuthorizeAlumno]
     public class AlumnoController : Controller
     {
         AlumnoService alumnoService = new AlumnoService();
@@ -23,7 +24,7 @@ namespace calificaciones.Controllers
         // GET: Alumno
         public ActionResult Inicio()
         {
-            if (Session["Id"]!=null && Session["Nombre"]!=null && Session["Rol"] != null)
+            if(SessionManagement.IdUsuario != null && SessionManagement.Nombre != null && SessionManagement.Rol != null)
             {
                 InicioAlumnoViewModel modelo = new InicioAlumnoViewModel();
 
@@ -35,19 +36,16 @@ namespace calificaciones.Controllers
 
                 return View(modelo);
             }
-
             return Redirect("~/");
-            
         }
         
         public ActionResult Preguntas(String Id)
         {
             // ObtenerPreguntasTipo (Todas, Sin Corregir, Correctas,Regular ó Mal)
-            List<Pregunta> preguntas = preguntaAlumnoService.ObtenerPreguntasTipo(Id, Convert.ToInt32(Session["Id"]));
-
+            List<Pregunta> preguntas = preguntaAlumnoService.ObtenerPreguntasTipo(Id, SessionManagement.IdUsuario);
             return View(preguntas);
         }
-        //[ActionName("Acerca-de")]
+        
         public ActionResult AcercaDe()
         {
             return View();
@@ -57,11 +55,8 @@ namespace calificaciones.Controllers
         public ActionResult VerRespuesta(int IdRespuesta)
         {
             RespuestaAlumno respuesta = respuestaServide.ObtenerRespuestaPorIdRespuesta(IdRespuesta);
-
             Pregunta pregunta = preguntaService.ObtenerUnaPreguntaId(respuesta.IdPregunta);
-
             TempData["Respuesta"] = respuesta.Respuesta;
-
             return View(pregunta);
         }
 
@@ -75,9 +70,7 @@ namespace calificaciones.Controllers
         public ActionResult Responder(int IdPregunta)
         {
             ResponderViewModel responderViewModel = new ResponderViewModel();
-
             responderViewModel.Pregunta = preguntaService.ObtenerUnaPreguntaId(IdPregunta);
-
             return View(responderViewModel);
         }
 
@@ -90,11 +83,10 @@ namespace calificaciones.Controllers
         public ActionResult VerificarRespuesta(int IdPregunta, ResponderViewModel respuesta)
         {
             Pregunta pregunta = preguntaService.ObtenerUnaPreguntaId(IdPregunta);
-
             if (pregunta.FechaDisponibleHasta.Value >= DateTime.Now && respuesta.RespuestaTextModel.Respuesta != null)
             {
-                respuestaServide.AgregarRespuesta(IdPregunta, respuesta.RespuestaTextModel.Respuesta, Convert.ToInt32(Session["Id"]));
-                respuestaServide.EnviarEmailRespuestaDelAlumno(pregunta,respuesta.RespuestaTextModel.Respuesta, Convert.ToInt32(Session["Id"]));
+                respuestaServide.AgregarRespuesta(IdPregunta, respuesta.RespuestaTextModel.Respuesta, SessionManagement.IdUsuario);
+                respuestaServide.EnviarEmailRespuestaDelAlumno(pregunta, respuesta.RespuestaTextModel.Respuesta, SessionManagement.IdUsuario);
                 return Redirect("~/Alumno/Preguntas");
             }
             else
@@ -103,7 +95,6 @@ namespace calificaciones.Controllers
                 responderViewModel.Pregunta = pregunta;
                 TempData["Respuesta"] = respuesta;
                 TempData["Mensaje"] = "Ya paso la fecha de entrega";
-
                 return View("Responder", responderViewModel);
             }
         }

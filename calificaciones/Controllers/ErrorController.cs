@@ -49,9 +49,7 @@ namespace calificaciones.Controllers
                     ViewBag.ErrorMensaje = "La página que ingreso es erronea";
                     ViewBag.Descripcion = "Por favor ingrese nuevamente";
                     break;
-
-            }
-            
+            }  
             return View();
        }
     }
