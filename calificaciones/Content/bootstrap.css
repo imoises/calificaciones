@@ -11030,3 +11030,7 @@ legend {
 .list-group-item:hover {
   background-color: #1c1e22;
 }
+
+.img-circle {
+    border-radius: 50%;
+}
