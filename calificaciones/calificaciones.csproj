@@ -205,6 +205,7 @@
     <Content Include="Content\images404\error-img.png" />
     <Content Include="Content\img-acerca-de\1.jpg" />
     <Content Include="Content\img-acerca-de\A.jpg" />
+    <Content Include="Content\img-acerca-de\C.png" />
     <Content Include="Content\Zero-css\jquery.dataTables.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome\css\all.css" />
