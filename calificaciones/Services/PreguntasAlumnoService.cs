@@ -83,5 +83,11 @@ namespace calificaciones.Services
             return listaPreguntasMal;
         }
 
+        public List<Pregunta> ObtenerTodasLasPreguntasSinResponder(int idAlumno)
+        {
+            List<Pregunta> preguntas = bdContexto.Preguntas.Where(p => p.RespuestaAlumnoes.Where(r => r.IdAlumno == idAlumno).Count() == 0).OrderByDescending(p => p.Nro).ToList();
+
+            return preguntas;
+        }
     }
 }

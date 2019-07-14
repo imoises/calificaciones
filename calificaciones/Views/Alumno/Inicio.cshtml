@@ -136,4 +136,34 @@
         </div>
 
     </div>
+
+    <div>
+        <h4>Preguntas Sin Responder</h4>
+        @{
+            Boolean flag = false;
+            foreach (var pregunta in Model.PreguntasSinResponder)
+            {
+                if (pregunta.FechaDisponibleHasta != null)
+                {
+                    if (pregunta.FechaDisponibleHasta.Value > DateTime.Now)
+                    {
+                        <div>
+                            <span class="custom-control-inline">
+                                <p>@pregunta.Nro. @pregunta.Pregunta1 &nbsp;</p>
+                                <form>
+                                    <button type="submit" class="btn btn-sm text-info" formaction="~/Alumno/Responder" value="@pregunta.IdPregunta" name="IdPregunta" formmethod="post">Responder</button>
+                                </form>
+                            </span>
+                        </div>
+                        flag = true;
+                    }
+                }
+            }
+            if (!flag)
+            {
+                <i> No quedan preguntas sin responder.</i>
+            }
+        }
+
+    </div>
 </div>

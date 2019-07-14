@@ -31,6 +31,8 @@ namespace calificaciones.Controllers
 
                 modelo.TablaDePosiciones = alumnoService.ObtenerLosDoceAlumnosConMejorPuntajeTotal();
 
+                modelo.PreguntasSinResponder = preguntaAlumnoService.ObtenerTodasLasPreguntasSinResponder(Convert.ToInt32(Session["Id"]));
+
                 return View(modelo);
             }
 

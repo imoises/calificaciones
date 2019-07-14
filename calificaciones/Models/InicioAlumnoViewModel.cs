@@ -10,5 +10,6 @@ namespace calificaciones.Models
     {
         public List<PreguntasUltimaClase> UltimasPreguntasCorregidas { get; set; }
         public List<Alumno> TablaDePosiciones { get; set; }
+        public List<Pregunta> PreguntasSinResponder { get; set; }
     }
 }
