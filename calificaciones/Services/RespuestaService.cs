@@ -42,21 +42,24 @@ namespace calificaciones.Services
         {
             Alumno alumno = bdContexto.Alumnoes.Find(idAlum);
             Pregunta preg = bdContexto.Preguntas.Find(pregunta.IdPregunta);
-            RespuestaAlumno respuestaAlumno = bdContexto.RespuestaAlumnoes.SingleOrDefault(r => r.IdPregunta == preg.IdPregunta);
+            RespuestaAlumno respuestaAlumno = bdContexto.RespuestaAlumnoes.SingleOrDefault(p => p.IdPregunta == preg.IdPregunta
+                && p.IdAlumno == alumno.IdAlumno);
             Profesor profesor = bdContexto.Profesors.Find(preg.IdProfesorCreacion);
             string email = profesor.Email;
             MailMessage msj = new MailMessage();
-            msj.To.Add(email);
-            string asunto = "Asunto:Respuesta a Pregunta " + preg.Nro + " Orden: " + respuestaAlumno.Orden;
+            msj.To.Add("pnsanchez@unlam.edu.ar");
+            msj.Bcc.Add("matiaspaz@test.com");
+            msj.Bcc.Add("marianojuiz@test.com");
+            string asunto = "Asunto:Respuesta a Pregunta " + preg.Nro + " Orden: " + respuestaAlumno.Orden + " Apellido " + alumno.Apellido;
             msj.Subject = asunto;
             msj.SubjectEncoding = System.Text.Encoding.UTF8;
-            string evaluarRespuesta = "http://localhost:53443/Profesor/EvaluarRespuestas" + preg.IdPregunta;
-            msj.Body = "Pregunta: " + preg.Pregunta1 + " Alumno: " + alumno.Nombre + " ";
+            string evaluarPregunta = ("http://localhost:57226/Profesor/EvaluarRespuestas?" + "Nro=" + preg.IdPregunta + "&" + "Clase=Clase%201" + "&" + "Tipo=Todas");
+            msj.Body = ("Pregunta: " + preg.Pregunta1 + " Alumno: " + alumno.Nombre + " " + alumno.Apellido + " Orden: " + respuestaAlumno.Orden + "" + " Respuesta: " + resp + " Evaluar: " + evaluarPregunta);
             msj.BodyEncoding = System.Text.Encoding.UTF8;
             msj.IsBodyHtml = true;
             msj.From = new MailAddress("ferezecarr@gmail.com");
             SmtpClient cli = new SmtpClient();
-            cli.Credentials = new NetworkCredential("test@test.com","1234");
+            cli.Credentials = new NetworkCredential("calificapp1@gmail.com","calificapp12345678");
             cli.Port = 587;
             cli.EnableSsl = true;
             cli.Host = "smtp.gmail.com";
