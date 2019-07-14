@@ -154,8 +154,6 @@ namespace calificaciones.Services
 
         public Pregunta FiltroRespuesta(Pregunta respuestaAlumnos, string tipo)
         {
-            var prueba = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion != null).ToList();
-
             var respuesta = new RespuestaAlumno();
             if (tipo != null && tipo != "Todas")
             {
@@ -166,7 +164,14 @@ namespace calificaciones.Services
                 }
                 else
                 {
-                    respuestaAlumnos.RespuestaAlumnoes = varRespuestaAlumnos;
+                    if (tipo == "SinCorregir")
+                    {
+                        respuestaAlumnos.RespuestaAlumnoes = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.IdResultadoEvaluacion == null).ToList();
+                    }
+                    else
+                    {
+                        respuestaAlumnos.RespuestaAlumnoes = varRespuestaAlumnos;
+                    }
                 }
             }
             return respuestaAlumnos;
