@@ -10,7 +10,7 @@ using calificaciones.Session;
 
 namespace calificaciones.Controllers
 {
-    [AuthorizeAlumno]
+    [AuthorizeAlumno(Roles = RolesPermisos.ROL_ALUMNO)]
     public class AlumnoController : Controller
     {
         AlumnoService alumnoService = new AlumnoService();

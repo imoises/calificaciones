@@ -16,8 +16,8 @@ namespace calificaciones.Controllers
         AlumnoService alumnoService = new AlumnoService();
         ProfesorService profesorService = new ProfesorService();
 
-       // [AuthorizeProfesor]
-       // [AuthorizeAlumno]
+      //  [AuthorizeProfesor]
+      //  [AuthorizeAlumno]
        // [AllowAnonymous]
         public ActionResult Ingresar()
         {
