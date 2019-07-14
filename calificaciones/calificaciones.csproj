@@ -195,6 +195,7 @@
     <Compile Include="Entidades\Tema.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Session\SessionManagement.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -206,6 +207,7 @@
     <Content Include="Content\img-acerca-de\1.jpg" />
     <Content Include="Content\img-acerca-de\A.jpg" />
     <Content Include="Content\img-acerca-de\C.png" />
+    <Content Include="Content\img-acerca-de\M.jpg" />
     <Content Include="Content\Zero-css\jquery.dataTables.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome\css\all.css" />
