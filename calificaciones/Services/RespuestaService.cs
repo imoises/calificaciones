@@ -151,12 +151,20 @@ namespace calificaciones.Services
 
         public Pregunta FiltroRespuesta(Pregunta respuestaAlumnos, string tipo)
         {
+            var prueba = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion != null).ToList();
+
             var respuesta = new RespuestaAlumno();
             if (tipo != null && tipo != "Todas")
             {
-                var query = from r in respuestaAlumnos.RespuestaAlumnoes where r.ResultadoEvaluacion.Resultado == tipo select r;
-                //var query1 = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion.Resultado == tipo);
-                respuestaAlumnos.RespuestaAlumnoes = query.ToList();
+                var varRespuestaAlumnos = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion != null).ToList();
+                if (varRespuestaAlumnos.Count != 0)
+                {
+                    respuestaAlumnos.RespuestaAlumnoes = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion.Resultado == tipo).ToList();
+                }
+                else
+                {
+                    respuestaAlumnos.RespuestaAlumnoes = varRespuestaAlumnos;
+                }
             }
             return respuestaAlumnos;
         }
