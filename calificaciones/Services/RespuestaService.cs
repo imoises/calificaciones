@@ -103,31 +103,6 @@ namespace calificaciones.Services
             return mejorRespuesta;
         }
 
-        //public List<RespuestaAlumno> ObtenerRespuestasAlumnoTipo(int idPregunta, String tipo) // tipo: Todas, SinCorregir, Correcta,Regular, Mal
-        //{
-        //    switch (tipo)
-        //    {
-        //        case "SinCorregir":
-        //            return ObtenerRespuestasAlumnoSinCorregir(idPregunta);
-        //        case "Correctas":
-        //            return ObtenerRespustasAlumnoCorrecta(idPregunta);
-        //        case "Regular":
-        //            return ObtenerRespustasAlumnoRegular(idPregunta);
-        //        case "Mal":
-        //            return ObtenerRespustasAlumnoMal(idPregunta);
-        //        default:
-        //            return ObtenerTodasLasRespuestaPublicadas();
-        //    }
-
-        //}
-
-        //public List<RespuestaAlumno> ObtenerRespustasAlumnoMal(int idPregunta)
-        //{
-        //    List<RespuestaAlumno> respuestasAlumno = bdContexto.RespuestaAlumnoes.Where(r => r.IdPregunta == idPregunta && r.IdResultadoEvaluacion == 3).ToList();
-
-        //    return respuestasAlumno;
-        //}
-
         public Pregunta ObtenerPreguntasConRespuestas(int nro, string clase)
         {
             var query = from p in bdContexto.Preguntas where p.Nro == nro && p.Clase.Nombre == clase select p;
@@ -154,12 +129,12 @@ namespace calificaciones.Services
 
         public Pregunta FiltroRespuesta(Pregunta respuestaAlumnos, string tipo)
         {
-            var respuesta = new RespuestaAlumno();
             if (tipo != null && tipo != "Todas")
             {
                 var varRespuestaAlumnos = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion != null).ToList();
-                if (varRespuestaAlumnos.Count != 0)
+                if (varRespuestaAlumnos.Count > 0 && tipo != "SinCorregir")
                 {
+                    respuestaAlumnos.RespuestaAlumnoes = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion != null).ToList();
                     respuestaAlumnos.RespuestaAlumnoes = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion.Resultado == tipo).ToList();
                 }
                 else
@@ -176,29 +151,6 @@ namespace calificaciones.Services
             }
             return respuestaAlumnos;
         }
-
-        //public Pregunta FiltroRespuesta(Pregunta respuestaAlumnos, string tipo)
-        //{
-        //    var respuesta = new RespuestaAlumno();
-
-        //    switch (tipo)
-        //    {
-        //        case "SinCorregir":
-        //            respuestaAlumnos.RespuestaAlumnoes = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion.Resultado == null).ToList();
-        //            break;
-        //        case "Correcta":
-        //            respuestaAlumnos.RespuestaAlumnoes = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion.IdResultadoEvaluacion == 1).ToList();
-        //            break;
-        //        case "Regular":
-        //            respuestaAlumnos.RespuestaAlumnoes = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion.IdResultadoEvaluacion == 2).ToList();
-        //            break;
-        //        case "Mal":
-        //            respuestaAlumnos.RespuestaAlumnoes = respuestaAlumnos.RespuestaAlumnoes.Where(r => r.ResultadoEvaluacion.IdResultadoEvaluacion == 3).ToList();
-        //            break;
-        //    }
-
-        //    return respuestaAlumnos;
-        //}
 
         public List<RespuestaAlumno> ObtenerRespuestasAlumnoTipo(String tipo) // tipo: Todas, SinCorregir, Correcta,Regular, Mal
         {
