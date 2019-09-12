@@ -24,7 +24,7 @@ namespace calificaciones
         {
             Session["Email"] = String.Empty;
             Session["SoyProfesor"] = String.Empty;
-        }
+        } 
 
         protected void Application_Error(Object sender, EventArgs e) 
         {
